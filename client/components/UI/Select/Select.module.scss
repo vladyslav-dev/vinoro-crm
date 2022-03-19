@@ -1,0 +1,43 @@
+@import '../../../styles/index.scss';
+
+.selectWrapper {
+
+    .selectLabel {
+        @include formLabelStyles;
+    }
+
+    .selected {
+        @include formInputStyles;
+        @include flexBetween;
+        background-color: $white;
+        padding: 0 16px;
+        cursor: pointer;
+    }
+
+    .options {
+        @include formInputStyles;
+        background-color: $white;
+        position: absolute;
+        height: auto;
+        bottom: 30px;
+        left: 0;
+        transform: translateY(100%);
+        opacity: 0;
+        visibility: hidden;
+
+        .optionItem {
+            transition: all .2s ease-in-out;
+            padding: 14px 16px;
+            cursor: pointer;
+
+            &:hover {
+                background-color: $bgGray;
+            }
+        }
+
+        &.open {
+            opacity: 1;
+            visibility: visible;
+        }
+    }
+}

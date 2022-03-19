@@ -1,0 +1,47 @@
+@import '../index.scss';
+
+.sectionGrid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    justify-items: center;
+    gap: 15px;
+    height: 100%;
+
+    @media(max-width: 980px) {
+        grid-template-columns: 1fr;
+    }
+
+    @media(max-width: 450px) {
+        grid-template-columns: 100%;
+    }
+
+    .sectionGridCol {
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: space-between;
+        gap: 15px;
+        width: 100%;
+
+        .sectionGridStandard {
+            display: flex;
+            flex-flow: wrap;
+            justify-content: space-between;
+            gap: 15px;
+
+            .sectionItem {
+                flex: 1;
+            }
+        }
+
+        .sectionGridRow {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            gap: 15px;
+
+            .sectionItem {
+                flex: 1;
+            }
+        }
+    }
+}

@@ -1,0 +1,31 @@
+@import '../../../styles/index.scss';
+
+.inputWrapper {
+    width: 100%;
+
+    label {
+        @include formLabelStyles;
+    }
+
+    input {
+        @include formInputStyles;
+        padding: 0 10px;
+
+        &[type=password] {
+            letter-spacing: 2px;
+            font-size: 18px;
+        }
+
+        &.inputAuth {
+            height: 38px;
+            border: 2px solid $gray;
+
+            &:focus, &:not(:placeholder-shown) {
+                border-color: $slate;
+            }
+        }
+    }
+
+
+}
+

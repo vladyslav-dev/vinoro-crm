@@ -1,0 +1,20 @@
+@import '../../../styles/index.scss';
+
+.textareaWrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    .label {
+        @include formLabelStyles;
+    }
+
+    .textarea {
+        @include formInputStyles;
+        transition: height .4s ease-in-out;
+        height: 170px;
+        resize: none;
+        line-height: 22px;
+        padding: 8px 10px;
+    }
+}

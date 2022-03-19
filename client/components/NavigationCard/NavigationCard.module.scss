@@ -1,0 +1,186 @@
+@import '../../styles/index.scss';
+
+@mixin cardLink {
+    all: unset;
+    cursor: pointer;
+    display: inherit;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+}
+
+.card {
+    @include radius-md;
+    display: inline-block;
+    width: 100%;
+    background-color: $white;
+    transition: all .2s ease-in-out;
+
+    &.cardShadow {
+        cursor: pointer;
+
+        &:hover {
+            box-shadow: 0px 8px 24px rgba(149, 157, 165, 0.2);
+        }
+    }
+}
+
+.standardCard {
+    min-width: 260px;
+
+    @media(max-width: 450px) {
+        min-width: 260px;
+        width: 100%;
+    }
+
+    a {
+        @include cardLink;
+        padding: 20px;
+
+        @media(max-width: 350px) {
+            padding: 18px 12px;
+        }
+
+        .standardCardRow {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+
+            .standardCardNumber {
+                font-size: 36px;
+                font-weight: 600;
+            }
+
+            .standardCardImage {
+                margin-left: auto;
+
+                svg {
+                    width: 64px;
+                    height: 64px;
+                }
+            }
+        }
+    }
+}
+
+.rowCard {
+    display: flex;
+    align-items: center;
+    height: 100%;
+
+    @media(max-width: 450px) {
+        min-width: 0;
+    }
+
+    a {
+        @include cardLink;
+        padding: 10px 20px;
+
+        @media(max-width: 350px) {
+            padding: 8px 12px;
+        }
+
+        .rowCardImage {
+            margin-left: auto;
+
+                svg {
+                    width: 64px;
+                    height: 64px;
+                }
+        }
+    }
+}
+
+.multiCard {
+    background-color: $white;
+    @include radius-md;
+    transition: all .3s ease-in-out;
+    padding: 20px;
+    box-sizing: border-box;
+    min-width: 400px;
+
+    @media(max-width: 450px) {
+        min-width: 0;
+    }
+
+    @media(max-width: 350px) {
+        padding: 18px 12px;
+    }
+
+    .multiCardTitle {
+        margin-bottom: 20px;
+    }
+
+    .multiCardBox {
+        background-color: $bgGray;
+        @include radius-md;
+        padding: 10px 12px;
+        box-sizing: border-box;
+
+        .item {
+            background-color: $white;
+            @include radius-md;
+            transition: all .2s ease-in-out;
+
+            &:hover {
+                box-shadow: 0px 8px 24px rgba(149, 157, 165, 0.2);
+            }
+
+            &:not(:last-child) {
+                margin-bottom: 10px;
+            }
+
+            a {
+                @include cardLink;
+                padding: 0 15px;
+
+                @media(max-width: 350px) {
+                    padding: 0 12px;
+                }
+
+                .itemRow {
+                    display: flex;
+                    align-items: center;
+
+                    .itemTitle {
+                        font-size: 18px;
+                        font-weight: 600;
+                        margin: 14px 0 8px 0;
+                    }
+
+                    .itemCol {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        margin-right: 28px;
+
+                        @media(max-width: 380px) {
+                            margin-right: 13px;
+                        }
+
+                        .itemColTitle {
+                            color: $zinc;
+                            font-size: 11px;
+                            font-weight: 600;
+                            margin-bottom: 8px;
+
+                            @media(max-width: 350px) {
+                                font-size: 10px;
+                            }
+                        }
+
+                        .itemColNumber {
+                            font-weight: 600;
+                            font-size: 32px;
+                        }
+                    }
+
+                    .itemImage {
+                        margin-left: auto;
+                        margin-bottom: 8px;
+                    }
+                }
+            }
+        }
+    }
+}

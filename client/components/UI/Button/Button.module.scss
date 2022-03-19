@@ -1,0 +1,12 @@
+@import '../../../styles/index';
+
+.button {
+    @include radius-md;
+    height: 34px;
+    padding: 0 28px;
+    color: $white;
+    font-weight: 600;
+    border: 2px solid transparent;
+    cursor: pointer;
+    user-select: none;
+}

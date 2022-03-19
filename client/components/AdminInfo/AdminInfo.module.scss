@@ -1,0 +1,87 @@
+@import '../../styles/index.scss';
+
+.admin {
+    min-width: 300px;
+    height: 135px;
+    padding: 16px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .adminRow {
+        display: flex;
+
+        .adminCol {
+            display: flex;
+            flex-direction: column;
+
+            &:first-child {
+                margin-right: 15px;
+            }
+
+            .adminAvatar {
+                width: 54px;
+                height: 54px;
+                border-radius: 50%;
+                position: relative;
+                z-index: 2;
+
+                &::before, &::after {
+                    content: '';
+                    position: absolute;
+                    display: block;
+                    border-radius: 50%;
+                }
+
+                &::before {
+                    top: -2px;
+                    left: -2px;
+                    width: calc(100% + 4px);
+                    height: calc(100% + 4px);
+                    display: block;
+                    border-radius: 50%;
+                    border: 3px solid $white;
+                }
+
+                &::after {
+                    top: -4px;
+                    left: -4px;
+                    width: calc(100% + 8px);
+                    height: calc(100% + 8px);
+                    border: 2px solid $slate;
+                }
+
+                & > div {
+                    position: unset !important;
+                  }
+
+                img {
+                    border-radius: 50%;
+                }
+            }
+
+            .adminUsername {
+                color: $slate;
+                font-size: 16px;
+                font-weight: 500;
+                margin: 5px 0;
+            }
+
+            .adminLogin {
+                margin-top: 4px;
+                color: $zinc;
+                font-size: 14px;
+                font-weight: 500;
+            }
+        }
+
+        .adminLogout {
+            all: unset;
+            color: $danger;
+            font-weight: 500;
+            font-size: 14px;
+            cursor: pointer;
+        }
+    }
+}

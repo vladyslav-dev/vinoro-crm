@@ -1,0 +1,44 @@
+@import '../../../styles/index.scss';
+
+.modal {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    opacity: 0;
+    z-index: 5;
+    visibility: hidden;
+    transition: all .3s ease-in-out;
+
+    &.active {
+        transform: scale(1);
+        opacity: 1;
+        visibility: visible;
+    }
+
+    &.modalBackground {
+        background: rgba(121, 121, 121, 0.3);
+        backdrop-filter: blur(6px);
+    }
+
+    .modalContent {
+        background-color: $white;
+        @include radius-md;
+        @include dropShadow;
+        display: inline-block;
+        box-sizing: border-box;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        .modalClose {
+            position: absolute;
+            right: 8px;
+            top: 8px;
+            height: 32px;
+            width: 32px;
+            cursor: pointer;
+        }
+    }
+}

@@ -1,0 +1,10 @@
+@import '../../styles/index.scss';
+
+.toolbar {
+    height: 64px;
+    background-color: $white;
+    padding: 0 22px;
+    display: flex;
+    align-items: center;
+    @include radius-md;
+}

@@ -1,0 +1,36 @@
+@import '../../styles/index.scss';
+
+.section {
+    padding: 16px 28px;
+    box-sizing: border-box;
+    max-width: 1360px;
+
+    // @media (max-width:700px) {
+    //     max-height: calc(100vh - 165px);
+    // }
+
+    @media(max-width: 450px) {
+        padding: 16px 10px;
+    }
+
+    .sectionRow {
+        @include flexBetween;
+        margin-bottom: 16px;
+
+        .sectionTitle {
+            font-size: 28px;
+            font-weight: 600;
+        }
+    }
+
+    .sectionContent {
+        @include radius-md;
+        // min-height: calc(100vh - 230px);
+        overflow-y: scroll;
+        max-height: calc(100vh - 250px);
+
+        &.background {
+            background-color: $white;
+        }
+    }
+}

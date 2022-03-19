@@ -1,0 +1,67 @@
+@import '../index.scss';
+
+.login {
+    background-image: url('../../images/login-background.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 100vw;
+    height: 100vh;
+    @include flexCenter;
+
+    .loginContainer {
+        max-width: 285px;
+        width: 100%;
+        transform: translateY(-40px);
+
+        .loginTitleWrapper {
+            margin-bottom: 36px;
+            text-align: center;
+
+            .loginLogo {
+                display: flex;
+                justify-content: center;
+                margin-bottom: 16px;
+            }
+
+            .loginSubtitle {
+                color: $zinc;
+                font-size: 13px;
+                font-weight: 600;
+            }
+
+            .loginError {
+                margin-top: 32px;
+                color: $danger;
+                font-weight: 600;
+                font-size: 14px;
+                opacity: 0;
+                transform: translateY(14px);
+                transition: all .4s ease-in-out;
+            }
+
+            .loginErrorVisible {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form {
+
+            .formRow {
+                display: flex;
+                justify-content: center;
+
+                &:not(:last-child) {
+                    margin-bottom: 10px;
+                }
+            }
+
+            .formButton {
+                margin-top: 20px;
+                padding: 0 64px;
+            }
+        }
+    }
+
+
+}

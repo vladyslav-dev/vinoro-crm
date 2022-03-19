@@ -1,0 +1,42 @@
+@import '../../../styles/index.scss';
+
+.toggleWrapper {
+    display: flex;
+    flex-direction: column;
+
+    .label {
+        @include formLabelStyles;
+    }
+
+    .toggle {
+        all: unset;
+        width: 52px;
+        height: 26px;
+        border: 2px solid $gray;
+        background-color: $bgGray;
+        border-radius: 26px;
+        position: relative;
+        cursor: pointer;
+
+        &::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: calc(100% - 2px - 22px);
+            width: 22px;
+            height: 22px;
+            display: block;
+            background-color: $gray;
+            border-radius: 50%;
+            transition: all .4s ease-in-out;
+        }
+
+        &.active {
+            border: 2px solid $slate;
+            &::after {
+                left: 2px;
+                background-color: $slate;
+            }
+        }
+    }
+}

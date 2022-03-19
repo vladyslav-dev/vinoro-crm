@@ -1,0 +1,46 @@
+@import '../../styles/index.scss';
+
+.section {
+    display: flex;
+    flex-direction: column-reverse;
+    padding-bottom: 0;
+    border-bottom: 2px solid $bgGray;
+    border-radius: 2px;
+    position: relative;
+
+    .sectionTitle {
+        display: inline-flex;
+        width: fit-content;
+        align-items: center;
+        margin-bottom: 24px;
+        cursor: pointer;
+
+        svg {
+            transition: all .4s ease-in-out;
+            transform: rotate(-90deg);
+            margin-left: 20px;
+        }
+    }
+
+    .sectionForm {
+        overflow: hidden;
+        visibility: hidden;
+        opacity: 0;
+        transition: all .4s ease-in-out;
+    }
+
+    &.open {
+        padding-bottom: 38px;
+
+        .sectionForm {
+            opacity: 1;
+            visibility: visible;
+
+            & ~ .sectionTitle {
+                svg {
+                    transform: rotate(0deg);
+                }
+            }
+        }
+    }
+}

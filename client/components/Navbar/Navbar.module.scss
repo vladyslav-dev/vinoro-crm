@@ -1,0 +1,140 @@
+@import '../../styles/index.scss';
+
+$menuHeight: 314px;
+$headerHeight: 100px;
+$headerMobileSize: 84px;
+$centerMenuPosition: calc((50% - ((#{$menuHeight} / 2)) - #{$headerHeight}));
+
+.navbar {
+    width: 100px;
+    height: 100%;
+    background-color: $white;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding-bottom: 32px;
+
+    @media (max-width: 700px) {
+        height: $headerMobileSize;
+        width: 100%;
+        padding-bottom: 0;
+        border-top: 3px solid $bgGray;
+    }
+
+    &__menu {
+        position: absolute;
+        top: $centerMenuPosition;
+        left: 0;
+        width: 100%;
+        min-height: $menuHeight;
+        flex-direction: column;
+        @include flexBetween;
+
+        @media (max-width: 700px) {
+            flex-direction: row;
+            min-height: auto;
+            height: $headerMobileSize;
+            width: 100%;
+            left: 0;
+            top: 0;
+        }
+
+        &_item {
+            cursor: pointer;
+            width: 100%;
+            @include flexCenter;
+            position: relative;
+            border-top: 2px solid transparent;
+            border-bottom: 2px solid transparent;
+            @include transitionLow;
+
+            &.active {
+                background-color: $bgGray;
+            }
+
+            @media (max-width: 700px) {
+                height: 100%;
+            }
+
+            a {
+                display: inline-flex;
+                justify-content: center;
+                align-items: center;
+                width: 100%;
+                height: 100%;
+                padding: 15px 0;
+
+                @media (max-width: 700px) {
+                    padding: 0 15px;
+                }
+            }
+
+            &_tooltip {
+                position: absolute;
+                left: 115px;
+                top: calc(50% - (34px / 2));
+                background-color: $slate;
+                color: $white;
+                font-size: 11px;
+                font-weight: bold;
+                white-space: nowrap;
+                padding: 0 16px;
+                border-radius: 12px;
+                height: 32px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: default;
+                z-index: 10;
+                transform: scale(0);
+                transform-origin: left;
+                transition: all .18s ease-in-out;
+
+                @media (max-width: 700px) {
+                    display: none;
+                }
+            }
+
+            &:hover {
+                background-color: $bgGray;
+                border-top: 2px solid $bgGray;
+                border-bottom: 2px solid $bgGray;
+
+                span {
+                    transform: scale(1);
+                }
+            }
+        }
+    }
+
+    .navbar__profile {
+        width: 100%;
+        cursor: pointer;
+        @include flexCenter;
+        padding: 15px 0;
+        transition: all .18s ease-in-out;
+
+        @media (max-width: 700px) {
+            height: 100%;
+        }
+
+        &:hover {
+            background-color: $bgGray;
+        }
+    }
+}
+
+.modal {
+    transform: none !important;
+    top: unset !important;
+    left: 109px !important;
+    bottom: 22px;
+    z-index: 5;
+
+    @media (max-width: 700px) {
+        right: 20px;
+        left: unset !important;
+        bottom: 96px;
+    }
+}
