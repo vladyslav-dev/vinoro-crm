@@ -21,7 +21,7 @@ const Button: React.FC<ButtonProps> = ({
     clickHandler,
 }) => {
 
-    console.log(getButtonStyle(color!)[variant]);
+
 
     return (
         <>

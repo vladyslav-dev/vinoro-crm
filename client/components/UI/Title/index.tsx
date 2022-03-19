@@ -23,7 +23,7 @@ const Title: React.FC<TitleProps> = ({
         'CARD': styles.cardTitle,
         'FORM': styles.formTitle,
     }
-    console.log(rectColor)
+
     return (
         <div className={`${title[styleType]} ${classNames}`}>
             {rectColor && <span

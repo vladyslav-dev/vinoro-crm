@@ -58,7 +58,7 @@ const InnerApp: React.FC<InnerAppProps> = ({ children }) => {
       router.push('/login')
     }
   }, [isAuth])
-  console.log(isAuth)
+
   if (isAuth === null) {
     return <div>Loading...</div>
   } else if (isAuth) {
@@ -70,7 +70,6 @@ const InnerApp: React.FC<InnerAppProps> = ({ children }) => {
 }
 
 const MyApp = (props: MyAppProps) => {
-  console.log('MyApp render')
 
   return (
     <Provider store={store}>
