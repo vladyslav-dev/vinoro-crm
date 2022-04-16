@@ -1,0 +1,12 @@
+@import '../../styles/index.scss';
+
+.formController {
+    display: flex;
+    align-items: center;
+
+    .formControllerButton {
+        &:first-child {
+            margin-right: 20px;
+        }
+    }
+}

@@ -12,6 +12,7 @@ import { setAuth, setUser } from '@/slices/auth';
 import { Provider } from "react-redux";
 import store, { RootState } from '@/store/index';
 import Dashboard from '@/layouts/Dashboard';
+import Loader from '@/components/Loader';
 
 NProgress.configure({ showSpinner: false });
 Router.events.on('routeChangeStart', () => NProgress.start());
@@ -30,6 +31,16 @@ const InnerApp: React.FC<InnerAppProps> = ({ children }) => {
   const { isAuth } = useSelector((state: RootState) => state.authReducer);
 
   useEffect(() => {
+    const slowLoad = window.setTimeout(function() {
+      console.log( "the page is taking its sweet time loading" );
+    }, 10 );
+
+    window.addEventListener('load', function() {
+        window.clearTimeout( slowLoad );
+    }, false );
+  }, [])
+
+  useEffect(() => {
     if (localStorage.getItem("user:token")) {
       AuthService.checkAuth()
         .then((result: any) => {
@@ -42,6 +53,7 @@ const InnerApp: React.FC<InnerAppProps> = ({ children }) => {
         })
         .catch((err: any) => {
           localStorage.removeItem('user:token');
+          dispatch(setAuth(false));
           console.log(err)
         })
     } else {
@@ -60,7 +72,7 @@ const InnerApp: React.FC<InnerAppProps> = ({ children }) => {
   }, [isAuth])
 
   if (isAuth === null) {
-    return <div>Loading...</div>
+    return <Loader />
   } else if (isAuth) {
     return <Dashboard>{children}</Dashboard>
   } else {

@@ -21,3 +21,5 @@ const addUser = async (username, login, password) => {
 }
 
 addUser('Default admin', 'admin', 'admin');
+
+module.exports = 'test';

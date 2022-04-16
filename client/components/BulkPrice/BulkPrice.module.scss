@@ -1,0 +1,136 @@
+@import '../../styles/index.scss';
+
+.defaultButton {
+    @include transitionLow;
+    transform-origin: center;
+    button {
+        width: 100%;
+    }
+
+    &.hide {
+        // transform: scale(0);
+        // opacity: 0;
+        // visibility: hidden;
+        display: none;
+    }
+}
+
+.bulkPrice {
+    @include transitionLow;
+    visibility: hidden;
+    opacity: 0;
+    display: none;
+    transform: translateY(20px);
+
+    &.active {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+        display: block;
+    }
+
+    .listTitle {
+        @include flexBetween;
+        margin-bottom: 12px;
+
+        .listTitleItem {
+            @include formLabelStyles;
+
+            &:nth-child(1) {
+                flex: 1.4;
+                margin-left: 26px;
+                margin-right: 16px;
+
+                @media (max-width: 500px) {
+                    flex: 1;
+                    margin-right: 10px;
+                }
+            }
+
+            &:nth-child(2) {
+                flex: 1;
+                margin-right: 42px;
+
+                @media (max-width: 500px) {
+                    flex: 1;
+                    margin-right: 36px;
+                }
+            }
+        }
+    }
+
+    .list {
+
+        .listItem {
+            display: flex;
+            align-items: center;
+            margin-bottom: 16px;
+
+            .itemIndex {
+                font-size: 14px;
+                font-weight: 600;
+                width: 26px;
+            }
+
+            .itemPrice {
+                margin-right: 16px;
+                flex: 1.4;
+
+                @media (max-width: 500px) {
+                    flex: 1;
+                    margin-right: 10px;
+                }
+            }
+
+            .itemFrom {
+                margin-right: 16px;
+                flex: 1;
+
+                @media (max-width: 500px) {
+                    flex: 1;
+                    margin-right: 10px;
+                }
+            }
+
+            .itemRemove {
+                transition: all .5s ease-in-out;
+                width: 26px;
+                height: 26px;
+                cursor: pointer;
+
+                &:hover {
+                    transform: scale(1.05) rotate(360deg);
+
+                }
+            }
+        }
+    }
+
+    .bulkPriceControl {
+        @include flexBetween;
+        margin-top: 28px;
+        margin-left: 26px;
+
+        .bulkPriceControlItem {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            @include transitionLow;
+
+            &:hover {
+                transform: scale(1.05);
+            }
+
+            span {
+                margin-left: 8px;
+                font-size: 13px;
+                font-weight: 700;
+            }
+
+            &:last-child {
+                color: $zinc;
+            }
+        }
+
+    }
+}

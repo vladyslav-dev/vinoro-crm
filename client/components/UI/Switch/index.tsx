@@ -3,34 +3,29 @@ import styles from './Switch.module.scss';
 
 interface SwitchProps {
     label?: {
-        positive: string;
-        negative: string;
-    }
+        positive?: string;
+        negative?: string;
+    },
+    isActive?: boolean;
+    toggleActive?: () => void;
 }
 
 const Switch: React.FC<SwitchProps> = ({
-    label
-}) => {
-
-
-    const [active, setActive] = useState(true)
-
-    const toggleHandler = () => {
-        setActive(!active)
-    }
-
-    return (
-        <div className={styles.toggleWrapper}>
-            <label className={styles.label} >
-                {active ? label?.positive : label?.negative}
-            </label>
-            <button
-                className={`${styles.toggle} ${active ? styles.active : ''}`}
-                onClick={toggleHandler}
-            />
-
-        </div>
-    )
-}
+    label,
+    isActive = true,
+    toggleActive,
+}) => (
+    <div className={styles.toggleWrapper}>
+        <label className={styles.label}>
+            {isActive ? label?.positive : label?.negative}
+        </label>
+        <input
+            type='checkbox'
+            checked={isActive}
+            onChange={toggleActive}
+            className={`${styles.toggle} ${isActive ? styles.active : ''}`}
+        />
+    </div>
+)
 
 export default Switch;

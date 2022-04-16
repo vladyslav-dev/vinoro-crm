@@ -1,0 +1,21 @@
+@import '../../styles/index.scss';
+
+.form {
+    @include formStyles;
+    max-width: 600px;
+    flex-direction: column;
+
+    .formSection {
+        @include formSectionStyles;
+
+        .formItem {
+            &:not(:last-child) {
+                margin-bottom: 18px;
+            }
+        }
+    }
+
+    .formController {
+        margin-top: 28px;
+    }
+}

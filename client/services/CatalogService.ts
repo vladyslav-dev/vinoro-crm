@@ -1,21 +1,22 @@
 import $api from "../api/index"
-import { ICatalog, ICatalogData } from "@/interfaces/catalog"
-
-export interface ICatalogService {
-    getCatalog: () => Promise<ICatalog>;
-    createCatalog: (data: ICatalogData) => Promise<ICatalog>;
-    updateCatalog: (data: ICatalogData) => Promise<ICatalog>;
-}
+import { ICatalogService } from "@/interfaces/catalog"
 
 const CatalogService: ICatalogService = {
-    getCatalog: async () => {
-        return await $api.get("/catalog");
+    getAll: async () => {
+        const response = await $api.get("/catalog");
+        return response.data.catalog;
+    },
+    getInfo: async () => {
+        const response = await $api.get("/catalog-info");
+        return response.data.catalogInfo;
     },
     createCatalog: async (data) => {
-        return await $api.post("/catalog", { data });
+        const response = await $api.post("/catalog", { data });
+        return response.data.catalog;
     },
-    updateCatalog: async (data) => {
-        return await $api.put("/catalog", { data });
+    updateCatalog: async (id) => {
+        const response = await $api.put("/catalog", { id });
+        return response.data.catalog;
     }
 }
 

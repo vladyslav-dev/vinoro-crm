@@ -1,33 +1,36 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import styles from './InputPrice.module.scss';
 
 interface InputPriceProps {
-    value?: string;
-    name?: string;
-    changeHandler?: (event: React.ChangeEvent<HTMLInputElement>) => void;
     label?: string;
+    value: string;
+    onChange: (value: string) => void;
+    showCurrency?: boolean;
 }
 
 const InputPrice: React.FC<InputPriceProps> = ({
+    label,
     value,
-    name,
-    changeHandler,
-    label
+    onChange,
+    showCurrency = true
 }) => {
 
+    const changeHandler = (e: ChangeEvent) => {
+        const { value } = e.target as HTMLInputElement;
+        const pattern = /^\d*$/.test(value);
+        return pattern && (value === "" || parseInt(value)) && onChange(value)
+    }
+
     return (
-        <div className={styles.inputWrapper}>
-            {label && <label className={styles.label} htmlFor={name}>{label}</label>}
+        <div className={`${styles.inputWrapper} ${showCurrency ? styles.currency : ''}`}>
+            {label && <label className={styles.label}>{label}</label>}
             <input
-                id={'myTextField'}
-                type='number'
-                name={name}
-                value={value}
+                type='text'
                 placeholder=' '
-                min={1}
-                step="1"
-                onChange={changeHandler}
                 className={styles.input}
+                value={value}
+                onChange={changeHandler}
+
             />
         </div>
     )

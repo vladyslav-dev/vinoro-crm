@@ -10,6 +10,15 @@ import AuthService from '@/services/AuthService';
 import { RootState } from '@/store/index';
 import styles from '@/styles/pages/login.module.scss';
 import logo from '@/images/login-logo.svg';
+import { useForm } from "react-hook-form";
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from "yup";
+
+const validationSchema = yup.object().shape({
+    login: yup.string().required(),
+    password: yup.string().required(),
+});
+
 
 import InputText from '@/components/UI/InputText';
 import Button from '@/components/UI/Button';
@@ -20,47 +29,48 @@ const Login: NextPage = () => {
     const disptach = useDispatch();
     const { isAuth } = useSelector((state: RootState) => state.authReducer);
 
-    const [userData, setUserData] = useState<IUserLogin>({
-        login: '',
-        password: '',
+    const [error, setError] = useState<string>('');
+
+    const { register, handleSubmit, reset, formState: { isValid } } = useForm<IUserLogin>({
+        mode: 'onChange',
+        defaultValues: {
+            login: '',
+            password: ''
+        },
+       resolver: yupResolver(validationSchema)
     });
-    const [error, setError] = useState<boolean>(false);
 
     useEffect(() => {
         if (isAuth) {
-            router.push('/home')
+            router.back();
         }
-
-        return () => {
-            setUserData({ login: '', password: '' })
-        }
-
     }, [isAuth])
 
-    const changeHandler = (event: React.ChangeEvent<HTMLInputElement>): void => {
-        setUserData(prevState => ({
-            ...prevState, [event.target.name]: event.target.value
-        }))
-    }
+    // const changeHandler = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    //     setUserData(prevState => ({
+    //         ...prevState, [event.target.name]: event.target.value
+    //     }))
+    // }
 
-    const submitHandler = async (event: React.SyntheticEvent) => {
-        event.preventDefault();
+
+
+    const submitHandler = async (data: IUserLogin) => {
         console.log('login request started')
 
-        AuthService.login(userData)
+        AuthService.login(data)
           .then((result: any) => {
             disptach(setUser(result.data.user));
             disptach(setAuth(true));
             localStorage.setItem("user:token", result.data.accessToken)
           })
           .catch((err: any) => {
-              console.dir(err)
-            setError(true);
+            console.error(err)
+            setError(err?.response?.data?.message || 'Network error');
             disptach(setAuth(false));
-            setTimeout(() => setError(false), 4000);
+            setTimeout(() => setError(''), 4000);
           })
           .finally(() => {
-            setUserData({ login: '', password: '' })
+            reset();
           })
     }
 
@@ -75,24 +85,22 @@ const Login: NextPage = () => {
                             <Image src={logo} alt='Vinoro' />
                         </div>
                         <p className={styles.loginSubtitle}>Admin panel</p>
-                        <p className={`${styles.loginError} ${error ? styles.loginErrorVisible : ''}`}>Wrong login or password</p>
+                        <p className={`${styles.loginError} ${error ? styles.loginErrorVisible : ''}`}>{error}</p>
                     </div>
-                    <form className={styles.form} onSubmit={submitHandler}>
+                    <form className={styles.form} onSubmit={handleSubmit(submitHandler)}>
                         <div className={styles.formRow}>
                             <InputText
-                                name='login'
-                                value={userData.login}
-                                changeHandler={changeHandler}
                                 label='Login'
+                                registerPath='login'
+                                register={register}
                                 authStyleType={true}
                             />
                         </div>
                         <div className={styles.formRow}>
                             <InputText
-                                name='password'
-                                value={userData.password}
-                                changeHandler={changeHandler}
                                 label='Password'
+                                registerPath='password'
+                                register={register}
                                 authStyleType={true}
                                 type='password'
                             />
@@ -101,9 +109,9 @@ const Login: NextPage = () => {
                             <Button
                                 innerText='Enter'
                                 type='submit'
-                                variant={userData.login && userData.password ? 'default' : 'disabled'}
+                                variant={isValid ? 'default' : 'disabled'}
                                 classNames={styles.formButton}
-                                clickHandler={submitHandler}
+                                clickHandler={handleSubmit(submitHandler)}
                             />
                         </div>
                     </form>

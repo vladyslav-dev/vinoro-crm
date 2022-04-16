@@ -38,11 +38,13 @@ class UserService {
         const user = await UserModel.findOne({ login })
         if (!user) {
             throw ApiError.BadRequest("No user with such login")
+            // throw new Error("No user with such login")
         }
 
         const isPasswordEqual = await bcrypt.compare(password, user.password)
         if (!isPasswordEqual) {
-            throw ApiError.BadRequest("Password incorrect")
+         //   throw new Error("Password incorrect")
+           throw ApiError.BadRequest("Password incorrect")
         }
 
         const userDto = new UserDto(user)
@@ -60,7 +62,6 @@ class UserService {
     }
 
     async refresh(refreshToken) {
-        console.log('refresh token')
         if (!refreshToken) {
             throw ApiError.UnauthorizedError()
         }

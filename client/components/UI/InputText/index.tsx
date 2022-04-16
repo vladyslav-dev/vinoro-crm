@@ -1,39 +1,35 @@
 import React from 'react';
 import styles from './InputText.module.scss';
+import { Path, UseFormRegister } from 'react-hook-form';
 
 type InputType = 'text' | 'password' | 'number';
 
 interface InputTextProps {
-    value?: string;
-    name?: string;
-    changeHandler?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    label?: string;
+    label: string;
+    registerPath: Path<any>;
+    register: UseFormRegister<any>;
     authStyleType?: boolean;
     type?: InputType;
-    classNames?: string;
 }
 
 const InputText: React.FC<InputTextProps> = ({
-    value,
-    name,
-    changeHandler,
     label = 'Default label',
     authStyleType = false,
     type = 'text',
-    classNames
+    register,
+    registerPath
 }) => {
 
     return (
         <div className={styles.inputWrapper}>
-            <label htmlFor={name}>{label}</label>
+            <label htmlFor={registerPath}>{label}</label>
             <input
-                id={name}
+                id={registerPath}
                 type={type}
-                name={name}
-                value={value}
                 placeholder=' '
-                onChange={changeHandler}
-                className={`${authStyleType ? styles.inputAuth : ''} ${classNames}`}
+                autoComplete="off"
+                className={`${authStyleType ? styles.inputAuth : ''}`}
+                {...register(registerPath)}
             />
         </div>
     )

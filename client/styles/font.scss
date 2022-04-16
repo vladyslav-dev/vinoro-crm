@@ -1,6 +1,11 @@
+@import './variables.scss';
+
 body {
     font-family: 'Noto Sans Display', sans-serif, Arial, Helvetica;
     font-style: normal;
     font-weight: normal;
     font-size: inherit;
+    color: $slate;
 }
+
+

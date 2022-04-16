@@ -4,29 +4,17 @@
     width: 100%;
     position: relative;
 
-    &:before {
-        content: "₴";
-        position: absolute;
-        color: $zinc;
-        font-weight: 600;
-        background-color: $bgGray;
-        border-top-left-radius: 12px;
-        border-bottom-left-radius: 12px;
-        @include flexCenter;
-        bottom: 2px;
-        left: 2px;
-        width: 40px;
-        height: 38px;
-        z-index: 2;
-      }
-
     .label {
         @include formLabelStyles;
     }
 
     .input {
+        padding-left: 0;
+    }
+
+    .input {
         @include formInputStyles;
-        padding-left: 52px;
+        text-align: center;
 
         &::-webkit-outer-spin-button,
         &::-webkit-inner-spin-button {
@@ -35,4 +23,26 @@
         }
     }
 
+    &.currency {
+        &:before {
+            content: "₴";
+            position: absolute;
+            color: $zinc;
+            font-weight: 600;
+            background-color: $bgGray;
+            border-top-left-radius: 12px;
+            border-bottom-left-radius: 12px;
+            @include flexCenter;
+            bottom: 2px;
+            left: 2px;
+            width: 40px;
+            height: 38px;
+            z-index: 2;
+        }
+
+        .input {
+            padding-left: 52px;
+            text-align: left;
+        }
+    }
 }

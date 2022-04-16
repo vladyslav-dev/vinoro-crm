@@ -9,4 +9,10 @@
     border: 2px solid transparent;
     cursor: pointer;
     user-select: none;
+    @include transitionLow;
+
+    &:hover {
+        @include dropShadow;
+        transform: scale(1.01);
+    }
 }

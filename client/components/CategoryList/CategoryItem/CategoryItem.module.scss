@@ -1,0 +1,51 @@
+@import '../../../styles/index.scss';
+
+.categoryItem {
+    @include flexBetween;
+    width: 100%;
+    padding: 8px 18px;
+    @include radius-sm;
+    @include transitionLow;
+    cursor: pointer;
+
+    .categoryItemName {
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 24px;
+        color: $zinc;
+        @include textOverflow;
+    }
+
+    .categoryItemIcon {
+        display: flex;
+        padding: 12px;
+        @include transitionLow;
+        border-radius: 50%;
+
+        svg {
+            width: 17px;
+            height: 17px;
+        }
+
+        &:hover {
+            transform: scale(1.108);
+            background-color: $white;
+        }
+    }
+
+    &:hover {
+        background-color: $bgGray;
+
+        .categoryItemName {
+            color: $slate;
+            @include transitionLow;
+        }
+
+        .categoryItemIcon {
+            svg path {
+                @include transitionLow;
+                fill: $slate;
+            }
+        }
+    }
+}

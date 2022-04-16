@@ -1,4 +1,5 @@
 import { ILangData } from '@/interfaces/general';
+import { PipelinePromise } from 'stream';
 
 export interface ICatalog {
     id: string;
@@ -9,3 +10,10 @@ export interface ICatalog {
 }
 
 export interface ICatalogData extends Omit<ICatalog, 'id' | 'order_id'> {}
+
+export interface ICatalogService {
+    getAll: () => Promise<ICatalog[]>;
+    getInfo: () => Promise<any>;
+    createCatalog: (data: ICatalogData) => Promise<ICatalog>;
+    updateCatalog: (id: string) => Promise<ICatalog>;
+}

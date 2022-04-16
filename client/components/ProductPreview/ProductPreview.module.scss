@@ -1,0 +1,185 @@
+@import '../../styles/index.scss';
+
+.preview {
+    position: sticky;
+    top: 30px;
+    right: 0;
+    overflow-y: scroll;
+    max-height: calc(100vh - 310px);
+    margin-right: -10px;
+    padding-right: 10px;
+    @include transitionLow;
+
+    &::-webkit-scrollbar {
+        width: 4px;
+        margin-right: -20px;
+        visibility: hidden;
+    }
+
+    &:hover {
+        &::-webkit-scrollbar {
+            visibility: visible;
+        }
+        &::-webkit-scrollbar-track {
+            background: $white;
+        }
+        &::-webkit-scrollbar-thumb {
+            background: $neutral;
+            border-radius:10px;
+        }
+        &::-webkit-scrollbar-thumb:hover {
+            background: $slate;
+        }
+    }
+
+    @media(max-width: 1000px) {
+        max-height: none;
+    }
+
+
+    @media(max-width: 450px) {
+        max-height: calc(100vh - 335px);
+    }
+
+    .previewTitle {
+        display: inline-flex;
+        width: fit-content;
+        align-items: center;
+        margin-bottom: 24px;
+    }
+
+    .previewList {
+
+        .previewItem {
+            position: relative;
+
+            a {
+                all: unset;
+                @include radius-sm;
+                min-height: 48px;
+                width: 100%;
+                display: flex;
+                align-items: center;
+                padding: 10px 8px;
+                border-bottom: 2px solid $bgGray;
+                font-size: 14px;
+                line-height: 18px;
+                font-weight: 600;
+                box-sizing: border-box;
+                cursor: pointer;
+
+                @include transitionLow;
+
+                &:hover .previewItemGroup > img {
+                    display: block;
+                }
+
+                .previewItemGroup {
+                    display: flex;
+                    align-items: center;
+                    flex: 1;
+
+                    .previewItemName {
+                        color: $zinc;
+                        margin-right: 16px;
+                        flex: 2;
+                    }
+
+                    .previewItemValue {
+                        color: $slate;
+                        flex: 4;
+                        @include textOverflow;
+
+                        &.falsyValue {
+                            color: $danger;
+                        }
+                    }
+
+                    .previewItemImage {
+                        flex: 4;
+                    }
+
+                    img {
+                        display: none;
+                        position: absolute;
+                        top: 52px;
+                        right: 50px;
+                        width: 220px;
+                        object-fit: contain;
+                        z-index: 2;
+                        @include radius-sm;
+                    }
+
+                    @media (max-width: 500px) {
+                        flex-direction: column;
+                        align-items: flex-start;
+
+                        .previewItemName {
+                            flex: 1;
+                            margin-bottom: 12px;
+                        }
+
+                        .previewItemValue {
+                            flex: 1;
+                        }
+                    }
+
+                    @media (max-width: 1000px) {
+                        .previewItemImage {
+                            img {
+                                width: 240px;
+                            }
+                        }
+                    }
+                }
+
+                .previewItemIndicator {
+                    width: 12px;
+                    height: 12px;
+                    border-radius: 50%;
+                    background-color: $success;
+                    margin-left: 12px;
+                }
+
+                .edited {
+                    margin-left: 16px;
+                    opacity: 0;
+
+                    svg {
+                        width: 15px;
+                        height: 15px;
+                    }
+                }
+
+                &:hover {
+                    background-color: rgb(249, 249, 249);
+                }
+            }
+
+            &.IND {
+
+                a {
+                    .previewItemGroup {
+                        .previewItemValue {
+                            color: $gray;
+                        }
+                    }
+
+                    .previewItemIndicator {
+                        background-color: $gray;
+
+                        &.red {
+                            background-color: $danger;
+                        }
+                    }
+                }
+            }
+
+            &.updated {
+                .edited {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+}

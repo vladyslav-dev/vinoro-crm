@@ -14,12 +14,12 @@ $centerMenuPosition: calc((50% - ((#{$menuHeight} / 2)) - #{$headerHeight}));
     flex-direction: column;
     justify-content: flex-end;
     padding-bottom: 32px;
+    z-index: 10;
 
     @media (max-width: 700px) {
         height: $headerMobileSize;
         width: 100%;
         padding-bottom: 0;
-        border-top: 3px solid $bgGray;
     }
 
     &__menu {
@@ -32,9 +32,10 @@ $centerMenuPosition: calc((50% - ((#{$menuHeight} / 2)) - #{$headerHeight}));
         @include flexBetween;
 
         @media (max-width: 700px) {
+            border-top: 3px solid $bgGray;
             flex-direction: row;
             min-height: auto;
-            height: $headerMobileSize;
+            height: 100%;
             width: 100%;
             left: 0;
             top: 0;
@@ -45,8 +46,6 @@ $centerMenuPosition: calc((50% - ((#{$menuHeight} / 2)) - #{$headerHeight}));
             width: 100%;
             @include flexCenter;
             position: relative;
-            border-top: 2px solid transparent;
-            border-bottom: 2px solid transparent;
             @include transitionLow;
 
             &.active {
@@ -98,8 +97,6 @@ $centerMenuPosition: calc((50% - ((#{$menuHeight} / 2)) - #{$headerHeight}));
 
             &:hover {
                 background-color: $bgGray;
-                border-top: 2px solid $bgGray;
-                border-bottom: 2px solid $bgGray;
 
                 span {
                     transform: scale(1);

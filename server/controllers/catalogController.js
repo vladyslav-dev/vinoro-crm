@@ -1,39 +1,28 @@
-const CatalogModel = require('../models/CatalogModel')
-
+const CatalogService = require('../services/CatalogService');
 
 module.exports.createCatalog = async (req, res) => {
-    console.log(req.body);
+    try {
+        const data = req?.body?.data;
 
-    const catalogData = {
-        catalog_name: req.body.name,
-        catalog_image: req.body.image,
-        visibility: req.body.visibility,
+        if (data) {
+            const catalogOne = await CatalogService.create(data);
+            res.json({ catalogOne })
+        }
+    } catch (error) {
+        res.send({message : 'Server error'})
     }
-
-    const catalog = await new CatalogModel(catalogData)
-
-    await catalog.save();
-    console.log(catalog);
-
-    res.json({ catalog })
 }
 
 module.exports.updateCatalog = async (req, res) => {
 
 }
 
-module.exports.getCatalog = async (req, res) => {
+module.exports.getAllCatalog = async (req, res) => {
     try {
-
-        const catalog = await CatalogModel.find()
-
-        console.log(catalog)
-
+        const catalog = await CatalogService.getAll();
         res.json({ catalog })
 
-
     } catch (err) {
-
         res.send({message : 'Server error'})
     }
 };

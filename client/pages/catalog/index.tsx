@@ -1,38 +1,32 @@
 import React from 'react';
+import useSWR from 'swr'
+import styles from '@/styles/pages/form.module.scss';
 import CatalogService from '@/services/CatalogService';
+import CategoryService from '@/services/CategoryService';
 
-import { NextPage, GetServerSideProps } from 'next';
-import { ICatalog } from '@/interfaces/catalog';
+import { NextPage } from 'next';
+import CatalogList from '@/components/CatalogList';
+import Section from '@/layouts/Section';
 
-// export const getServerSideProps: GetServerSideProps = async (context) => {
+const Catalog: NextPage = () => {
 
-//     const catalog = await CatalogService.createCatalog({
-//         catalog_name: {
-//             ru: '',
-//             uk: '',
-//             en: '',
-//         },
-//         catalog_image: '',
-//         visibility: true
-//     })
+    const catalogResponse = useSWR('CATALOG-GET-ALL', async () => await CatalogService.getAll());
+    const categoryResponse = useSWR('CATEGORY-GET-ALL', async () => await CategoryService.getAll());
 
-//     return {
-//         props: {
-//             catalog
-//         },
-//       }
-// }
 
-interface CatalogProps {
-    catalog?: ICatalog;
-}
+    const catalog = catalogResponse.data;
+    const category = categoryResponse.data;
 
-const Catalog: NextPage<CatalogProps> = ({ catalog }) => {
+    if (!catalog || !category) {
+        return null
+    }
 
     return (
-        <div>
-            Catalog
-        </div>
+        <Section title="Каталог">
+            <div className={styles.sectionContainer}>
+                <CatalogList catalogList={catalog} categoryList={category} />
+            </div>
+        </Section>
     )
 }
 

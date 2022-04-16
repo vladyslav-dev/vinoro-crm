@@ -9,62 +9,27 @@ import { PackageIcon } from '@/components/Icons/PackageIcon';
 import { SaleIcon } from '@/components/Icons/SaleIcon';
 import { AddIcon } from '@/components/Icons/AddIcon';
 
-import foodIcon from '@/images/icons/food-icon.svg';
-import alcoholIcon from '@/images/icons/alcohol-icon.svg';
-import detergentIcon from '@/images/icons/detergent-icon.svg';
+
+import useSWR from 'swr';
+import DashboardService from '@/services/DashboardService';
 
 const Home: NextPage = () => {
 
-  const data = [
-    {
-      title: 'Продукты питания',
-      link: '/catalog/#foodstuffs',
-      renderIcon: () => <Image src={foodIcon} width={80} height={80} alt="Продукты питания" />,
-      info: [
-        {
-          infoTitle: 'Всего товара',
-          infoNumber: '92'
-        },
-        {
-          infoTitle: 'Категорий',
-          infoNumber: '7'
-        }
-      ]
-    },
-    {
-      title: 'Алкогольные напитки',
-      link: '/catalog/#alcoholic-drinks',
-      renderIcon: () => <Image src={alcoholIcon} width={80} height={80} alt="Алкогольные напитки" />,
-      info: [
-        {
-          infoTitle: 'Всего товара',
-          infoNumber: '54'
-        },
-        {
-          infoTitle: 'Категорий',
-          infoNumber: '9'
-        }
-      ]
-    },
-    {
-      title: 'Бытовая химия',
-      link: '/catalog/#household-chemicals',
-      renderIcon: () => <Image src={detergentIcon} width={80} height={80} alt="Бытовая химия" />,
-      info: [
-        {
-          infoTitle: 'Всего товара',
-          infoNumber: '124'
-        },
-        {
-          infoTitle: 'Категорий',
-          infoNumber: '4'
-        }
-      ]
-    },
-  ]
+  const catalogResponse = useSWR('DASHBOARD-GET-INFO', async () => await DashboardService.getInfo())
+
+
+  const catalogInfo = catalogResponse.data;
+
+  console.log(catalogInfo)
+
+
+
+  if (!catalogInfo) {
+    return null;
+  }
 
   return (
-    <Section title="Главная" showBackground={false} >
+    <Section title="Главная" showBackground={false} hideScrollbar>
       <div className={styles.sectionGrid}>
         <div className={styles.sectionGridCol}>
           <div className={styles.sectionGridStandard}>
@@ -74,7 +39,7 @@ const Home: NextPage = () => {
                 title='Все товары'
                 link='/products'
                 color={'COLOR_JORDY_BLUE'}
-                numberInfo='317'
+                numberInfo={String(catalogInfo.totalProducts)}
                 renderIcon={(props) => <BasketIcon {...props} />}
               />
             </div>
@@ -84,7 +49,7 @@ const Home: NextPage = () => {
                 title='Все заказы'
                 link='/orders'
                 color={'COLOR_CREAM_BRULEE'}
-                numberInfo='27'
+                numberInfo={String(catalogInfo.totalOrders)}
                 renderIcon={(props) => <PackageIcon {...props} />}
               />
             </div>
@@ -94,7 +59,7 @@ const Home: NextPage = () => {
                 title='Новые товары'
                 link='/new-products'
                 color={'COLOR_MADANG'}
-                numberInfo='14'
+                numberInfo={String(catalogInfo.totalNewProducts)}
                 renderIcon={(props) => <NewIcon {...props} />}
               />
             </div>
@@ -104,7 +69,7 @@ const Home: NextPage = () => {
                 title='Скидки на товары'
                 link='/discount-products'
                 color={'COLOR_SEA_PINK'}
-                numberInfo='44'
+                numberInfo={String(catalogInfo.totalDiscountPriceProducts)}
                 renderIcon={(props) => <SaleIcon {...props} />}
               />
             </div>
@@ -135,7 +100,7 @@ const Home: NextPage = () => {
             type='multi'
             title='Каталог'
             color={'COLOR_WATER_LEAF'}
-            multiCardData={data}
+            multiCardData={catalogInfo.catalogInfo}
           />
         </div>
       </div>

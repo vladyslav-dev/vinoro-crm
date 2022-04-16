@@ -9,12 +9,32 @@
         @include formLabelStyles;
     }
 
-    .textarea {
-        @include formInputStyles;
-        transition: height .4s ease-in-out;
+    .textareaRelative {
+        position: relative;
         height: 170px;
-        resize: none;
-        line-height: 22px;
-        padding: 8px 10px;
+
+        .textarea {
+            @include formInputStyles;
+            transition: height .4s ease-in-out;
+            height: 170px;
+            resize: none;
+            line-height: 22px;
+            padding: 8px 10px;
+            overflow: hidden;
+            position: absolute;
+            top: 0;
+            left: 0;
+
+
+
+            &:focus {
+                background-color: $white;
+                // position: absolute;
+                // top: 0;
+                // left: 0;
+            }
+        }
     }
+
+
 }

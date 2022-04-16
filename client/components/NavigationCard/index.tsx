@@ -1,9 +1,11 @@
+/* eslint-disable @next/next/no-img-element */
 import React from 'react';
 import Link from 'next/link';
 import styles from './NavigationCard.module.scss';
 import Title from '@/components/UI/Title';
 import { TLIGHT_COLORS } from '@/interfaces/general';
-import { LIGHT_COLORS } from '@/constants/colors'
+import { LIGHT_COLORS } from '@/constants/colors';
+import { ICatalogInfo } from '@/interfaces/dashboard';
 
 type TCard = 'standard' | 'multi' | 'row';
 
@@ -17,6 +19,8 @@ interface IMultiCard {
     }[];
 }
 
+
+
 interface NavigationCardProps {
     type?: TCard;
     color?: TLIGHT_COLORS;
@@ -24,7 +28,7 @@ interface NavigationCardProps {
     link?: string;
     renderIcon?: (props: any) => React.ReactNode;
     numberInfo?: string;
-    multiCardData?: IMultiCard[];
+    multiCardData?: ICatalogInfo[];
 }
 
 const NavigationCard: React.FC<NavigationCardProps> = ({
@@ -102,36 +106,39 @@ const MultiCard: React.FC<NavigationCardProps> = ({
                 <Title rectColor={color}  titleText={title || 'Default title'} />
             </div>
             <div className={styles.multiCardBox}>
-                {multiCardData && multiCardData.map((item: IMultiCard) => (
-                    <MultiCardItem key={item.title} {...item} />
+                {multiCardData && multiCardData.map((item: ICatalogInfo) => (
+                    <MultiCardItem key={item.catalogId} {...item} />
                 ))}
             </div>
         </div>
     )
 }
 
-const MultiCardItem: React.FC<IMultiCard> = ({
-    title,
-    info,
-    link,
-    renderIcon
+const MultiCardItem: React.FC<ICatalogInfo> = ({
+    catalogName,
+    catalogImage,
+    totalCategory,
+    totalProducts,
+    linkName,
 }) => {
     return (
         <div className={styles.item}>
-            <Link href={link!}>
+            <Link href={`/catalog#${linkName}`}>
                 <a>
                     <div className={styles.itemRow}>
-                        <h3 className={styles.itemTitle}>{title}</h3>
+                        <h3 className={styles.itemTitle}>{catalogName.ru}</h3>
                     </div>
                     <div className={styles.itemRow}>
-                        {info && info.map(item => (
-                            <div className={styles.itemCol} key={item.infoTitle}>
-                                <span className={styles.itemColTitle}>{item.infoTitle}</span>
-                                <span className={styles.itemColNumber}>{item.infoNumber}</span>
-                            </div>
-                        ))}
+                        <div className={styles.itemCol}>
+                            <span className={styles.itemColTitle}>Всего товаров</span>
+                            <span className={styles.itemColNumber}>{totalProducts}</span>
+                        </div>
+                        <div className={styles.itemCol}>
+                            <span className={styles.itemColTitle}>Категорий</span>
+                            <span className={styles.itemColNumber}>{totalCategory}</span>
+                        </div>
                         <div className={styles.itemImage}>
-                            {renderIcon!()}
+                            <img src={catalogImage} alt="icon" />
                         </div>
                     </div>
                 </a>

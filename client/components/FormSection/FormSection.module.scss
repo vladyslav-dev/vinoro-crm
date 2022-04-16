@@ -33,8 +33,9 @@
         padding-bottom: 38px;
 
         .sectionForm {
-            opacity: 1;
+            overflow: visible;
             visibility: visible;
+            opacity: 1;
 
             & ~ .sectionTitle {
                 svg {
