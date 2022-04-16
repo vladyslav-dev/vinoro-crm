@@ -202,7 +202,7 @@ const CategoryForm: React.FC<CategoryFormProps> = ({
             <div className={`${styles.alert} ${alert.isActive ? styles.active : ''}`}>
                 <Alert type={alert.type} textContent={alert.textContent} />
             </div>
-            <div className={`${isUpdating ? styles.loader : styles.loaderHidden}`}><Loader /></div>
+            <div className={`${isUpdating ? styles.loader : styles.loaderHidden}`}><Loader isFormLoader /></div>
         </div>
     )
 }
