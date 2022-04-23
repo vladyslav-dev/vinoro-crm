@@ -4,6 +4,7 @@ import styles from './Img.module.scss'
 
 interface ImgProps {
     src: string;
+    secondSrc?: string;
     quality?: number;
     alt?: string;
 }
@@ -13,10 +14,12 @@ const Img: React.FC<ImgProps> = (
         src,
         quality = 5,
         alt = "Image not found",
+        secondSrc = 'https://res.cloudinary.com/vinoro-media-storage/image/upload/v1626027250/vinoro/empty_xjuljc.jpg',
     }
 ) => {
 
     const [isImageReady, setIsImageReady] = React.useState(false);
+    const [source, setSourse] = React.useState(src);
 
     return (
         <div className={styles.imageContainer}>
@@ -25,7 +28,8 @@ const Img: React.FC<ImgProps> = (
                 {src && (
                     <Image
                         onLoadingComplete={() => setIsImageReady(true)}
-                        src={src}
+                        onError={() => setSourse(secondSrc)}
+                        src={source}
                         layout="fill"
                         lazyBoundary="1200px"
                         className={`${styles.image}`}

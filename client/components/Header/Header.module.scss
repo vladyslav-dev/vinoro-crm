@@ -9,7 +9,7 @@ $headerMobileSize: 84px;
     @include flexBetween;
 
     @media (max-width: 700px) {
-        height: 80px;
+        height: $headerMobileSize;
         border-bottom: 2px solid  $bgGray;
     }
 

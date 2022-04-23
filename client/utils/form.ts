@@ -20,18 +20,18 @@ export type IFilteredCategory = {
     [key: string]: any;
 }
 
-export type TTransformToSelectData = (data: SelectDataVariant, value: string, lang?: keyof ILangData) => ISelectData[];
-export type TTransformFilteredCategory = (fiilteredCategory: IFilteredCategory, value: string, lang?: keyof ILangData) => IFilteredCategory;
+export type TTransformToSelectData = (data: SelectDataVariant, value: string, lang?: keyof ILangData, id?: string) => ISelectData[];
+export type TTransformFilteredCategory = (fiilteredCategory: IFilteredCategory, value: string, lang?: keyof ILangData, categoryId?: string) => IFilteredCategory;
 export type TFilterCategory = (category: ICategory[]) => IFilteredCategory;
 export type TGetLangField = (field: any, lang?: keyof ILangData) => string;
 export type TCompareLangFields = (arr1: ILangData, arr2: ILangData) => boolean;
 
-export const transformToSelectData: TTransformToSelectData = (data, value, lang = 'ru') => (
+export const transformToSelectData: TTransformToSelectData = (data, value, lang = 'ru', id) => (
     // Transform data for <Select>
     data.map((item: any, index: number) => ({
         id: item.id,
         value: item![value][lang],
-        selected: !!(index === 0)
+        selected: id ? item.id === id : !!(index === 0)
     }))
 )
 
@@ -47,9 +47,9 @@ export const filterCategory: TFilterCategory = (category) => {
     return fiilteredCategory;
 }
 
-export const transformFilteredCategory: TTransformFilteredCategory = (fiilteredCategory, value, lang = 'ru') => {
+export const transformFilteredCategory: TTransformFilteredCategory = (fiilteredCategory, value, lang = 'ru', categoryId) => {
     for(let key in fiilteredCategory) {
-        fiilteredCategory[key] = transformToSelectData(fiilteredCategory[key], value, lang)
+        fiilteredCategory[key] = transformToSelectData(fiilteredCategory[key], value, lang, categoryId)
     }
     // Filtered category data by catalog[id] for <Select>
 
@@ -76,8 +76,8 @@ export const transformBulkPriceToNumber = (bulkPrice: IFormBulkPrice[]) => (
     }))
 )
 
-export const transformBulkPriceToString = (bulkPrice: IFormBulkPrice[]): string => (
-    bulkPrice.map(item => `${item.price} UAH от ${item.from}шт.`).join(' | ')
+export const transformBulkPriceToString = (bulkPrice: IFormBulkPrice[] | IBulkPrice[]): string => (
+    bulkPrice.map(item => `${item.price} ₴ от ${item.from}шт.`).join(' | ')
 )
 
 export const getLangField: TGetLangField = (field, lang = 'ru') => field[lang];
@@ -100,11 +100,20 @@ export const compareBulkPrice = (arr1: Array<IFormBulkPrice>, arr2: Array<IFormB
     }
 }
 
+const getSelectedCatalogIdByCategory = (transformedCategory: IFilteredCategory) => {
+    for (let key in transformedCategory) {
+        if (transformedCategory[key].some((item: ISelectData) => item.selected)) {
+            return key
+        }
+    }
+}
+
 export const setInitialValues = (catalog: ICatalog[], category: ICategory[], product?: IProduct) => {
     const transformedCategory: IFilteredCategory =
-                        transformFilteredCategory(filterCategory(category), 'category_name', 'ru');
+                        transformFilteredCategory(filterCategory(category), 'category_name', 'ru', product?.category);
 
-    const transformedCatalog: ISelectData[] = transformToSelectData(catalog, 'catalog_name', 'ru');
+    const selectedCatalogId = getSelectedCatalogIdByCategory(transformedCategory);
+    const transformedCatalog: ISelectData[] = transformToSelectData(catalog, 'catalog_name', 'ru', selectedCatalogId);
 
     return {
         name: {
@@ -299,4 +308,23 @@ export const setProductPreview = (options: IProductPreviewOptions) => {
     ]
 
     return isUpdateProduct ? [...config, ...updateProductConfig] : config
+}
+
+
+// Category form
+
+export const initCategoryForm = (catalog: ICatalog[], category?: ICategory) => {
+    const transformedCatalog: ISelectData[] = transformToSelectData(catalog, 'catalog_name', 'ru', category?.catalog);
+
+    return {
+        id: category?.id || '',
+        category_name: {
+            ru: category?.category_name.ru || '',
+            uk: category?.category_name.uk || '',
+            en: category?.category_name.en || '',
+        },
+        category_image: category?.category_image || '',
+        visibility: category?.visibility ?? true,
+        catalogSelect: transformedCatalog
+    }
 }

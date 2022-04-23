@@ -13,6 +13,11 @@ export interface IFormBulkPrice {
     price: string;
 }
 
+export interface IProductOrder {
+    id: string;
+    order_id: number;
+}
+
 export interface IProduct {
     id: string;
     order_id: number;
@@ -49,7 +54,11 @@ export interface IProductForm extends Omit<IProduct,
 
 export interface IProductService {
     getAll: () => Promise<IProduct[]>;
+    getByCategoryId: (categoryId: string) => Promise<IProduct[]>;
     getOne: (id: string) => Promise<IProduct>;
+    getDiscountedProducts: () => Promise<IProduct[]>;
+    getNewProducts: () => Promise<IProduct[]>;
     create: (product: IProductData) => Promise<IProduct>;
     update: (product: IProductData) => Promise<IProduct>;
+    updateProductOrder: (products: IProductOrder[]) => any;
 }

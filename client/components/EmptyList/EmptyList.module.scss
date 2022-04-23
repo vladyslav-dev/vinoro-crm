@@ -1,0 +1,17 @@
+@import '../../styles/index.scss';
+
+.empty {
+    display: flex;
+    align-items: center;
+
+    img {
+        width: 26px;
+        height: 26px;
+        margin-right: 10px;
+    }
+
+    span {
+        font-weight: 600;
+        font-size: 15px;
+    }
+}

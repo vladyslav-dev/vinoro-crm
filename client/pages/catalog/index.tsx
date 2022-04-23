@@ -1,6 +1,5 @@
 import React from 'react';
 import useSWR from 'swr'
-import styles from '@/styles/pages/form.module.scss';
 import CatalogService from '@/services/CatalogService';
 import CategoryService from '@/services/CategoryService';
 
@@ -22,10 +21,8 @@ const Catalog: NextPage = () => {
     }
 
     return (
-        <Section title="Каталог">
-            <div className={styles.sectionContainer}>
-                <CatalogList catalogList={catalog} categoryList={category} />
-            </div>
+        <Section title="Каталог" showBackground={false}>
+            <CatalogList catalogList={catalog} categoryList={category} />
         </Section>
     )
 }

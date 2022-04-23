@@ -11,37 +11,42 @@ interface CardProps {
     product: IProduct;
 }
 
-const CardComponent = ({ product }: CardProps) => {
-
-
-    return (
-        <div className={styles.card}>
-            <Link href={`/edit-product/[id]`} as={`/edit-product/${product?.id}`} passHref>
-                <div>
-                    <div className={styles.cardImage}>
-                        <Img src={product.image} />
+const DefaultCardComponent: React.FC<CardProps> = ({ product }) => (
+    <div className={`${styles.defaultCard} ${!product.visibility ? styles.visibilityHidden : ''}`}>
+        <Link href={`/edit-product/[id]`} as={`/edit-product/${product?.id}`}>
+            <a className={styles.cardLink}>
+                <div className={styles.cardImage}>
+                    <Img src={product.image} />
+                </div>
+                <div className={styles.cardInfo}>
+                    <div className={styles.cardAvailability}>
+                        {product.availability ? <p className={styles.cardAvailabilityGreen}>Есть в наличии	&nbsp;&#10004;</p> : <p className={styles.cardAvailabilityRed}>Нет в наличии &#10008;</p>}
                     </div>
-                    <div className={styles.cardInfo}>
-                        <div className={styles.cardAvailability}>
-                            {product.availability ? <p className={styles.cardAvailabilityGreen}>Есть в наличии	&nbsp;&#10004;</p> : <p className={styles.cardAvailabilityRed}>Нет в наличии &#10008;</p>}
+                    <div className={styles.cardName}>
+                        <span>{product.name.ru}</span>
+                    </div>
+
+                    {product.discount_price ? (
+                        <div className={styles.cardDiscountCost}>
+                            <span className={styles.cardNewCost}>{product.discount_price} ₴</span>
+                            <span className={styles.cardOldCost}>{product.price} ₴</span>
                         </div>
-                        <div className={styles.cardName}>
-                            <span>{product.name.ru}</span>
-                        </div>
+                    ) : (
                         <div className={styles.cardCost}>
-                            <span>{product.price} UAH</span>
-                        </div>
-                    </div>
-                    {product.new && (
-                        <div className={styles.cardNew}>
-                            <img src={newIcon.src} alt='New' width={34} height={34} />
+                            <span>{product.price} ₴</span>
                         </div>
                     )}
                 </div>
-            </Link>
-        </div>
-    )
-}
-const Card = React.memo(CardComponent)
+                {product.new && (
+                    <div className={styles.cardNew}>
+                        <img src={newIcon.src} alt='New' width={34} height={34} />
+                    </div>
+                )}
+            </a>
+        </Link>
+    </div>
+)
 
-export default Card
+const DefaultCard = React.memo(DefaultCardComponent);
+
+export default DefaultCard;

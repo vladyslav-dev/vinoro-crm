@@ -1,8 +1,13 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import styles from './InputImage.module.scss';
 import { UploadIcon } from '@/components/Icons/UploadIcon';
+import Cropper from "react-easy-crop";
+import { Point } from "react-easy-crop/types";
 import { getBase64 } from '@/utils/file';
+import getCroppedImg from '@/utils/cropImage';
+import Button from '../Button';
+import Loader from '@/components/Loader';
 
 interface InputImageProps {
     image: string;
@@ -16,6 +21,44 @@ const InputImage: React.FC<InputImageProps> = ({
     label = 'Default label',
 }) => {
 
+    const [crop, setCrop] = useState<Point>({ x: 0, y: 0 });
+    const [isUpdate, setIsUpdate] = useState<boolean>(false);
+
+    const [file, setFile] = useState<string>('');
+    const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
+
+    const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
+        setCroppedAreaPixels(croppedAreaPixels);
+    }, [])
+
+      const cropHandler = useCallback(async () => {
+
+        try {
+            setIsUpdate(true);
+            const res: any = await getCroppedImg(
+              file,
+              croppedAreaPixels,
+            )
+
+            setTimeout(() => {
+                changeHandler!(res as string)
+                setFile('')
+                setIsUpdate(false)
+            }, 800)
+
+          } catch (e) {
+            console.error(e)
+          }
+
+
+      }, [file, croppedAreaPixels])
+
+      const cancelHandler = () => {
+        setCroppedAreaPixels(null)
+        setFile('')
+      }
+
+
     const inputRef = useRef<HTMLInputElement>(null);
     const inputDropArea = useRef<HTMLDivElement>(null);
 
@@ -25,7 +68,7 @@ const InputImage: React.FC<InputImageProps> = ({
         if (files.length) {
             const file = files[0];
             getBase64(file).then((dataBaseImage) => {
-                changeHandler!(dataBaseImage as string)
+                setFile(dataBaseImage as string)
             })
         }
     }
@@ -76,8 +119,6 @@ const InputImage: React.FC<InputImageProps> = ({
         }
     }, [])
 
-
-
     return (
         <div className={styles.inputWrapper}>
             <label className={styles.label}>{label}</label>
@@ -108,6 +149,32 @@ const InputImage: React.FC<InputImageProps> = ({
                     <span>Загрузить файл</span>
                 </button>
             </div>
+            {file && (
+                <div className={styles.cropBackground}>
+                    <div className={`${styles.crop} ${isUpdate ? styles.update : ''}`}>
+                        {isUpdate ? (
+                            <Loader />
+                        ) : (
+                            <Cropper
+                                image={file}
+                                crop={crop}
+                                aspect={2 / 3}
+                                onCropChange={setCrop}
+                                onCropComplete={onCropComplete}
+                                classes={{ containerClassName: styles.cropContainer }}
+                            />
+                        )}
+
+                    </div>
+                    {!isUpdate && (
+                        <div className={styles.cropController}>
+                            <Button innerText='Отменить' variant='outlined' clickHandler={cancelHandler} />
+                            <Button innerText='Сохранить' clickHandler={cropHandler} />
+                        </div>
+                    )}
+                </div>
+            )}
+
         </div>
     )
 }

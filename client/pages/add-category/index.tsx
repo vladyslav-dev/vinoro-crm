@@ -23,6 +23,7 @@ const AddCategory: NextPage = () => {
             <div className={styles.sectionContainer}>
                 <CategoryForm
                     catalog={data}
+                    type="create"
                 />
             </div>
         </Section>

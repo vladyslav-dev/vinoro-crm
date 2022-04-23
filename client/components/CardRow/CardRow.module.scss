@@ -1,0 +1,96 @@
+@import "../../styles/index.scss";
+
+
+.rowCard {
+    position: relative;
+    height: fit-content;
+    padding: 6px;
+    @include radius-md;
+    @include transitionLow;
+
+    &:hover {
+        @include dropShadow;
+    }
+
+    .cardFlex {
+        width: 100%;
+        display: flex;
+        text-decoration: none;
+
+        .cardImage {
+            min-width: 85px;
+            height: 100%;
+            overflow: hidden;
+            position: relative;
+            transition: .4s ease-in;
+            @include radius-sm;
+
+            & > div {
+                will-change: transform;
+                transition: all .3s;
+                height: 100%;
+
+                img {
+                    object-fit: cover !important;
+                }
+            }
+
+            &:hover {
+                & > div {
+                    transform: scale(1.13);
+                }
+            }
+
+            .cardNew {
+                position: absolute;
+                top: 6px;
+                right: 6px;
+                opacity: .88;
+                pointer-events: none;
+            }
+        }
+
+        .cardInfo {
+            font-size: 13px;
+            font-weight: 600;
+            margin-left: 10px;
+            color: $slate;
+            padding-top: 3px;
+
+            .cardInfoItem {
+                @include textOverflow(2);
+                line-height: 20px;
+
+                &:not(:last-child) {
+                    margin-bottom: 6px;
+                }
+
+                & .danger {
+                    color: $danger;
+                }
+
+                & .success {
+                    color: $success;
+                }
+
+                & .strikeOut {
+                    position: relative;
+                    margin-right: 8px;
+
+                    @include lineThrough;
+                }
+
+                & > .bulkPrice {
+                    margin-top: 4px;
+                    @include textOverflow(1);
+                }
+            }
+
+        }
+    }
+
+    &.visibilityHidden {
+        opacity: .3;
+    }
+}
+

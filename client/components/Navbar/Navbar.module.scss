@@ -14,7 +14,7 @@ $centerMenuPosition: calc((50% - ((#{$menuHeight} / 2)) - #{$headerHeight}));
     flex-direction: column;
     justify-content: flex-end;
     padding-bottom: 32px;
-    z-index: 10;
+    z-index: 4;
 
     @media (max-width: 700px) {
         height: $headerMobileSize;
@@ -56,7 +56,7 @@ $centerMenuPosition: calc((50% - ((#{$menuHeight} / 2)) - #{$headerHeight}));
                 height: 100%;
             }
 
-            a {
+            & > span:first-child {
                 display: inline-flex;
                 justify-content: center;
                 align-items: center;
@@ -85,7 +85,7 @@ $centerMenuPosition: calc((50% - ((#{$menuHeight} / 2)) - #{$headerHeight}));
                 align-items: center;
                 justify-content: center;
                 cursor: default;
-                z-index: 10;
+                z-index: 1000;
                 transform: scale(0);
                 transform-origin: left;
                 transition: all .18s ease-in-out;
@@ -102,22 +102,6 @@ $centerMenuPosition: calc((50% - ((#{$menuHeight} / 2)) - #{$headerHeight}));
                     transform: scale(1);
                 }
             }
-        }
-    }
-
-    .navbar__profile {
-        width: 100%;
-        cursor: pointer;
-        @include flexCenter;
-        padding: 15px 0;
-        transition: all .18s ease-in-out;
-
-        @media (max-width: 700px) {
-            height: 100%;
-        }
-
-        &:hover {
-            background-color: $bgGray;
         }
     }
 }

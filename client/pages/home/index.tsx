@@ -1,6 +1,5 @@
 import type { NextPage } from 'next'
 import styles from '@/styles/pages/home.module.scss'
-import Image from 'next/image';
 import NavigationCard from '@/components/NavigationCard';
 import Section from '@/layouts/Section';
 import { BasketIcon } from '@/components/Icons/BasketIcon';

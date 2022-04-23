@@ -1,21 +1,23 @@
 const ProductService = require('../services/ProductService')
 
 
-module.exports.createProduct = async (req, res) => {
+module.exports.createProduct = async (req, res, next) => {
     try {
         const data = req?.body?.data;
 
         if (data) {
             const productOne = await ProductService.create(data);
 
-            res.json({ product: productOne })
+            return res.json({ product: productOne })
         }
+
+        return res.send({ message: 'Error, data was not send' })
     } catch (error) {
-        res.send({message : error})
+        next(error)
     }
 }
 
-module.exports.getProduct = async (req, res) => {
+module.exports.getProduct = async (req, res, next) => {
     try {
         const id = req.params.id;
 
@@ -26,31 +28,88 @@ module.exports.getProduct = async (req, res) => {
 
         return res.send({ message: 'Error, product id was not send' })
     } catch (error) {
-        res.send({ message : error })
-    }req.params
+        next(error)
+    }
 }
 
-module.exports.updateProduct = async (req, res) => {
+module.exports.updateProduct = async (req, res, next) => {
     try {
         const data = req?.body?.data;
 
-        const product = await ProductService.update(data);
+        if (data) {
+            const product = await ProductService.update(data);
 
-        res.json({ product })
+            return res.json({ product })
+        }
+
+        return res.send({ message: 'Error, data was not send' })
 
     } catch (error) {
-        res.send({message : error})
+        next(error)
     }
 }
 
-module.exports.getAllProducts = async (req, res) => {
+module.exports.getAllProducts = async (req, res, next) => {
     try {
-
         const productList = await ProductService.getAll();
-        // console.log('productList ', productList)
-        res.json({ products: productList })
+
+        return res.json({ products: productList })
 
     } catch (error) {
-        res.send({message : error})
+        next(error)
     }
 };
+
+module.exports.getProductsByCategoryId = async (req, res, next) => {
+    try {
+        const id = req.params.id;
+
+        if (id) {
+            const products = await ProductService.getProductsByCategoryId(id);
+            return res.json({ products })
+        }
+
+        return res.send({ message: 'Error, category id was not send' })
+
+    } catch (error) {
+        next(error)
+    }
+}
+
+module.exports.getDiscountedProducts = async (req, res, next) => {
+    try {
+        const productList = await ProductService.getDiscountedProducts();
+
+        return res.json({ products: productList })
+
+    } catch (error) {
+        next(error)
+    }
+}
+
+module.exports.getNewProducts = async (req, res, next) => {
+    try {
+        const productList = await ProductService.getNewProducts();
+
+        return res.json({ products: productList })
+
+    } catch (error) {
+        next(error)
+    }
+}
+
+module.exports.updateProductOrder = async (req, res, next) => {
+    try {
+
+        const data = req.body.data
+
+        if (data) {
+            await ProductService.updateOrder(data);
+
+            return res.send('Success')
+        }
+
+    } catch (error) {
+        next(error)
+    }
+}

@@ -4,7 +4,6 @@ const CategoryModel = new mongoose.Schema({
     order_id: {
         type: Number,
         require: true,
-        unique: true,
     },
     category_name: {
         ru: String,

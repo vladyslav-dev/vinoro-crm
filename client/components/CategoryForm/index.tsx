@@ -8,27 +8,14 @@ import Select from '@/components/UI/Select';
 import CategoryService from '@/services/CategoryService';
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
 import { ICatalog } from '@/interfaces/catalog';
-import { ICategory, ICategoryData } from '@/interfaces/category';
-import { ISelectData } from '@/components/UI/Select';
+import { ICategory, ICategoryForm } from '@/interfaces/category';
 import Alert from '../Alert';
 import { AlertState } from '@/interfaces/alert';
 import { useRouter } from 'next/router';
 import Loader from '../Loader';
-
-const validationSchema = yup.object().shape({
-    category_name: yup.object().shape({
-        ru: yup.string().required(),
-        uk: yup.string().required(),
-        en: yup.string().required(),
-    })
-  });
-
-interface ICategoryForm extends Omit<ICategoryData, 'catalog'> {
-    catalogSelect: ISelectData[]
-}
-
+import { initCategoryForm } from '@/utils/form';
+import { categoryValidationSchema } from '@/utils/validation';
 interface CategoryFormProps {
     catalog: ICatalog[];
     category?: ICategory;
@@ -42,6 +29,7 @@ const CategoryForm: React.FC<CategoryFormProps> = ({
 }) => {
     console.log('category form render');
     console.log(catalog)
+    console.log(category)
 
     const router = useRouter();
 
@@ -52,28 +40,19 @@ const CategoryForm: React.FC<CategoryFormProps> = ({
         textContent: ''
     });
 
-    const catalogSelectData: ISelectData[] = catalog!.map((item, index) => ({
-        id: item.id,
-        value: item.catalog_name.ru,
-        selected: !!(index === 0)
-    }))
+    const [formState, setFormState] = useState<ICategoryForm>(() => initCategoryForm(catalog, category))
 
-    const { register, control, handleSubmit, reset, formState: { isValid } } = useForm<ICategoryForm>({
+    const { register, control, handleSubmit, watch, reset, formState: { isValid, isDirty } } = useForm<ICategoryForm>({
         mode: 'onChange',
-        defaultValues: {
-            category_name: {
-                ru: category?.category_name.ru || '',
-                uk: category?.category_name.uk || '',
-                en: category?.category_name.en || '',
-            },
-            category_image: category?.category_image || '',
-            visibility: category?.visibility || true,
-            catalogSelect: catalogSelectData
-        },
-      resolver: yupResolver(validationSchema)
+        defaultValues: formState,
+        resolver: yupResolver(categoryValidationSchema)
     });
 
     const onSubmit = async (data: ICategoryForm) => {
+
+        // set Loading background
+        setIsUpdating(true)
+
         const selectedCatalog = data?.catalogSelect?.find(item => item.selected);
 
         const fetchData: any = {
@@ -85,42 +64,104 @@ const CategoryForm: React.FC<CategoryFormProps> = ({
 
         type === 'update' && (fetchData['id'] = data!.id) // add key id if form type update
 
-        if (type === 'create') {
-            CategoryService.create(fetchData)
-                .then(category => {
-                    setIsUpdating(false)
+        // slow transition to show Loader
+        setTimeout(() => {
+            if (type === 'create') {
+                CategoryService.create(fetchData)
+                    .then(category => {
 
-                    setAlert({
-                        isActive: true,
-                        type: 'success',
-                        textContent: 'Категория успешно создана'
+                         // remove Loading background
+                        setIsUpdating(false)
+
+                        // show alert success
+                        setAlert({
+                            isActive: true,
+                            type: 'success',
+                            textContent: 'Категория успешно создана'
+                        })
+
+                        // redirect to edit page after 2500ms
+                        setTimeout(() => {
+                            router.push(`/edit-category/${category.id}`)
+                        }, 2500)
+                    })
+                    .catch(err => {
+                        // remove Loading background
+                        setIsUpdating(false)
+
+                        // set Error alert
+                        setAlert({
+                            isActive: true,
+                            type: 'error',
+                            textContent: 'Ошибка при создании'
+                        })
+
+                         // remove Alert after 2500ms
+                        setTimeout(() => {
+                            setAlert((prevState => ({
+                                ...prevState,
+                                isActive: false,
+                            })))
+                        }, 2500)
+
+                        // reset form to default
+                        reset();
+                        console.log(err)
                     })
 
-                    setTimeout(() => {
-                        router.push(`/edit-category/${category.id}`)
-                    }, 2500)
-                })
-                .catch(err => {
-                    setIsUpdating(false)
+            }
 
-                    setTimeout(() => {
-                        setAlert((prevState => ({
-                            ...prevState,
-                            isActive: false,
-                        })))
-                    }, 2500)
-                    reset();
-                    console.log(err)
-                })
+            if (type === 'update') {
+                CategoryService.update(fetchData)
+                    .then((updatedCategory: ICategory) => {
+                        console.log(updatedCategory)
 
-        }
+                        // Calculate new initial value
+                        const newInitValue = initCategoryForm(catalog, updatedCategory)
 
-        if (type === 'update') {
-            CategoryService.update(fetchData)
-        }
+                        // set new value
+                        setFormState(() => newInitValue)
+                        // reset form with new value
+                        reset(newInitValue)
 
-        reset();
+                        // show alert "success updated"
+                        setAlert({
+                            isActive: true,
+                            type: 'success',
+                            textContent: 'Категория успешно обновлена'
+                        })
+                    })
+                    .catch(err => {
+
+                        // remove Loading background
+                        setIsUpdating(false)
+
+                        // show alert "error on updating"
+                        setAlert({
+                            isActive: true,
+                            type: 'error',
+                            textContent: 'Ошибка при обновлении'
+                        })
+                        console.log(err)
+                    })
+                    .finally(() => {
+
+                        // remove Loading background
+                        setIsUpdating(false)
+
+                        // remove Alert after 2500ms
+                        setTimeout(() => {
+                            setAlert((prevState => ({
+                                ...prevState,
+                                isActive: false,
+                            })))
+                        }, 2500)
+                    })
+            }
+        }, 820)
     };
+
+    console.log(isDirty)
 
     const resetForm = () => reset();
 
@@ -193,7 +234,7 @@ const CategoryForm: React.FC<CategoryFormProps> = ({
                 <FormController
                     resetChanges={resetForm}
                     applyChanges={handleSubmit(onSubmit)}
-                    isDisabledSubmitButton={!isValid}
+                    isDisabledSubmitButton={!isValid || !isDirty}
                     labels={{
                         applyLabel: type === 'create' ? 'Добавить' : 'Обновить'
                     }}

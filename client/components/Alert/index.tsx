@@ -12,7 +12,7 @@ const Alert: React.FC<AlertProps> = ({
 
     const isSuccess = type === 'success';
     const isError = type === 'error';
-    console.log(successIcon)
+
     return (
         <div
             className={`

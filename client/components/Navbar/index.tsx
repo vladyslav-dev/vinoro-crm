@@ -25,15 +25,17 @@ const Navbar: React.FC<NavbarProps> = () => {
                 {images.map((item, key) => (
                     <li key={key} className={`${styles.navbar__menu_item} ${router.pathname === item.url ? styles.active : ''}`}>
                         <Link href={item.url} passHref>
-                            <a>
+                            <span>
                                 <Image src={item.icon} alt="Icon" />
-                            </a>
+                            </span>
                         </Link>
                         <span className={styles.navbar__menu_item_tooltip}>{item.tooltip}</span>
                     </li>
                 ))}
-                <li className={`${styles.navbar__menu_item} ${styles.navbar__profile}`} onClick={() => setShowModal(true)}>
-                    <Image src={userIcon} alt="Icon" />
+                <li className={`${styles.navbar__menu_item}`} onClick={() => setShowModal(true)}>
+                    <span>
+                        <Image src={userIcon} alt="Icon" />
+                    </span>
                 </li>
             </ul>
 

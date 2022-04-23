@@ -4,6 +4,8 @@
     @include formStyles;
     max-width: 600px;
     flex-direction: column;
+    position: relative;
+    transition: opacity .5s ease-in-out;
 
     .formSection {
         @include formSectionStyles;

@@ -5,22 +5,23 @@ const utils = require('../utils');
 
 class ProductService {
     async create(data) {
-        const lastOrderId = await utils.getLastOrderId(ProductModel);
 
         const categoryId = data.category
 
+        const folderName = await utils.getFolderName(categoryId);
+
         const image = await cloudinary.uploader.upload(data.image, {
-            folder: `vinoro/products/${utils.getFolderName(categoryId)}`,
+            folder: `vinoro/products/${folderName}`,
+            transformation: [
+                { quality: "auto", fetch_format: "webp" }
+            ]
         })
 
         // last order id
-        const lastOrderId2 = await ProductModel.find({category : data.category}).sort({order_id : -1}).limit(1)
-
-        console.log('lastOrderId2: ')
-        console.log(lastOrderId2)
+        const lastElement = await ProductModel.find({category : data.category}).sort({order_id : -1}).limit(1)
 
         const product = new ProductModel({
-            order_id: lastOrderId ? lastOrderId + 1 : 1,
+            order_id: lastElement.length ? lastElement[0]['order_id'] + 1 : 0,
             name: data.name,
             description: data.description,
             image: image.secure_url,
@@ -43,28 +44,26 @@ class ProductService {
     }
 
     async update(product) {
-        try {
-            console.log('product update')
+
+        const folderName = await utils.getFolderName(product.category);
 
             const image = await cloudinary.uploader.upload(product.image, {
-                folder: `vinoro/products/${utils.getFolderName(product.category)}`,
+                folder: `vinoro/products/${folderName}`,
+                transformation: [
+                    { quality: "auto", fetch_format: "webp", width: 1280, height: 1920 }
+                ]
             })
+
             product.image = image.secure_url;
 
             const res = await ProductModel.findByIdAndUpdate(product.id, {
                 ...product,
                 modified_date: Date.now()
             }, { new: true })
-            console.log('result --------------- update')
-            console.log(res)
 
             const productDto = new ProductDto(res);
 
             return productDto;
-
-        } catch (error) {
-            console.log(error)
-        }
     }
 
     async getOne(id) {
@@ -77,7 +76,7 @@ class ProductService {
     }
 
     async getAll() {
-        const products = await ProductModel.find();
+        const products = await ProductModel.find()
 
         const productsDto = products.map(product => new ProductDto(product));
 
@@ -103,6 +102,42 @@ class ProductService {
             return value;
         })
     }
-}
+
+    async getProductsByCategoryId(id) {
+
+        const products = await ProductModel.find({ category: id }).sort('order_id');
+
+        const productsDto = products.map(product => new ProductDto(product));
+
+        return productsDto
+    }
+
+    async getDiscountedProducts() {
+        const products = await ProductModel.find({ discount_price: { $ne: null } }).sort('order_id');
+
+        const productsDto = products.map(product => new ProductDto(product));
+
+        return productsDto;
+    }
+
+    async getNewProducts() {
+        const products = await ProductModel.find({ new: true }).sort('order_id');
+
+        const productsDto = products.map(product => new ProductDto(product))
+
+        return productsDto;
+    }
+
+    async updateOrder(products) {
+
+        const updateOne = async (model) => {
+            await ProductModel.findByIdAndUpdate(model.id, {
+                order_id: model.order_id
+            })
+        }
+
+        products.map(item => updateOne(item))
+    }
+ }
 
 module.exports = new ProductService()

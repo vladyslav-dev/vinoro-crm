@@ -1,4 +1,6 @@
+import { IProduct } from '@/interfaces/product';
 import { ILangData } from '@/interfaces/general';
+import { ISelectData } from '@/components/UI/Select';
 
 export interface ICategory {
     id: string;
@@ -10,6 +12,10 @@ export interface ICategory {
 }
 
 export interface ICategoryData extends Omit<ICategory, 'order_id'> {}
+
+export interface ICategoryForm extends Omit<ICategoryData, 'catalog'> {
+    catalogSelect: ISelectData[]
+}
 
 export interface ICategoryService {
     getAll: () => Promise<ICategory[]>;

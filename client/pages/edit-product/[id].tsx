@@ -15,7 +15,7 @@ const EditProduct: NextPage = () => {
 
     const catalogResponse = useSWR('CATALOG-GET-ALL', async () => await CatalogService.getAll())
     const categoryResponse = useSWR('CATEGORY-GET-ALL', async () => await CategoryService.getAll())
-    const productResponse = useSWR(`PRODUCT-GET-ONE-${query.id}`, async () => await ProductService.getOne(query.id as string || ''))
+    const productResponse = useSWR(`PRODUCT-GET-ONE-${query.id}`, async () => await ProductService.getOne(query.id as string))
 
     const catalog = catalogResponse.data;
     const category = categoryResponse.data;

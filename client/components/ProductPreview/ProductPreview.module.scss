@@ -88,7 +88,7 @@
                     .previewItemValue {
                         color: $slate;
                         flex: 4;
-                        @include textOverflow;
+                        @include textOverflow(1);
 
                         &.falsyValue {
                             color: $danger;

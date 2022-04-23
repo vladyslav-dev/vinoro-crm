@@ -3,11 +3,9 @@ import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import styles from '@/styles/pages/form.module.scss';
 import Section from '@/layouts/Section';
-import ProductForm from '@/components/ProductForm';
 import useSWR from 'swr'
 import CatalogService from '@/services/CatalogService';
 import CategoryService from '@/services/CategoryService';
-import ProductService from '@/services/ProductService';
 import CategoryForm from '@/components/CategoryForm';
 
 const EditCategory: NextPage = () => {
@@ -15,7 +13,7 @@ const EditCategory: NextPage = () => {
     const { query } = useRouter();
 
     const catalogResponse = useSWR('CATALOG-GET-ALL', async () => await CatalogService.getAll())
-    const categoryResponse = useSWR('CATEGORY-GET-ONE', async () => await CategoryService.getOne(query.id as string || ''))
+    const categoryResponse = useSWR(`CATEGORY-GET-ONE-${query.id}`, async () => await CategoryService.getOne(query.id as string))
 
 
     const catalogList = catalogResponse.data;
@@ -34,7 +32,7 @@ const EditCategory: NextPage = () => {
                 <CategoryForm
                     catalog={catalogList}
                     category={category}
-                    // type='update'
+                    type="update"
                 />
             </div>
         </Section>

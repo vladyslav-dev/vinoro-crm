@@ -9,18 +9,6 @@ import { ICatalogInfo } from '@/interfaces/dashboard';
 
 type TCard = 'standard' | 'multi' | 'row';
 
-interface IMultiCard {
-    title?: string;
-    link?: string;
-    renderIcon: () => React.ReactNode;
-    info?: {
-        infoTitle?: string;
-        infoNumber?: string;
-    }[];
-}
-
-
-
 interface NavigationCardProps {
     type?: TCard;
     color?: TLIGHT_COLORS;

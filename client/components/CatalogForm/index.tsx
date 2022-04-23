@@ -8,15 +8,7 @@ import { ICatalog, ICatalogData } from '@/interfaces/catalog';
 import CatalogService from '@/services/CatalogService';
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from "yup";
-
-const validationSchema = yup.object().shape({
-    catalog_name: yup.object().shape({
-        ru: yup.string().required(),
-        uk: yup.string().required(),
-        en: yup.string().required(),
-    })
-});
+import { catalogValidationSchema } from '@/utils/validation';
 
 interface CatalogFormProps {
     catalogData?: ICatalog
@@ -36,7 +28,7 @@ const CatalogForm: React.FC<CatalogFormProps> = ({ catalogData }) => {
             catalog_image: catalogData?.catalog_image || '',
             visibility: catalogData?.visibility || true
         },
-       resolver: yupResolver(validationSchema)
+       resolver: yupResolver(catalogValidationSchema)
     });
 
     const onSubmit = async (data: ICatalogData) => {

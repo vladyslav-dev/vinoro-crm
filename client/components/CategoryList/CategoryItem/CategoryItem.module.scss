@@ -7,13 +7,18 @@
     @include radius-sm;
     @include transitionLow;
     cursor: pointer;
+    text-decoration: none;
 
     .categoryItemName {
         font-weight: 600;
         font-size: 14px;
         line-height: 24px;
         color: $zinc;
-        @include textOverflow;
+        @include textOverflow(1);
+
+        &.hide {
+            opacity: .4;
+        }
     }
 
     .categoryItemIcon {

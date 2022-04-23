@@ -1,6 +1,12 @@
 @import '../index.scss';
 
 .sectionContainer {
-    padding: 30px 20px;
+    padding: 20px;
     box-sizing: border-box;
+    background-color: $white;
+    @include radius-md;
+
+    @media (max-width: 500px) {
+        padding: 10px;
+    }
 }

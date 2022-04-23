@@ -12,7 +12,7 @@ interface SectionProps {
 
 const Section: React.FC<SectionProps> = ({
     title,
-    toolbar = true,
+    toolbar = false,
     showBackground = true,
     hideScrollbar = false,
     children,
@@ -58,7 +58,7 @@ const Section: React.FC<SectionProps> = ({
                 <h1 className={styles.sectionTitle}>{title}</h1>
                 {toolbar && <Toolbar />}
             </div>
-            <div className={styles.contentWrapper} ref={wrapperRef}>
+            <div className={`${styles.contentWrapper}`} ref={wrapperRef}>
                 <div className={`${styles.shadow} ${styles.top}`} ref={shadowTopRef} />
                 <div className={`${styles.shadow} ${styles.bottom}`} ref={shadowBottomRef} />
                 <div

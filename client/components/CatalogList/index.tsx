@@ -11,21 +11,21 @@ interface CatalogProps {
 
 const CatalogList: React.FC<CatalogProps> = ({ catalogList, categoryList }) => {
 
-    console.log('CatalogList render')
-
 
     const filterCategoryById = (data: ICategory[], catalogId: string) => {
         return data.filter(item => item.catalog === catalogId)
     }
 
     return (
-        <ul className={styles.catalogList}>
-            {catalogList.map(item => (
-                <li key={item.id} className={styles.catalogItem}>
-                    <CatalogItem catalog={item} categoryList={filterCategoryById(categoryList, item.id)} />
-                </li>
-            ))}
-        </ul>
+        <div className={styles.ctalogWrapper}>
+            <ul className={styles.catalogList}>
+                {catalogList.map(item => (
+                    <li key={item.id} className={styles.catalogItem}>
+                        <CatalogItem catalog={item} categoryList={filterCategoryById(categoryList, item.id)} />
+                    </li>
+                ))}
+            </ul>
+        </div>
     )
 }
 

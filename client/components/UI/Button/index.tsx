@@ -25,7 +25,7 @@ const Button: React.FC<ButtonProps> = ({
     return (
         <>
             <button
-                className={`${styles.button} ${classNames}`}
+                className={`${classNames} ${styles.button}`}
                 type={type}
                 style={getButtonStyle(color!)[variant] as React.CSSProperties}
                 onClick={clickHandler}

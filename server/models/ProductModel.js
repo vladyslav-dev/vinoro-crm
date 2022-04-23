@@ -6,7 +6,6 @@ const ProductModel = new mongoose.Schema({
     order_id: {
         type: Number,
         require: true,
-        unique: true,
     },
     name: {
         ru: String,

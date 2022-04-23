@@ -1,7 +1,7 @@
 @import '../../styles/index.scss';
 
 .section {
-    padding: 16px 28px;
+    padding: 0 28px;
     box-sizing: border-box;
     max-width: 1360px;
 
@@ -10,23 +10,30 @@
     // }
 
     @media(max-width: 450px) {
-        padding: 16px 10px;
+        padding: 0 10px;
     }
 
     .sectionRow {
         @include flexBetween;
-        margin-bottom: 16px;
+        margin: 16px 0;
+        height: 64px;
 
         .sectionTitle {
             font-size: 28px;
             line-height: initial;
             font-weight: 600;
-           @include textOverflow;
+           @include textOverflow(1);
+
+           @media(max-width: 400px) {
+            font-size: 24px;
+           }
         }
     }
 
     .contentWrapper {
         position: relative;
+        // border-radius: 12px;
+        // // overflow: hidden;
 
         .shadow {
             position: absolute;
@@ -53,11 +60,11 @@
                 border-bottom-right-radius: 12px;
             }
         }
-
         .sectionContent {
             @include radius-md;
-            height: calc(100vh - 250px);
-            max-height: calc(100vh - 250px);
+            // height: calc(100vh - 250px);
+            // max-height: calc(100vh - 250px);
+            max-height: calc(100vh - 220px);
             overflow-y: auto;
             scroll-behavior: smooth;
 
@@ -67,6 +74,10 @@
 
             &.background {
                 background-color: $white;
+            }
+
+            @media(max-width: 700px) {
+                max-height: calc(100vh - 275px);
             }
 
             @media(max-width: 450px) {

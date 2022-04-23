@@ -6,10 +6,10 @@ import FormSection from '@/components/FormSection';
 import InputText from '@/components/UI/InputText';
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
 import { ICategory } from '@/interfaces/category';
 import { ICatalog } from '@/interfaces/catalog';
 import { AlertState } from '@/interfaces/alert';
+import { useSWRConfig } from 'swr'
 import Select, { ISelectData } from '@/components/UI/Select';
 import ProductPreview from '@/components/ProductPreview';
 import FormController from '@/components/FormController';
@@ -21,6 +21,7 @@ import BulkPrice from '@/components/BulkPrice';
 import Switch from '@/components/UI/Switch';
 import Loader from '@/components/Loader';
 import Alert from '@/components/Alert';
+
 import uniqid from 'uniqid';
 import {
     IProduct,
@@ -37,30 +38,7 @@ import {
     setProductPreview,
     setInitialValues
 } from '@/utils/form';
-
-const validationSchema = yup.object().shape({
-    name: yup.object().shape({
-        ru: yup.string().required('Name should not be empty'),
-        uk: yup.string().required('Name should not be empty'),
-        en: yup.string().required('Name should not be empty'),
-    }),
-    description: yup.object().shape({
-        ru: yup.string().required('Description should not be empty'),
-        uk: yup.string().required('Description should not be empty'),
-        en: yup.string().required('Description should not be empty'),
-    }),
-    image: yup.string().required('Image should be uploaded'),
-    price: yup.string().required('Price should not be empty'),
-    discount_price: yup.string(),
-    bulk_price: yup.array().of(yup.object().shape({
-        id: yup.string().required(),
-        from: yup.string().required(),
-        price: yup.string().required(),
-    })),
-    published_date: yup.string(),
-    modified_date: yup.string(),
-    new: yup.boolean(),
-});
+import { productValidationSchema } from '@/utils/validation';
 
 interface ProductFormProps {
     product?: IProduct;
@@ -75,7 +53,8 @@ const ProductForm: React.FC<ProductFormProps> = ({
     category,
     type
 }) => {
-    console.log('rerender Product Form')
+
+    const swr: any = useSWRConfig();
 
     const router = useRouter();
 
@@ -88,16 +67,15 @@ const ProductForm: React.FC<ProductFormProps> = ({
 
     const transformedCategory: IFilteredCategory = useMemo(() => {
         return transformFilteredCategory(filterCategory(category), 'category_name', 'ru');
-    }, [category]);
+    }, [catalog, category]);
 
     const [formState, setFormState] = useState<IProductForm>(() => setInitialValues(catalog, category, product));
 
-
-    const { register, control, trigger, watch, setValue, getValues, handleSubmit, reset, formState: { isValid, errors } } = useForm<IProductForm>({
+    const { register, control, trigger, watch, setValue, handleSubmit, reset, formState: { isValid, isDirty, errors } } = useForm<IProductForm>({
         mode: 'onChange',
         reValidateMode: 'onChange',
         defaultValues: formState,
-        resolver: yupResolver(validationSchema)
+        resolver: yupResolver(productValidationSchema)
     });
 
     useEffect(() => {
@@ -109,7 +87,6 @@ const ProductForm: React.FC<ProductFormProps> = ({
     }, []);
 
     const selectedCategoryValue: string = useMemo(() => {
-        console.log('updated selected category value')
         return getSelectedCategory(watch('categorySelect'))?.value!
     }, [watch('categorySelect')])
 
@@ -165,6 +142,8 @@ const ProductForm: React.FC<ProductFormProps> = ({
                     // remove Loading background
                     setIsUpdating(false)
 
+                    reset();
+
                     // show alert success
                     setAlert({
                         isActive: true,
@@ -172,45 +151,70 @@ const ProductForm: React.FC<ProductFormProps> = ({
                         textContent: 'Товар успешно создан'
                     })
 
+                    // clear cache to refetch data
+                    swr.cache.delete(`CATEGORY-GET-PRODUCTS-${createdProduct.category}`);
+                    swr.cache.delete(`PRODUCTS-GET-ALL`);
+
                     // redirect to edit page after 2500ms
                     setTimeout(() => {
-                        router.push(`/edit-product/${createdProduct.id}`)
+                        router.push(`/edit-product/${createdProduct?.id}`)
                     }, 2500)
                 })
                 .catch(err => {
-                     // remove Loading background
+                    // remove Loading background
                     setIsUpdating(false)
 
+                    // set Error alert
+                    setAlert({
+                        isActive: true,
+                        type: 'error',
+                        textContent: 'Ошибка при создании'
+                    })
 
+                    // remove Alert after 2500ms
                     setTimeout(() => {
                         setAlert((prevState => ({
                             ...prevState,
                             isActive: false,
                         })))
                     }, 2500)
-                    reset();
+
                     console.log(err)
                 })
         }
 
         if (type === 'update') {
-            // const updatedProduct = await ProductService.update(fetchData as IProductData);
-
             ProductService.update(fetchData as IProductData)
                 .then(updatedProduct => {
-                   // console.log(updatedProduct)
+                    // Calculate new initial value
                     const initValues: IProductForm = setInitialValues(catalog, category, updatedProduct)
 
+                    // set new value
                     setFormState(() => initValues)
+                    // reset form with new value
                     reset(initValues)
 
+                    // show alert "success updated"
                     setAlert({
                         isActive: true,
                         type: 'success',
                         textContent: 'Товар успешно обновлен'
                     })
+
+                    // refetch current product
+                    swr.mutate(`PRODUCT-GET-ONE-${updatedProduct.id}`);
+
+                    // clear cache to refetch data
+                    swr.cache.delete(`GET-PRODUCTS-BY-CATEGORY-${updatedProduct.category}`);
+                    swr.cache.delete(`PRODUCTS-GET-ALL`);
+
                 })
                 .catch(err => {
+
+                    // remove Loading background
+                    setIsUpdating(false)
+
+                    // show alert "error on updating"
                     setAlert({
                         isActive: true,
                         type: 'error',
@@ -220,8 +224,10 @@ const ProductForm: React.FC<ProductFormProps> = ({
                 })
                 .finally(() => {
 
+                    // remove Loading background
                     setIsUpdating(false)
 
+                    // remove Alert after 2500ms
                     setTimeout(() => {
                         setAlert((prevState => ({
                             ...prevState,
@@ -232,8 +238,6 @@ const ProductForm: React.FC<ProductFormProps> = ({
         }
     }
 
-
-
     const productPreviewConfig = setProductPreview({
         initialSelectedCategoryValue,
         selectedCategoryValue,
@@ -242,8 +246,6 @@ const ProductForm: React.FC<ProductFormProps> = ({
         errors,
         isUpdateProduct: type === 'update'
     })
-
-    const isSomeFieldUpdated = productPreviewConfig.some((item: any) => item.isUpdated);
 
     return (
         <div className={`${styles.form} ${isUpdating ? styles.updating : ''}`}>
@@ -450,11 +452,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
                 <FormController
                     resetChanges={() => reset()}
                     applyChanges={handleSubmit(submitForm)}
-                    isDisabledSubmitButton={
-                        type === 'create' ? !isValid : (
-                            (!isValid && isSomeFieldUpdated) || (isValid && !isSomeFieldUpdated)
-                        )
-                    }
+                    isDisabledSubmitButton={!isValid || !isDirty}
                     labels={{
                         applyLabel: type === 'create' ? 'Добавить' : 'Обновить'
                     }}
