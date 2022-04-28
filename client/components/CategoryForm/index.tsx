@@ -13,7 +13,7 @@ import { ICategory, ICategoryForm } from '@/interfaces/category';
 import Alert from '../Alert';
 import { AlertState } from '@/interfaces/alert';
 import { useRouter } from 'next/router';
-import Loader from '../Loader';
+import Loader from '../UI/Loader';
 import { initCategoryForm } from '@/utils/form';
 import { categoryValidationSchema } from '@/utils/validation';
 interface CategoryFormProps {
@@ -27,9 +27,6 @@ const CategoryForm: React.FC<CategoryFormProps> = ({
     category,
     type
 }) => {
-    console.log('category form render');
-    console.log(catalog)
-    console.log(category)
 
     const router = useRouter();
 
@@ -58,7 +55,7 @@ const CategoryForm: React.FC<CategoryFormProps> = ({
         const fetchData: any = {
             category_name: data.category_name,
             category_image: data.category_image,
-            visibility: data.visibility,
+            visibility: data.visibility ?? true,
             catalog: selectedCatalog?.id!
         }
 
@@ -106,7 +103,6 @@ const CategoryForm: React.FC<CategoryFormProps> = ({
 
                         // reset form to default
                         reset();
-                        console.log(err)
                     })
 
             }
@@ -114,7 +110,6 @@ const CategoryForm: React.FC<CategoryFormProps> = ({
             if (type === 'update') {
                 CategoryService.update(fetchData)
                     .then((updatedCategory: ICategory) => {
-                        console.log(updatedCategory)
 
                         // Calculate new initial value
                         const newInitValue = initCategoryForm(catalog, updatedCategory)
@@ -142,7 +137,6 @@ const CategoryForm: React.FC<CategoryFormProps> = ({
                             type: 'error',
                             textContent: 'Ошибка при обновлении'
                         })
-                        console.log(err)
                     })
                     .finally(() => {
 
@@ -160,8 +154,6 @@ const CategoryForm: React.FC<CategoryFormProps> = ({
             }
         }, 820)
     };
-
-    console.log(isDirty)
 
     const resetForm = () => reset();
 
@@ -243,7 +235,7 @@ const CategoryForm: React.FC<CategoryFormProps> = ({
             <div className={`${styles.alert} ${alert.isActive ? styles.active : ''}`}>
                 <Alert type={alert.type} textContent={alert.textContent} />
             </div>
-            <div className={`${isUpdating ? styles.loader : styles.loaderHidden}`}><Loader isFormLoader /></div>
+            <div className={`${isUpdating ? styles.loader : styles.loaderHidden}`}><Loader type='bubbles' /></div>
         </div>
     )
 }

@@ -5,13 +5,13 @@ import Link from 'next/link';
 import styles from './ProductPreview.module.scss';
 import { EditIcon } from '@/components/Icons/EditIcon';
 import Title from '../UI/Title';
+import { IProductPreviewConfig } from '@/utils/form';
 
 interface ProductPreviewProps {
-    data: any;
+    data: IProductPreviewConfig[];
 }
 
 const ProductPreview: React.FC<ProductPreviewProps> = ({ data }) => {
-
     const router = useRouter();
 
     return (

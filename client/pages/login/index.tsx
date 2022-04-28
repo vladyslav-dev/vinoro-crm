@@ -12,16 +12,10 @@ import styles from '@/styles/pages/login.module.scss';
 import logo from '@/images/login-logo.svg';
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from "yup";
-
-const validationSchema = yup.object().shape({
-    login: yup.string().required(),
-    password: yup.string().required(),
-});
-
-
 import InputText from '@/components/UI/InputText';
 import Button from '@/components/UI/Button';
+import { authValidationSchema } from '@/utils/validation';
+import Head from 'next/head';
 
 const Login: NextPage = () => {
 
@@ -37,8 +31,12 @@ const Login: NextPage = () => {
             login: '',
             password: ''
         },
-       resolver: yupResolver(validationSchema)
+       resolver: yupResolver(authValidationSchema)
     });
+
+    useEffect(() => {
+        router.prefetch('/home')
+      }, [])
 
     useEffect(() => {
         if (isAuth) {
@@ -46,17 +44,7 @@ const Login: NextPage = () => {
         }
     }, [isAuth])
 
-    // const changeHandler = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    //     setUserData(prevState => ({
-    //         ...prevState, [event.target.name]: event.target.value
-    //     }))
-    // }
-
-
-
     const submitHandler = async (data: IUserLogin) => {
-        console.log('login request started')
-
         AuthService.login(data)
           .then((result: any) => {
             disptach(setUser(result.data.user));
@@ -64,7 +52,6 @@ const Login: NextPage = () => {
             localStorage.setItem("user:token", result.data.accessToken)
           })
           .catch((err: any) => {
-            console.error(err)
             setError(err?.response?.data?.message || 'Network error');
             disptach(setAuth(false));
             setTimeout(() => setError(''), 4000);
@@ -75,48 +62,53 @@ const Login: NextPage = () => {
     }
 
     if (isAuth) {
-        return <div>Authorized!</div>
+        return null
     } else {
         return (
-            <div className={styles.login}>
-                <div className={styles.loginContainer}>
-                    <div className={styles.loginTitleWrapper}>
-                        <div className={styles.loginLogo}>
-                            <Image src={logo} alt='Vinoro' />
+            <>
+                <Head>
+                    <title>Vinoro — Авторизация</title>
+                </Head>
+                <div className={styles.login}>
+                    <div className={styles.loginContainer}>
+                        <div className={styles.loginTitleWrapper}>
+                            <div className={styles.loginLogo}>
+                                <Image src={logo} alt='Vinoro' />
+                            </div>
+                            <p className={styles.loginSubtitle}>Admin panel</p>
+                            <p className={`${styles.loginError} ${error ? styles.loginErrorVisible : ''}`}>{error}</p>
                         </div>
-                        <p className={styles.loginSubtitle}>Admin panel</p>
-                        <p className={`${styles.loginError} ${error ? styles.loginErrorVisible : ''}`}>{error}</p>
+                        <form className={styles.form} onSubmit={handleSubmit(submitHandler)}>
+                            <div className={styles.formRow}>
+                                <InputText
+                                    label='Login'
+                                    registerPath='login'
+                                    register={register}
+                                    authStyleType={true}
+                                />
+                            </div>
+                            <div className={styles.formRow}>
+                                <InputText
+                                    label='Password'
+                                    registerPath='password'
+                                    register={register}
+                                    authStyleType={true}
+                                    type='password'
+                                />
+                            </div>
+                            <div className={styles.formRow}>
+                                <Button
+                                    innerText='Enter'
+                                    type='submit'
+                                    variant={isValid ? 'default' : 'disabled'}
+                                    classNames={styles.formButton}
+                                    clickHandler={handleSubmit(submitHandler)}
+                                />
+                            </div>
+                        </form>
                     </div>
-                    <form className={styles.form} onSubmit={handleSubmit(submitHandler)}>
-                        <div className={styles.formRow}>
-                            <InputText
-                                label='Login'
-                                registerPath='login'
-                                register={register}
-                                authStyleType={true}
-                            />
-                        </div>
-                        <div className={styles.formRow}>
-                            <InputText
-                                label='Password'
-                                registerPath='password'
-                                register={register}
-                                authStyleType={true}
-                                type='password'
-                            />
-                        </div>
-                        <div className={styles.formRow}>
-                            <Button
-                                innerText='Enter'
-                                type='submit'
-                                variant={isValid ? 'default' : 'disabled'}
-                                classNames={styles.formButton}
-                                clickHandler={handleSubmit(submitHandler)}
-                            />
-                        </div>
-                    </form>
                 </div>
-            </div>
+            </>
         )
     }
 }

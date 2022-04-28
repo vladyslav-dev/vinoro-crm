@@ -2,6 +2,7 @@ import React from 'react';
 import useSWR from 'swr'
 import CatalogService from '@/services/CatalogService';
 import CategoryService from '@/services/CategoryService';
+import Head from 'next/head';
 
 import { NextPage } from 'next';
 import CatalogList from '@/components/CatalogList';
@@ -21,9 +22,15 @@ const Catalog: NextPage = () => {
     }
 
     return (
-        <Section title="Каталог" showBackground={false}>
-            <CatalogList catalogList={catalog} categoryList={category} />
-        </Section>
+        <>
+            <Head>
+                <title>Vinoro — Каталог</title>
+            </Head>
+            <Section title="Каталог" showBackground={false}>
+                <CatalogList catalogList={catalog} categoryList={category} />
+            </Section>
+        </>
+
     )
 }
 

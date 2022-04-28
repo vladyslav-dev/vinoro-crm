@@ -17,8 +17,13 @@ export interface ICategoryForm extends Omit<ICategoryData, 'catalog'> {
     catalogSelect: ISelectData[]
 }
 
+export interface ISearchCategory {
+    id: string;
+    category_name: ILangData;
+}
 export interface ICategoryService {
     getAll: () => Promise<ICategory[]>;
+    getSearchCategory: () => Promise<ISearchCategory>;
     getOne: (id: string) => Promise<ICategory>;
     create: (data: ICategoryData) => Promise<ICategory>;
     update: (data: ICategoryData) => Promise<ICategory>;

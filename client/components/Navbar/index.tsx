@@ -6,15 +6,10 @@ import Link from 'next/link';
 import userIcon from '@/images/icons/user-icon.svg';
 import { images } from '@/constants/index';
 
-
 import Modal from '@/components/UI/Modal';
 import AdminInfo from '@/components/AdminInfo';
 
-interface NavbarProps {
-
-}
-
-const Navbar: React.FC<NavbarProps> = () => {
+const Navbar: React.FC = () => {
 
     const router = useRouter();
     const [showModal, setShowModal] = useState<boolean>(false);

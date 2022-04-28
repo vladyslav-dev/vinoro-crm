@@ -2,8 +2,6 @@
 
 .cardList {
     width: 100%;
-
-    // overflow: hidden;
     color: $slate;
 
     &.row {
@@ -31,7 +29,6 @@
         flex-direction: column;
     }
 }
-
 
 .cardListItemCol {
     display: inline-block;

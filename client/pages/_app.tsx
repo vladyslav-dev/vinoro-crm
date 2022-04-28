@@ -9,10 +9,14 @@ import Router, { useRouter } from 'next/router';
 import AuthService from '@/services/AuthService';
 import { useDispatch, useSelector } from 'react-redux';
 import { setAuth, setUser } from '@/slices/auth';
+import { setProducts, setCategory } from '@/slices/search';
 import { Provider } from "react-redux";
 import store, { RootState } from '@/store/index';
 import Dashboard from '@/layouts/Dashboard';
-import Loader from '@/components/Loader';
+import Loader from '@/components/UI/Loader';
+import useSWR from 'swr';
+import ProductService from '@/services/ProductService';
+import CategoryService from '@/services/CategoryService';
 
 NProgress.configure({ showSpinner: false });
 Router.events.on('routeChangeStart', () => NProgress.start());
@@ -30,69 +34,60 @@ const InnerApp: React.FC<InnerAppProps> = ({ children }) => {
   const dispatch = useDispatch();
   const { isAuth } = useSelector((state: RootState) => state.authReducer);
 
-  useEffect(() => {
-    const slowLoad = window.setTimeout(function() {
-      console.log( "the page is taking its sweet time loading" );
-    }, 10 );
+  const { data: swrSearchProducts } = useSWR(`GET-SEARCH-PRODUCTS`, async () => await ProductService.getSearchProducts());
+  const { data: swrSearchCategory } = useSWR(`GET-SEARCH-CATEGORY`, async () => await CategoryService.getSearchCategory());
 
-    window.addEventListener('load', function() {
-        window.clearTimeout( slowLoad );
-    }, false );
-  }, [])
+  useEffect(() => {
+    dispatch(setProducts(swrSearchProducts));
+    dispatch(setCategory(swrSearchCategory));
+  }, [swrSearchProducts])
 
   useEffect(() => {
     if (localStorage.getItem("user:token")) {
       AuthService.checkAuth()
         .then((result: any) => {
-          console.log('check auth true')
           setTimeout(() => {
             dispatch(setAuth(true));
             dispatch(setUser(result?.data?.user));
             localStorage.setItem('user:token', result?.data?.accessToken);
-          }, 2000)
+          }, 1500)
         })
-        .catch((err: any) => {
+        .catch(() => {
           localStorage.removeItem('user:token');
           dispatch(setAuth(false));
-          console.log(err)
+          console.error('Token is not define, Unauthorized')
         })
     } else {
       setTimeout(() => {
         dispatch(setAuth(false));
-    }, 2000)
-      console.log('Token is not define, Unauthorized')
+    }, 1500)
+      console.error('Token is not define, Unauthorized')
     }
   }, [])
 
   useEffect(() => {
-    if (!isAuth) {
-      console.log('router push to login page')
-      router.push('/login')
-    }
-  }, [isAuth])
+      if (!isAuth) {
+        router.push('/login')
+      }
+    }, [isAuth])
 
-  if (isAuth === null) {
-    return <Loader />
-  } else if (isAuth) {
-    return <Dashboard>{children}</Dashboard>
-  } else {
-    return <>{children}</>
+    if (isAuth === null) {
+        return <Loader />
+    } else if (isAuth) {
+        return <Dashboard>{children}</Dashboard>
+    } else {
+        return <>{children}</>
+    }
   }
 
-}
+const MyApp = (props: MyAppProps) => (
+  <Provider store={store}>
+    <InnerApp>
+      <props.Component {...props.pageProps} />
+    </InnerApp>
+  </Provider>
 
-const MyApp = (props: MyAppProps) => {
-
-  return (
-    <Provider store={store}>
-      <InnerApp>
-        <props.Component {...props.pageProps} />
-      </InnerApp>
-    </Provider>
-
-  )
-}
-
+)
 MyApp.getInitialProps = async ({ Component, router, ctx }: AppContext) => {
 
   const pageContext = { ...ctx };

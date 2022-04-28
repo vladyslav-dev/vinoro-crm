@@ -16,8 +16,8 @@ const app = express()
 const PORT = process.env.PORT || 5000
 
 
-app.use(bodyParser.json({limit: '50mb'}))
-app.use(bodyParser.urlencoded({limit: '50mb', extended: true}))
+app.use(bodyParser.json({limit: '100mb', extended: true}))
+app.use(bodyParser.urlencoded({limit: '100mb', extended: true}))
 
 app.use(express.json())
 app.use(cookieParser())
@@ -32,13 +32,6 @@ app.use('/api', dashboardRouter)
 app.use('/api', catalogRouter)
 app.use('/api', categoryRouter)
 app.use('/api', productRouter)
-
-// app.use(function(req, res, next) {
-//     res.header('Access-Control-Allow-Origin', '*');
-//     res.header('Access-Control-Allow-Credentials', true);
-//     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-//     next();
-//   });
 
 app.use(errorMiddleware)
 
@@ -55,7 +48,7 @@ const start = async () => {
         app.listen(PORT, () => console.log('Server has been started on PORT ', PORT))
 
     } catch (err) {
-        console.log(err)
+        console.error(err)
     }
 }
 

@@ -9,6 +9,8 @@ import CategoryService from '@/services/CategoryService';
 import EmptyList from '@/components/EmptyList';
 import ProductService from '@/services/ProductService';
 import CardListDraggable from '@/components/CardListDraggable';
+import Loader from '@/components/UI/Loader';
+import Head from 'next/head';
 
 const Category: NextPage = () => {
 
@@ -26,15 +28,26 @@ const Category: NextPage = () => {
     }
 
     return (
-        <Section title={category.category_name.ru} toolbar showBackground={false}>
-            <div className={formStyles.sectionContainer}>
-                {products.length ? (
-                    <CardListDraggable products={products} />
-                ): (
-                    <EmptyList />
-                )}
-            </div>
-        </Section>
+        <>
+            <Head>
+                <title>Vinoro — {category.category_name.ru}</title>
+            </Head>
+            <Section title={category.category_name.ru} toolbar>
+                <div className={formStyles.sectionContainer}>
+                    {!products ? (
+                        <Loader type='bubbles' />
+                    ) : (
+                        <>
+                            {products.length ? (
+                                <CardListDraggable products={products} />
+                            ) : (
+                                <EmptyList />
+                            )}
+                        </>
+                    )}
+                </div>
+            </Section>
+        </>
     )
 }
 

@@ -8,13 +8,11 @@ $centerMenuPosition: calc((50% - ((#{$menuHeight} / 2)) - #{$headerHeight}));
 .navbar {
     width: 100px;
     height: 100%;
-    background-color: $white;
     position: relative;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     padding-bottom: 32px;
-    z-index: 4;
 
     @media (max-width: 700px) {
         height: $headerMobileSize;
@@ -48,12 +46,55 @@ $centerMenuPosition: calc((50% - ((#{$menuHeight} / 2)) - #{$headerHeight}));
             position: relative;
             @include transitionLow;
 
+            &::after {
+                content: "";
+                position: absolute;
+                left: 0;
+                top: calc(50% - (22px / 2));
+                display: block;
+                width: 6px;
+                height: 22px;
+                border-top-right-radius: 18px;
+                border-bottom-right-radius: 18px;
+                background-color: $slate;
+                transform: scale(0);
+                transform-origin: left;
+                transition: .3s ease-in-out;
+            }
+
             &.active {
-                background-color: $bgGray;
+                &::after {
+                    top: calc(50% - (42px / 2));
+                    height: 42px;
+                    transform: scale(1);
+                }
             }
 
             @media (max-width: 700px) {
                 height: 100%;
+
+                &::after {
+                    content: "";
+                    position: absolute;
+                    left: calc(50% - (22px / 2));
+                    top: unset;
+                    bottom: 0;
+                    height: 6px;
+                    width: 22px;
+                    border-top-left-radius: 18px;
+                    border-bottom-right-radius: 0;
+                    transform-origin: bottom;
+                }
+
+                &.active {
+                    &::after {
+                        top: unset;
+                        left: calc(50% - (42px / 2));
+                        width: 42px;
+                        height: 6px;
+                        transform: scale(1);
+                    }
+                }
             }
 
             & > span:first-child {
@@ -72,15 +113,15 @@ $centerMenuPosition: calc((50% - ((#{$menuHeight} / 2)) - #{$headerHeight}));
             &_tooltip {
                 position: absolute;
                 left: 115px;
-                top: calc(50% - (34px / 2));
+                top: calc(50% - (28px / 2));
                 background-color: $slate;
                 color: $white;
-                font-size: 11px;
+                font-size: 10px;
                 font-weight: bold;
                 white-space: nowrap;
-                padding: 0 16px;
-                border-radius: 12px;
-                height: 32px;
+                padding: 0 12px;
+                border-radius: 6px;
+                height: 28px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -96,7 +137,9 @@ $centerMenuPosition: calc((50% - ((#{$menuHeight} / 2)) - #{$headerHeight}));
             }
 
             &:hover {
-                background-color: $bgGray;
+                &::after {
+                    transform: scale(1);
+                }
 
                 span {
                     transform: scale(1);

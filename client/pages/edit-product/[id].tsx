@@ -8,34 +8,41 @@ import useSWR from 'swr'
 import CatalogService from '@/services/CatalogService';
 import CategoryService from '@/services/CategoryService';
 import ProductService from '@/services/ProductService';
+import Head from 'next/head';
 
 const EditProduct: NextPage = () => {
 
-    const { query } = useRouter();
+    const router = useRouter();
 
-    const catalogResponse = useSWR('CATALOG-GET-ALL', async () => await CatalogService.getAll())
-    const categoryResponse = useSWR('CATEGORY-GET-ALL', async () => await CategoryService.getAll())
-    const productResponse = useSWR(`PRODUCT-GET-ONE-${query.id}`, async () => await ProductService.getOne(query.id as string))
+    const { data: catalogList } = useSWR('CATALOG-GET-ALL', async () => await CatalogService.getAll())
+    const { data: categoryList } = useSWR('CATEGORY-GET-ALL', async () => await CategoryService.getAll())
+    const { data: product, error } = useSWR(`PRODUCT-GET-ONE-${router.query.id}`, async () => await ProductService.getOne(router.query.id as string))
 
-    const catalog = catalogResponse.data;
-    const category = categoryResponse.data;
-    const product = productResponse.data;
+    if (!!error) {
+        router.push('/')
+        return null
+    }
 
-    if (!catalog || !category || !product) {
+    if (!catalogList || !categoryList || !product) {
         return null
     }
 
     return (
-        <Section title={product.name.ru}>
-            <div className={styles.sectionContainer}>
-                <ProductForm
-                    catalog={catalog}
-                    category={category}
-                    product={product}
-                    type='update'
-                />
-            </div>
-        </Section>
+        <>
+            <Head>
+                <title>Vinoro — {product.name.ru}</title>
+            </Head>
+            <Section title={product.name.ru}>
+                <div className={styles.sectionContainer}>
+                    <ProductForm
+                        catalog={catalogList}
+                        category={categoryList}
+                        product={product}
+                        type='update'
+                    />
+                </div>
+            </Section>
+        </>
     )
 }
 

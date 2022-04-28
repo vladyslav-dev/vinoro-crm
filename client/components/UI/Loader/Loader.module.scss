@@ -1,0 +1,76 @@
+@import '../../../styles/index.scss';
+
+@mixin position-center($text-align: center) {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin: auto;
+	text-align: $text-align;
+}
+
+.loading {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 3;
+	@include radius-md;
+	backdrop-filter: blur(6px);
+
+	&.form {
+		background: rgba(255, 255, 255, 0.443);
+		border-radius: 12px;
+	}
+
+	.loadingText {
+		@include position-center;
+		width: 100%;
+		height: 100px;
+		line-height: 100px;
+		@include flexCenter;
+		flex-direction: column;
+	}
+
+	&.fullText {
+		border-radius: 0;
+
+		.loadingText {
+			flex-direction: row;
+
+			.loadingTextWords {
+				display: inline-block;
+				margin: 0 5px;
+				color: $slate;
+				font-size: 24px;
+				font-family: 'Quattrocento Sans', sans-serif;
+				@for $i from 0 through 6 {
+					&:nth-child(#{$i + 1}) {
+						opacity: 0;
+						animation: blurText 1.5s (#{$i/5}s) infinite linear alternate;
+					}
+				}
+			}
+		}
+	}
+
+	.loadingWord {
+		font-family: 'Quattrocento Sans', sans-serif;
+		font-size: 13px;
+		font-weight: 600;
+		margin-top: -18px;
+		color: $slate;
+		letter-spacing: .4px;
+	}
+}
+
+@keyframes blurText {
+	0% {
+        opacity: 0;
+    }
+	100% {
+        opacity: 1;
+    }
+}

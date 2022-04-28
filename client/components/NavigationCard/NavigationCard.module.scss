@@ -16,6 +16,7 @@
     height: 100%;
     background-color: $white;
     transition: all .2s ease-in-out;
+    animation: fade-in .6s forwards;
 
     &.cardShadow {
         cursor: pointer;

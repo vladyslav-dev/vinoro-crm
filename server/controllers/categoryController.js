@@ -7,7 +7,7 @@ module.exports.createCategory = async (req, res, next) => {
         if (data) {
             const categoryOne = await CategoryService.create(data);
 
-            return res.json({ category: categoryOne })
+            return res.json(categoryOne)
         }
     } catch (error) {
         next(error)
@@ -20,7 +20,7 @@ module.exports.updateCategory = async (req, res, next) => {
         if (data) {
             const category = await CategoryService.update(data);
 
-            return res.json({ category })
+            return res.json(category)
         }
     } catch (error) {
         next(error)
@@ -30,12 +30,22 @@ module.exports.updateCategory = async (req, res, next) => {
 module.exports.getAllCategory = async (req, res, next) => {
     try {
         const categoryList = await CategoryService.getAll();
-        return res.json({ category: categoryList })
+        return res.json(categoryList)
 
     } catch (error) {
         next(error)
     }
 };
+
+module.exports.getSearchCategory = async (req, res, next) => {
+    try {
+        const categoryList = await CategoryService.getSearchCategory();
+        return res.json(categoryList)
+
+    } catch (error) {
+        next(error)
+    }
+}
 
 module.exports.getOneCategory = async (req, res, next) => {
     try {
@@ -43,7 +53,7 @@ module.exports.getOneCategory = async (req, res, next) => {
 
         if (id) {
             const category = await CategoryService.getOne(id);
-            return res.json({ category })
+            return res.json(category)
         }
 
         return res.send({ message: 'Error, category id was not send' })

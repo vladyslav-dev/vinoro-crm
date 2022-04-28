@@ -12,10 +12,8 @@ const addUser = async (username, login, password) => {
         })
 
         const userData = await UserService.registration(username, login, password);
-        console.log("User added!")
-        console.log(userData);
     } catch (err) {
-        console.log(err)
+        console.error(err)
     }
 
 }

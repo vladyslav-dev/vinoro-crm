@@ -28,6 +28,10 @@
     transition: all .2s ease-in-out;
 }
 
+@mixin viewTransition {
+    transition: all .5s ease-in-out;
+}
+
 @mixin radius-sm {
     border-radius: 6px;
 }

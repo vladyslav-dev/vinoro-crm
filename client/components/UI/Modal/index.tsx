@@ -17,27 +17,24 @@ const Modal: React.FC<ModalProps> = ({
     children,
     showBackground = false,
     classNames = ''
-}) => {
-
-    return (
-        <div
-            className={`
-                ${styles.modal}
-                ${isActive ? styles.active : ''}
-                ${showBackground ? styles.modalBackground : ''}
-            `}
-            onClick={closeModal}
-        >
-            <div className={`${styles.modalContent} ${classNames}`} onClick={event => event.stopPropagation()}>
-                <>
-                    <span className={styles.modalClose} onClick={closeModal}>
-                        <Image src={closeIcon} alt='Close' />
-                    </span>
-                    {children}
-                </>
-            </div>
+}) => (
+    <div
+        className={`
+            ${styles.modal}
+            ${isActive ? styles.active : ''}
+            ${showBackground ? styles.modalBackground : ''}
+        `}
+        onClick={closeModal}
+    >
+        <div className={`${styles.modalContent} ${classNames}`} onClick={event => event.stopPropagation()}>
+            <>
+                <span className={styles.modalClose} onClick={closeModal}>
+                    <Image src={closeIcon} alt='Close' />
+                </span>
+                {children}
+            </>
         </div>
-    )
-}
+    </div>
+)
 
 export default Modal;

@@ -16,7 +16,7 @@ module.exports = {
         return categoryName.trim().toLowerCase().replace(/ /g, '_').replace(/\W/ig, '')
     },
     calcDate: (model) => {
-        const newDaysLimit = 1; // change to 30 !!!!!!!!!!!!!!!!!!!
+        const newDaysLimit = 30;
 
         const pd = new Date(model.published_date);
         const nd = new Date();

@@ -5,6 +5,7 @@
     height: fit-content;
     cursor: pointer;
     position: relative;
+    animation: fade-in .6s forwards;
 
     .cardLink {
         text-decoration: none;

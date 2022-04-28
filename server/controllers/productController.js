@@ -8,7 +8,7 @@ module.exports.createProduct = async (req, res, next) => {
         if (data) {
             const productOne = await ProductService.create(data);
 
-            return res.json({ product: productOne })
+            return res.json(productOne)
         }
 
         return res.send({ message: 'Error, data was not send' })
@@ -23,7 +23,7 @@ module.exports.getProduct = async (req, res, next) => {
 
         if (id) {
             const product = await ProductService.getOne(id);
-            return res.json({ product })
+            return res.json(product)
         }
 
         return res.send({ message: 'Error, product id was not send' })
@@ -39,7 +39,7 @@ module.exports.updateProduct = async (req, res, next) => {
         if (data) {
             const product = await ProductService.update(data);
 
-            return res.json({ product })
+            return res.json(product)
         }
 
         return res.send({ message: 'Error, data was not send' })
@@ -53,12 +53,23 @@ module.exports.getAllProducts = async (req, res, next) => {
     try {
         const productList = await ProductService.getAll();
 
-        return res.json({ products: productList })
+        return res.json(productList);
 
     } catch (error) {
         next(error)
     }
 };
+
+module.exports.getSearchProducts = async (req, res, next) => {
+    try {
+        const productList = await ProductService.getSearchProducts();
+
+        return res.json(productList)
+
+    } catch (error) {
+        next(error)
+    }
+}
 
 module.exports.getProductsByCategoryId = async (req, res, next) => {
     try {
@@ -66,7 +77,7 @@ module.exports.getProductsByCategoryId = async (req, res, next) => {
 
         if (id) {
             const products = await ProductService.getProductsByCategoryId(id);
-            return res.json({ products })
+            return res.json(products)
         }
 
         return res.send({ message: 'Error, category id was not send' })
@@ -80,7 +91,7 @@ module.exports.getDiscountedProducts = async (req, res, next) => {
     try {
         const productList = await ProductService.getDiscountedProducts();
 
-        return res.json({ products: productList })
+        return res.json(productList)
 
     } catch (error) {
         next(error)
@@ -91,7 +102,7 @@ module.exports.getNewProducts = async (req, res, next) => {
     try {
         const productList = await ProductService.getNewProducts();
 
-        return res.json({ products: productList })
+        return res.json(productList)
 
     } catch (error) {
         next(error)

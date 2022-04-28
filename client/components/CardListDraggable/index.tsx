@@ -1,5 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import dynamic from 'next/dynamic'
 import styles from './CardListDraggable.module.scss'
 import { IProduct } from '@/interfaces/product'
 import { getViewMode } from '@/utils/toolbar';
@@ -9,10 +9,8 @@ import Button from '../UI/Button';
 import ProductService from '@/services/ProductService';
 import { useSWRConfig } from 'swr';
 import { compareProductList, reorderProducts } from '@/utils/product';
-
-
-const DefaultCard = dynamic(() => import('@/components/Card'), { ssr: true })
-const RowCard = dynamic(() => import('@/components/CardRow'), { ssr: true })
+import DefaultCard from '@/components/Card';
+import RowCard from '@/components/CardRow';
 
 export interface CardListDraggableProps {
     products: Array<IProduct>;
@@ -59,7 +57,6 @@ const CardListDraggable: React.FC<CardListDraggableProps> = ({ products }) => {
             result.destination.index
         ) as Array<IProduct>
 
-        console.log(reorderedProductList)
 
         const newProductList = reorderedProductList.map((item, index) => {
             return {

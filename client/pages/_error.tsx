@@ -1,5 +1,3 @@
-
-
 const Error = ({ statusCode }: any) => {
     return (
       <p>

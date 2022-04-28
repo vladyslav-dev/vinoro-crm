@@ -2,8 +2,8 @@
 
 .alert {
     @include flexCenter;
-    padding: 16px 26px;
-    @include radius-md;
+    padding: 16px 20px;
+    @include radius-sm;
 
     &.success {
         background-color: $success;
@@ -15,8 +15,8 @@
 
     .alertIcon {
         position: relative;
-        width: 18px;
-        height: 18px;
+        width: 15px;
+        height: 15px;
         margin-right: 15px;
 
         img {
@@ -26,7 +26,7 @@
     }
 
     .alertText {
-        font-size: 16px;
+        font-size: 14px;
         font-weight: 600;
         color: $white;
     }

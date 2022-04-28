@@ -14,9 +14,9 @@ interface NavigationCardProps {
     color?: TLIGHT_COLORS;
     title?: string;
     link?: string;
-    renderIcon?: (props: any) => React.ReactNode;
     numberInfo?: string;
     multiCardData?: ICatalogInfo[];
+    renderIcon?: (props: any) => React.ReactNode;
 }
 
 const NavigationCard: React.FC<NavigationCardProps> = ({

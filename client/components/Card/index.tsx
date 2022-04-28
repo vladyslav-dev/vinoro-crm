@@ -4,7 +4,7 @@ import React from 'react';
 import styles from './Card.module.scss';
 import newIcon from '@/images/new-icon.svg';
 
-import Img from '@/components/Img';
+import Img from '@/components/UI/Img';
 import { IProduct } from '@/interfaces/product';
 
 interface CardProps {
@@ -29,11 +29,16 @@ const DefaultCardComponent: React.FC<CardProps> = ({ product }) => (
                     {product.discount_price ? (
                         <div className={styles.cardDiscountCost}>
                             <span className={styles.cardNewCost}>{product.discount_price} ₴</span>
-                            <span className={styles.cardOldCost}>{product.price} ₴</span>
+                            {product.price !== 1 && (
+                                <span className={styles.cardOldCost}>{product.price} ₴</span>
+                            )}
                         </div>
                     ) : (
                         <div className={styles.cardCost}>
-                            <span>{product.price} ₴</span>
+                            {product.price !== 1 && (
+                                <span>{product.price} ₴</span>
+                            )}
+
                         </div>
                     )}
                 </div>

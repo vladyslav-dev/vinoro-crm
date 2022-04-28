@@ -11,7 +11,6 @@ interface CatalogProps {
 
 const CatalogList: React.FC<CatalogProps> = ({ catalogList, categoryList }) => {
 
-
     const filterCategoryById = (data: ICategory[], catalogId: string) => {
         return data.filter(item => item.catalog === catalogId)
     }

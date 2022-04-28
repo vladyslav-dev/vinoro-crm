@@ -1,0 +1,160 @@
+@import '../../styles/index.scss';
+
+.wrapper {
+    position: relative;
+    width: 100%;
+    z-index: 3;
+
+    .search {
+        position: inherit;
+
+        input {
+            @include formInputStyles;
+            padding: 0 10px;
+            width: 100%;
+
+            &:focus {
+                background-color: $bgGray;
+            }
+
+            &:not(:placeholder-shown) {
+                border-color: $zinc;
+                background-color: $bgGray;
+            }
+        }
+
+        .searchIcon {
+            @include flexCenter;
+            border-top-right-radius: 12px;
+            border-bottom-right-radius: 12px;
+            width: 48px;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            right: 0;
+            cursor: pointer;
+
+            svg {
+                position: absolute;
+                top: 50%;
+                right: 50%;
+                transform: translate(50%, -50%);
+            }
+
+            &.close {
+                box-sizing: border-box;
+                display: block;
+                width: 22px;
+                height: 22px;
+                top: 50%;
+                right: 10px;
+                transform: translateY(-50%);
+                border: 2px solid transparent;
+                border-radius: 40px;
+
+                &::after,
+                &::before {
+                    content: "";
+                    display: block;
+                    box-sizing: border-box;
+                    position: absolute;
+                    width: 16px;
+                    height: 2px;
+                    background: $zinc;
+                    transform: rotate(45deg);
+                    border-radius: 5px;
+                    top: 8px;
+                    left: 1px
+                }
+                &::after {
+                    transform: rotate(-45deg)
+                }
+
+                svg {
+                    display: none;
+                }
+            }
+        }
+    }
+
+    .searchOutput {
+        position: absolute;
+        width: 100%;
+        max-height: calc(100vh - 296px);
+        overflow-y: auto;
+        top: 52px;
+        left: 0;
+        background-color: $white;
+        @include radius-md;
+        @include dropShadow;
+        padding: 12px;
+        box-sizing: border-box;
+        z-index: 2;
+
+        @media (max-width: 450px) {
+            max-height: calc(100vh - 162px);
+        }
+
+        .searchOutputLength {
+            color: $zinc;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .searchList {
+            margin-top: 22px;
+            display: flex;
+            flex-direction: column;
+
+            .searchItem {
+
+                .searchItemCategory {
+                    font-size: 11px;
+                    color: $gray;
+                    font-weight: 600;
+
+                    .categoryName {
+                        color: $zinc;
+                    }
+                }
+
+                .searchItemOutput {
+                    margin: 12px 0;
+                    width: 100%;
+                    display: flex;
+                    flex-direction: column;
+
+                    .searchItemCategoryRest {
+                        padding: 12px 8px;
+                    }
+
+                    .itemOutputLink {
+                        display: inline-block;
+                        padding: 10px 8px;
+                        line-height: 22px;
+                        font-weight: 600;
+                        color: $zinc;
+                        font-size: 14px;
+                        text-decoration: none;
+                        @include radius-md;
+
+                        &:hover {
+                            background-color: $bgGray
+                        }
+
+                        .itemOutput {
+                            @include textOverflow(1);
+                            .letter {
+
+                                &.highlight {
+                                    color: $slate;
+                                    font-weight: 700;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

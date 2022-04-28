@@ -1,7 +1,6 @@
 const CatalogModel = require('../models/CatalogModel');
 const CategoryModel = require('../models/CategoryModel');
 const ProductModel = require('../models/ProductModel');
-// const CatalogDto = require('../dtos/catalogDtos');
 
 class DashboardService {
 
@@ -41,7 +40,7 @@ class DashboardService {
             }
 
         } catch (err) {
-            console.log(err)
+            console.error(err)
         }
     }
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styles from './CatalogForm.module.scss';
 import FormSection from '@/components/FormSection';
 import FormController from '@/components/FormController';
@@ -15,7 +15,6 @@ interface CatalogFormProps {
 }
 
 const CatalogForm: React.FC<CatalogFormProps> = ({ catalogData }) => {
-    console.log('catalog form render');
 
     const { register, control, handleSubmit, reset, formState: { isValid } } = useForm<ICatalogData>({
         mode: 'onChange',
@@ -32,9 +31,7 @@ const CatalogForm: React.FC<CatalogFormProps> = ({ catalogData }) => {
     });
 
     const onSubmit = async (data: ICatalogData) => {
-        console.log(data);
-        const response = await CatalogService.createCatalog(data);
-        console.log(response);
+        await CatalogService.createCatalog(data);
         reset();
     };
 

@@ -14,8 +14,7 @@ const AdminInfo: React.FC = () => {
 
     const logout = () => {
         AuthService.logout()
-            .then((response: any) => console.log(response))
-            .catch((err: any) => console.log(err))
+            .catch((err: any) => console.error(err))
             .finally(() => {
                 dispatch(setAuth(false))
                 dispatch(setUser(null));

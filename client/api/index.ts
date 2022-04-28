@@ -23,14 +23,11 @@ $api.interceptors.response.use((congif) => {
   if (error?.response?.status == 401 && error?.config && !error?.config?._isRetry) {
       originalRequest._isRetry = true;
       try {
-        console.log('request to refresh')
         const response = await axios.get<AuthResponse>(`${API_URL}/refresh`, { withCredentials: true })
         localStorage.setItem('user:token', response?.data?.accessToken);
         return $api.request(originalRequest);
       } catch (e) {
-        console.log(e)
         localStorage.removeItem('user:token')
-        console.log('Unauthorized')
       }
   }
   throw error;

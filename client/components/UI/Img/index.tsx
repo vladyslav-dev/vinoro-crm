@@ -12,7 +12,7 @@ interface ImgProps {
 const Img: React.FC<ImgProps> = (
     {
         src,
-        quality = 5,
+        quality = 75,
         alt = "Image not found",
         secondSrc = 'https://res.cloudinary.com/vinoro-media-storage/image/upload/v1626027250/vinoro/empty_xjuljc.jpg',
     }
@@ -37,9 +37,7 @@ const Img: React.FC<ImgProps> = (
                         alt={alt}
                     />
                 )}
-
             </div>
-
         </div >
     )
 }

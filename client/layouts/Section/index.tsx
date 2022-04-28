@@ -2,6 +2,10 @@ import React, { useEffect, useRef } from 'react';
 import styles from './Section.module.scss';
 import Toolbar from '@/components/Toolbar';
 
+// @store
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store/index';
+
 interface SectionProps {
     title?: string;
     toolbar?: boolean;
@@ -17,6 +21,8 @@ const Section: React.FC<SectionProps> = ({
     hideScrollbar = false,
     children,
 }) => {
+
+    const view = useSelector((state: RootState) => state.viewReducer);
 
     const wrapperRef = useRef<HTMLDivElement>(null);
     const contentRef = useRef<HTMLDivElement>(null);
@@ -53,7 +59,7 @@ const Section: React.FC<SectionProps> = ({
     }, [])
 
     return (
-        <div className={styles.section}>
+        <div className={`${styles.section} ${view.viewMode ? styles.viewMode : ''}`}>
             <div className={styles.sectionRow}>
                 <h1 className={styles.sectionTitle}>{title}</h1>
                 {toolbar && <Toolbar />}

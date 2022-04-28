@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-img-element */
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import styles from './InputImage.module.scss';
@@ -7,12 +8,13 @@ import { Point } from "react-easy-crop/types";
 import { getBase64 } from '@/utils/file';
 import getCroppedImg from '@/utils/cropImage';
 import Button from '../Button';
-import Loader from '@/components/Loader';
+import Loader from '@/components/UI/Loader';
+import Portal from '@/components/Portal';
 
 interface InputImageProps {
     image: string;
-    changeHandler: (dataBaseImage: string) => void;
     label?: string;
+    changeHandler: (dataBaseImage: string) => void;
 }
 
 const InputImage: React.FC<InputImageProps> = ({
@@ -27,7 +29,7 @@ const InputImage: React.FC<InputImageProps> = ({
     const [file, setFile] = useState<string>('');
     const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
 
-    const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
+    const onCropComplete = useCallback((_, croppedAreaPixels) => {
         setCroppedAreaPixels(croppedAreaPixels);
     }, [])
 
@@ -35,13 +37,13 @@ const InputImage: React.FC<InputImageProps> = ({
 
         try {
             setIsUpdate(true);
-            const res: any = await getCroppedImg(
+            const base64 = await getCroppedImg(
               file,
               croppedAreaPixels,
             )
 
             setTimeout(() => {
-                changeHandler!(res as string)
+                changeHandler(base64 as string)
                 setFile('')
                 setIsUpdate(false)
             }, 800)
@@ -53,11 +55,10 @@ const InputImage: React.FC<InputImageProps> = ({
 
       }, [file, croppedAreaPixels])
 
-      const cancelHandler = () => {
+    const cancelHandler = () => {
         setCroppedAreaPixels(null)
         setFile('')
-      }
-
+    }
 
     const inputRef = useRef<HTMLInputElement>(null);
     const inputDropArea = useRef<HTMLDivElement>(null);
@@ -120,62 +121,65 @@ const InputImage: React.FC<InputImageProps> = ({
     }, [])
 
     return (
-        <div className={styles.inputWrapper}>
-            <label className={styles.label}>{label}</label>
-            <input
-                type="file"
-                ref={inputRef}
-                multiple={false}
-                accept="image/png,image/jpg,image/jpeg"
-                placeholder=" "
-                onChange={(event) => {
-                    fileHandler(event.target.files);
-                    event.target.value = '';
-                }}
-                className={styles.input}
-            />
-            <div
-                className={`
-                ${styles.inputPreview}
-                ${isHighlighted ? styles.highlight : '' }
-                ${image ? styles.active : ''}
-                `}
-                onClick={() => inputRef?.current?.click()}
-                ref={inputDropArea}
-            >
-                {image && <img src={image} alt="Product preview" />}
-                <button className={styles.inputPreviewButton}>
-                    <UploadIcon />
-                    <span>Загрузить файл</span>
-                </button>
-            </div>
-            {file && (
-                <div className={styles.cropBackground}>
-                    <div className={`${styles.crop} ${isUpdate ? styles.update : ''}`}>
-                        {isUpdate ? (
-                            <Loader />
-                        ) : (
-                            <Cropper
-                                image={file}
-                                crop={crop}
-                                aspect={2 / 3}
-                                onCropChange={setCrop}
-                                onCropComplete={onCropComplete}
-                                classes={{ containerClassName: styles.cropContainer }}
-                            />
-                        )}
-
-                    </div>
-                    {!isUpdate && (
-                        <div className={styles.cropController}>
-                            <Button innerText='Отменить' variant='outlined' clickHandler={cancelHandler} />
-                            <Button innerText='Сохранить' clickHandler={cropHandler} />
-                        </div>
-                    )}
+        <>
+            <div className={styles.inputWrapper}>
+                <label className={styles.label}>{label}</label>
+                <input
+                    type="file"
+                    ref={inputRef}
+                    multiple={false}
+                    accept="image/png,image/jpg,image/jpeg"
+                    placeholder=" "
+                    onChange={(event) => {
+                        fileHandler(event.target.files);
+                        event.target.value = '';
+                    }}
+                    className={styles.input}
+                />
+                <div
+                    className={`
+                    ${styles.inputPreview}
+                    ${isHighlighted ? styles.highlight : '' }
+                    ${image ? styles.active : ''}
+                    `}
+                    onClick={() => inputRef?.current?.click()}
+                    ref={inputDropArea}
+                >
+                    {image && <img src={image} alt="Product preview" />}
+                    <button className={styles.inputPreviewButton}>
+                        <UploadIcon />
+                        <span>Загрузить файл</span>
+                    </button>
                 </div>
-            )}
+            </div>
+            <Portal>
+                {file && (
+                    <div className={`${styles.cropBackground} ${isUpdate ? styles.update : ''}`}>
+                        <div className={`${styles.crop}`}>
+                            {isUpdate ? (
+                                <Loader type='bubbles' />
+                            ) : (
+                                <Cropper
+                                    image={file}
+                                    crop={crop}
+                                    aspect={2 / 3}
+                                    onCropChange={setCrop}
+                                    onCropComplete={onCropComplete}
+                                    classes={{ containerClassName: styles.cropContainer }}
+                                />
+                            )}
 
-        </div>
+                        </div>
+                        {!isUpdate && (
+                            <div className={styles.cropController}>
+                                <Button innerText='Отменить' variant='outlined' clickHandler={cancelHandler} />
+                                <Button innerText='Сохранить' clickHandler={cropHandler} />
+                            </div>
+                        )}
+                    </div>
+                )}
+            </Portal>
+        </>
     )
 }
 

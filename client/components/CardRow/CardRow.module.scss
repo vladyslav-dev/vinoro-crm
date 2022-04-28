@@ -1,12 +1,12 @@
 @import "../../styles/index.scss";
 
-
 .rowCard {
     position: relative;
     height: fit-content;
     padding: 6px;
     @include radius-md;
     @include transitionLow;
+    animation: fade-in .3s forwards;
 
     &:hover {
         @include dropShadow;
@@ -85,7 +85,6 @@
                     @include textOverflow(1);
                 }
             }
-
         }
     }
 

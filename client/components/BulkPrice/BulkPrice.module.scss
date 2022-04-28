@@ -3,14 +3,12 @@
 .defaultButton {
     @include transitionLow;
     transform-origin: center;
+
     button {
         width: 100%;
     }
 
     &.hide {
-        // transform: scale(0);
-        // opacity: 0;
-        // visibility: hidden;
         display: none;
     }
 }
@@ -60,7 +58,6 @@
     }
 
     .list {
-
         .listItem {
             display: flex;
             align-items: center;

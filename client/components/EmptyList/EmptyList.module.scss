@@ -3,6 +3,9 @@
 .empty {
     display: flex;
     align-items: center;
+    background-color: $white;
+    padding: 20px;
+    @include radius-md;
 
     img {
         width: 26px;

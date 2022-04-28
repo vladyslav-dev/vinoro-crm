@@ -1,5 +1,10 @@
 import * as yup from 'yup';
 
+export const authValidationSchema = yup.object().shape({
+    login: yup.string().required(),
+    password: yup.string().required(),
+});
+
 export const catalogValidationSchema = yup.object().shape({
     catalog_name: yup.object().shape({
         ru: yup.string().required(),
@@ -23,9 +28,9 @@ export const productValidationSchema = yup.object().shape({
         en: yup.string().required(),
     }),
     description: yup.object().shape({
-        ru: yup.string().required(),
-        uk: yup.string().required(),
-        en: yup.string().required(),
+        ru: yup.string(),
+        uk: yup.string(),
+        en: yup.string(),
     }),
     image: yup.string().required(),
     price: yup.string().required(),

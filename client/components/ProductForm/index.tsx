@@ -1,28 +1,28 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, useMemo } from 'react';
+import { useSWRConfig } from 'swr';
+import uniqid from 'uniqid';
 import styles from './ProductForm.module.scss';
 import { useRouter } from 'next/router';
-import FormSection from '@/components/FormSection';
-import InputText from '@/components/UI/InputText';
-import { useForm, Controller } from "react-hook-form";
-import { yupResolver } from '@hookform/resolvers/yup';
 import { ICategory } from '@/interfaces/category';
 import { ICatalog } from '@/interfaces/catalog';
 import { AlertState } from '@/interfaces/alert';
-import { useSWRConfig } from 'swr'
+import { useForm, Controller } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { productValidationSchema } from '@/utils/validation';
 import Select, { ISelectData } from '@/components/UI/Select';
 import ProductPreview from '@/components/ProductPreview';
 import FormController from '@/components/FormController';
 import ProductService from '@/services/ProductService';
 import InputPrice from '@/components/UI/InputPrice';
 import InputImage from '@/components/UI/InputImage';
+import FormSection from '@/components/FormSection';
+import InputText from '@/components/UI/InputText';
 import Textarea from '@/components/UI/Textarea';
 import BulkPrice from '@/components/BulkPrice';
 import Switch from '@/components/UI/Switch';
-import Loader from '@/components/Loader';
+import Loader from '@/components/UI/Loader';
 import Alert from '@/components/Alert';
-
-import uniqid from 'uniqid';
 import {
     IProduct,
     IFormBulkPrice,
@@ -38,7 +38,6 @@ import {
     setProductPreview,
     setInitialValues
 } from '@/utils/form';
-import { productValidationSchema } from '@/utils/validation';
 
 interface ProductFormProps {
     product?: IProduct;
@@ -135,6 +134,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
 
         type === 'update' && (fetchData['id'] = product!.id) // add key id if form type update
 
+
         if (type === 'create') {
             ProductService.create(fetchData as IProductData)
                 .then(createdProduct => {
@@ -178,8 +178,6 @@ const ProductForm: React.FC<ProductFormProps> = ({
                             isActive: false,
                         })))
                     }, 2500)
-
-                    console.log(err)
                 })
         }
 
@@ -220,7 +218,6 @@ const ProductForm: React.FC<ProductFormProps> = ({
                         type: 'error',
                         textContent: 'Ошибка при обновлении'
                     })
-                    console.log(err)
                 })
                 .finally(() => {
 
@@ -461,7 +458,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
             <div className={`${styles.alert} ${alert.isActive ? styles.active : ''}`}>
                 <Alert type={alert.type} textContent={alert.textContent} />
             </div>
-            <div className={`${isUpdating ? styles.loader : styles.loaderHidden}`}><Loader isFormLoader /></div>
+            <div className={`${isUpdating ? styles.loader : styles.loaderHidden}`}><Loader type={'bubbles'} /></div>
         </div>
     )
 }

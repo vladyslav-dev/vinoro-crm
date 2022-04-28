@@ -5,13 +5,26 @@ import { IBulkPrice, IFormBulkPrice, IProduct, IProductForm } from '@/interfaces
 import { ISelectData } from '@/components/UI/Select';
 import { FieldErrors, UseFormWatch } from 'react-hook-form';
 
-interface IProductPreviewOptions {
+export interface IProductPreviewOptions {
     initialSelectedCategoryValue: string;
     selectedCategoryValue: string;
     initialValues: IProductForm;
     getField: UseFormWatch<IProductForm>;
     errors: FieldErrors;
     isUpdateProduct: boolean;
+}
+
+export interface IProductPreviewConfig {
+    title: string;
+    path: string;
+    data: {
+        value: string;
+        field: any;
+    };
+    required: boolean;
+    type: string;
+    isUpdated: boolean;
+    IND: string;
 }
 
 export type SelectDataVariant = ICatalog[] | ICategory[];
@@ -140,7 +153,7 @@ export const setInitialValues = (catalog: ICatalog[], category: ICategory[], pro
     }
 }
 
-export const setProductPreview = (options: IProductPreviewOptions) => {
+export const setProductPreview = (options: IProductPreviewOptions): IProductPreviewConfig[] => {
 
     const {
         initialSelectedCategoryValue, // memoized value
@@ -189,7 +202,7 @@ export const setProductPreview = (options: IProductPreviewOptions) => {
                 value: 'description' in errors ? IND : descriptionField || IND,
                 field:  descriptionField
             },
-            required: true,
+            required: false,
             type: 'text',
             isUpdated: !compareLangFields(initialValues.description, getField('description')),
             IND
@@ -225,7 +238,7 @@ export const setProductPreview = (options: IProductPreviewOptions) => {
                 value: 'bulk_price' in errors ? IND : bulkPriceField || IND,
                 field:  getField('bulk_price')
             },
-            required: ('bulk_price' in errors) && bulkPriceField.length,
+            required: !!(('bulk_price' in errors) && bulkPriceField.length),
             type: 'text',
             isUpdated: compareBulkPrice(initialValues.bulk_price, getField('bulk_price')),
             IND

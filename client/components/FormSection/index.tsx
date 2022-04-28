@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useRef, useEffect } from 'react';
 import styles from './FormSection.module.scss';
 import Title from '@/components/UI/Title';

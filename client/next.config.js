@@ -6,6 +6,7 @@
 
 const nextConfig = {
   reactStrictMode: true,
+  optimizeFonts: false,
   images: {
     domains: ["res.cloudinary.com"],
   },

@@ -3,10 +3,14 @@ import React from 'react';
 import styles from './EmptyList.module.scss';
 import frowningFaceIcon from '@/images/emoji/frowning-face.svg';
 
-const EmptyList = () => (
+interface EmptyListProps {
+    text?: string;
+}
+
+const EmptyList: React.FC<EmptyListProps> = ({ text = 'Тут еще нет добавленных товаров' }) => (
     <div className={styles.empty}>
         <img src={frowningFaceIcon.src} alt='frowning face' />
-        <span>Тут еще нет добавленных товаров</span>
+        <span>{text}</span>
     </div>
 )
 

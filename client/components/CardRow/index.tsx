@@ -4,7 +4,7 @@ import React from 'react';
 import styles from './CardRow.module.scss';
 import newIcon from '@/images/new-icon.svg';
 import { transformBulkPriceToString } from '@/utils/form';
-import Img from '../Img';
+import Img from '../UI/Img';
 import { IProduct } from '@/interfaces/product';
 
 interface CardProps {
@@ -31,11 +31,17 @@ const RowCardComponent: React.FC<CardProps> = ({ product }) => (
                     <li className={styles.cardInfoItem}>
                         {product.discount_price ? (
                             <>
-                                <span className={styles.strikeOut}>{product.price} ₴</span>
+                                {product.price !== 1 && (
+                                    <span className={styles.strikeOut}>{product.price} ₴</span>
+                                )}
                                 <span className={styles.danger}>{product.discount_price} ₴</span>
                             </>
                         ) : (
-                            <span>{product.price} ₴</span>
+                            <>
+                                {product.price !== 1 && (
+                                    <span>{product.price} ₴</span>
+                                )}
+                            </>
                         )}
                     </li>
                     <li className={styles.cardInfoItem}>

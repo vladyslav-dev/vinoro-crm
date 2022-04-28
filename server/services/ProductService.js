@@ -1,6 +1,7 @@
 const ProductModel = require('../models/ProductModel');
 const cloudinary = require('../utils/cloudinary')
 const ProductDto = require('../dtos/productDtos');
+const SearchProductsDto = require('../dtos/SearchProductDtos')
 const utils = require('../utils');
 
 class ProductService {
@@ -13,7 +14,12 @@ class ProductService {
         const image = await cloudinary.uploader.upload(data.image, {
             folder: `vinoro/products/${folderName}`,
             transformation: [
-                { quality: "auto", fetch_format: "webp" }
+                {
+                    quality: "auto",
+                    fetch_format: "webp",
+                    width: 1280,
+                    height: 1920
+                }
             ]
         })
 
@@ -50,7 +56,12 @@ class ProductService {
             const image = await cloudinary.uploader.upload(product.image, {
                 folder: `vinoro/products/${folderName}`,
                 transformation: [
-                    { quality: "auto", fetch_format: "webp", width: 1280, height: 1920 }
+                    {
+                        quality: "auto",
+                        fetch_format: "webp",
+                        width: 1280,
+                        height: 1920
+                    }
                 ]
             })
 
@@ -76,7 +87,7 @@ class ProductService {
     }
 
     async getAll() {
-        const products = await ProductModel.find()
+        const products = await ProductModel.find().sort([['category'], ['order_id', 0]])
 
         const productsDto = products.map(product => new ProductDto(product));
 
@@ -101,6 +112,14 @@ class ProductService {
         return Promise.all(checkedProducts).then(value => {
             return value;
         })
+    }
+
+    async getSearchProducts() {
+        const searchProducts = await ProductModel.find({}, ['_id', 'name', 'category']);
+
+        const searchProductsDto = searchProducts.map(item => new SearchProductsDto(item))
+
+        return searchProductsDto
     }
 
     async getProductsByCategoryId(id) {

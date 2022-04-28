@@ -52,8 +52,14 @@ export interface IProductForm extends Omit<IProduct,
     modified_date: string;
 }
 
+export interface ISearchProduct {
+    id: string;
+    name: ILangData;
+    category: string;
+}
 export interface IProductService {
     getAll: () => Promise<IProduct[]>;
+    getSearchProducts: () => Promise<ISearchProduct[]>
     getByCategoryId: (categoryId: string) => Promise<IProduct[]>;
     getOne: (id: string) => Promise<IProduct>;
     getDiscountedProducts: () => Promise<IProduct[]>;

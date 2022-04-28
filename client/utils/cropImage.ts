@@ -70,9 +70,12 @@ export default async function getCroppedImg(
 
   return new Promise((resolve, reject) => {
     canvas.toBlob((file) => {
-      getBase64(file).then((dataBaseImage) => {
-        resolve(dataBaseImage)
-      })
-    })
+        getBase64(file).then((dataBaseImage) => {
+          getBase64(dataBaseImage, true).then((res => {
+            resolve(res)
+          }))
+
+        })
+      }, 'image/webp', 1)
   })
 }

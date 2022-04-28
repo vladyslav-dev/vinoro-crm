@@ -1,7 +1,6 @@
 @import '../../../styles/index.scss';
 
 .catalogItem {
-
     .catalogName {
         margin-bottom: 10px;
 
@@ -12,9 +11,5 @@
             text-align: center;
             border-bottom: 2px solid $bgGray;
         }
-    }
-
-    .categoryList {
-
     }
 }

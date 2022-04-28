@@ -19,21 +19,15 @@ const Button: React.FC<ButtonProps> = ({
     variant = 'default',
     color,
     clickHandler,
-}) => {
-
-
-    return (
-        <>
-            <button
-                className={`${classNames} ${styles.button}`}
-                type={type}
-                style={getButtonStyle(color!)[variant] as React.CSSProperties}
-                onClick={clickHandler}
-            >
-                {innerText}
-            </button>
-       </>
-    )
-}
+}) => (
+    <button
+        className={`${classNames} ${styles.button}`}
+        type={type}
+        style={getButtonStyle(color!)[variant] as React.CSSProperties}
+        onClick={clickHandler}
+    >
+        {innerText}
+    </button>
+)
 
 export default Button;

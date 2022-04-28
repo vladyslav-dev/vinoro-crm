@@ -6,6 +6,7 @@ import ProductForm from '@/components/ProductForm';
 import useSWR from 'swr'
 import CatalogService from '@/services/CatalogService';
 import CategoryService from '@/services/CategoryService';
+import Head from 'next/head';
 
 const AddProduct: NextPage = () => {
 
@@ -20,15 +21,20 @@ const AddProduct: NextPage = () => {
     }
 
     return (
-        <Section title="Добавить товар">
-            <div className={styles.sectionContainer}>
-                <ProductForm
-                    catalog={catalog}
-                    category={category}
-                    type='create'
-                />
-            </div>
-        </Section>
+        <>
+            <Head>
+                <title>Vinoro — Добавить товар</title>
+            </Head>
+            <Section title="Добавить товар">
+                <div className={styles.sectionContainer}>
+                    <ProductForm
+                        catalog={catalog}
+                        category={category}
+                        type='create'
+                    />
+                </div>
+            </Section>
+        </>
     )
 }
 

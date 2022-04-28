@@ -23,7 +23,6 @@ module.exports = class ProductDtos {
         this.image = model.image
         this.price = model.price
         this.discount_price = model.discount_price
-        // this.new = !model.new ? model.new : checkIsNew ? false : true
         this.new = model.new
         this.product_count = model.product_count
         this.availability = model.availability
@@ -37,15 +36,4 @@ module.exports = class ProductDtos {
             from: item.from
         }))
     }
-
-    // checkIsNew() {
-    //     const newDaysLimit = 2; // change to 30 !!!!!!!!!!!!!!!!!!!
-
-    //     const pd = new Date(model.published_date);
-    //     const nd = new Date();
-
-    //     const days = Math.round( (nd.getTime() - pd.getTime()) / (1000 * 3600 * 24) );
-
-    //     return (days > newDaysLimit)
-    // }
 }

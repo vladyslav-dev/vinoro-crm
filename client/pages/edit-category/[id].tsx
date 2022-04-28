@@ -7,6 +7,7 @@ import useSWR from 'swr'
 import CatalogService from '@/services/CatalogService';
 import CategoryService from '@/services/CategoryService';
 import CategoryForm from '@/components/CategoryForm';
+import Head from 'next/head';
 
 const EditCategory: NextPage = () => {
 
@@ -15,27 +16,28 @@ const EditCategory: NextPage = () => {
     const catalogResponse = useSWR('CATALOG-GET-ALL', async () => await CatalogService.getAll())
     const categoryResponse = useSWR(`CATEGORY-GET-ONE-${query.id}`, async () => await CategoryService.getOne(query.id as string))
 
-
     const catalogList = catalogResponse.data;
     const category = categoryResponse.data;
-
-    console.log(category)
-
 
     if (!catalogList || !category) {
         return null
     }
 
     return (
-        <Section title={category.category_name.ru}>
-            <div className={styles.sectionContainer}>
-                <CategoryForm
-                    catalog={catalogList}
-                    category={category}
-                    type="update"
-                />
-            </div>
-        </Section>
+        <>
+            <Head>
+                <title>Vinoro — {category.category_name.ru}</title>
+            </Head>
+            <Section title={category.category_name.ru}>
+                <div className={styles.sectionContainer}>
+                    <CategoryForm
+                        catalog={catalogList}
+                        category={category}
+                        type="update"
+                    />
+                </div>
+            </Section>
+        </>
     )
 }
 

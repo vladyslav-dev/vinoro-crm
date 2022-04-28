@@ -1,7 +1,7 @@
 const utils = require('../utils');
 const CategoryDto = require('../dtos/categoryDtos');
 const CategoryModel = require('../models/CategoryModel');
-const ProductModel = require('../models/ProductModel');
+const SearchCategoryDto = require('../dtos/searchCategoryDtos');
 const ProductDto = require('../dtos/productDtos');
 
 class CategoryService {
@@ -38,6 +38,13 @@ class CategoryService {
         const res = categoryList.map(item => new CategoryDto(item));
 
         return res;
+    }
+    async getSearchCategory() {
+        const categoryList = await CategoryModel.find({}, ['_id', 'category_name']);
+
+        const categoryDtos = categoryList.map(item => new SearchCategoryDto(item))
+
+        return categoryDtos
     }
     async getOne(id) {
         const categoryOne = await CategoryModel.findById(id);
