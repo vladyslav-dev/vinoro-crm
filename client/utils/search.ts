@@ -3,7 +3,6 @@ interface IHighlightLetters {
     isHighlighted: boolean;
 }
 
-
 export const highlightSearchedLetters = (searchText: string, searchQuery: string): Array<IHighlightLetters>  => {
 
     const result: Array<IHighlightLetters> = [];
