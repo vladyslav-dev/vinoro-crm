@@ -21,11 +21,24 @@
         }
     }
 
+    &.open {
+        .selected {
+            z-index: 5;
+            svg {
+                transform: rotate(180deg);
+            }
+        }
+    }
+}
+
+.portal {
+
+    @include flexCenter;
     .optionsWrapper {
         position: absolute;
-        width: 100%;
-        top: 78px;
-        left: 0;
+        width: 92%;
+        max-width: 500px;
+        margin: auto;
         opacity: 0;
         visibility: hidden;
 
@@ -56,24 +69,18 @@
     }
 
     &.open {
-        .selected {
-            z-index: 5;
-            svg {
-                transform: rotate(180deg);
-            }
-        }
-
+        position: fixed;
+        background: #44444436;
+        z-index: 4;
+        inset: 0;
         .optionsWrapper {
             z-index: 10;
             opacity: 1;
             visibility: visible;
         }
 
-        .optionsBackground {
-            position: fixed;
-            background: #44444436;
-            z-index: 4;
-            inset: 0;
-        }
+        // .optionsBackground {
+
+        // }
     }
 }

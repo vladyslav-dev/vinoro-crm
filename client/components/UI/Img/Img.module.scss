@@ -1,10 +1,5 @@
 @import "../../../styles/index.scss";
 
-$base-color: #ddd;
-$shine-color: #e8e8e8;
-$animation-duration: 1.6s;
-$avatar-offset: 52 + 16;
-
 .imageContainer {
   position: relative;
 
@@ -17,7 +12,7 @@ $avatar-offset: 52 + 16;
     left: 0;
     padding-top: 150%;
     transform: scale(0.2);
-    opacity: .2;
+    opacity: 0;
     transition: all .1s ease-in-out;
 
     & > div {
@@ -43,8 +38,8 @@ $avatar-offset: 52 + 16;
     width: 100%;
     padding-top: 150%;
 
-    animation: shines $animation-duration infinite linear;
-    background-image: linear-gradient(90deg, $base-color 0px, $shine-color 40px, $base-color 80px) ;
+    animation: shines 2.2s infinite linear;
+    background-image: linear-gradient(91deg, #f6f6f6 0px, #ececece6 40px, #f6f6f6 80px);
     background-size: 600px;
   }
 }

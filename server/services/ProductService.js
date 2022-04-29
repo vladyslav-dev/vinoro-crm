@@ -87,7 +87,7 @@ class ProductService {
     }
 
     async getAll() {
-        const products = await ProductModel.find().sort([['category'], ['order_id', 0]])
+        const products = await ProductModel.find().sort([['category', 1], ['order_id', 1]])
 
         const productsDto = products.map(product => new ProductDto(product));
 

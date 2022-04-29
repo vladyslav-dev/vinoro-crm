@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import styles from './Select.module.scss';
 import { ExpandArrow } from '@/components/Icons/Arrow';
+import Portal from '@/components/Portal';
 
 export interface ISelectData {
     id: string;
@@ -42,19 +43,23 @@ const Select: React.FC<SelectProps> = ({
                 <span className={styles.selectedValue}>{selectedOption(data)!.value}</span>
                 <ExpandArrow />
             </div>
-            <div className={styles.optionsBackground} onClick={() => setIsOpen(false)} />
-            <div className={styles.optionsWrapper}>
-                <ul className={styles.options} ref={selectedRef}>
-                    {data.map(({ selected, value, id }) => !selected ? (
-                        <li
-                            key={id}
-                            id={id}
-                            className={styles.optionItem}
-                            onClick={selectHandler}
-                        >{value}</li>
-                    ) : null)}
-                </ul>
-            </div>
+            <Portal>
+                <div className={`${styles.portal} ${isOpen ? styles.open : ''}`} onClick={() => setIsOpen(false)}>
+                    {/* <div className={styles.optionsBackground} onClick={() => setIsOpen(false)} /> */}
+                    <div className={styles.optionsWrapper}>
+                        <ul className={styles.options} ref={selectedRef}>
+                            {data.map(({ selected, value, id }) => !selected ? (
+                                <li
+                                    key={id}
+                                    id={id}
+                                    className={styles.optionItem}
+                                    onClick={selectHandler}
+                                >{value}</li>
+                            ) : null)}
+                        </ul>
+                    </div>
+                </div>
+            </Portal>
 
         </div>
     )
