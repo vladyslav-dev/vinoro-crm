@@ -29,6 +29,7 @@ $headerMobileSize: 84px;
         @include viewTransition;
 
         @media (max-width: 700px) {
+            top: $headerMobileSize;
             flex-direction: column-reverse;
             height: calc(100vh - #{$headerMobileSize});
         }
