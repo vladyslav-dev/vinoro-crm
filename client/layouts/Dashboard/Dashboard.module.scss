@@ -21,6 +21,9 @@ $headerMobileSize: 84px;
 
     .layout__group {
         display: flex;
+        position: fixed;
+        inset: 0;
+        top: 100px;
         height: calc(100vh - 100px);
         width: 100%;
         @include viewTransition;
