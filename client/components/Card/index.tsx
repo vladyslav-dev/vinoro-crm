@@ -38,7 +38,6 @@ const DefaultCardComponent: React.FC<CardProps> = ({ product }) => (
                             {product.price !== 1 && (
                                 <span>{product.price} ₴</span>
                             )}
-
                         </div>
                     )}
                 </div>

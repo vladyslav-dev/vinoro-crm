@@ -40,7 +40,7 @@ const InnerApp: React.FC<InnerAppProps> = ({ children }) => {
   useEffect(() => {
     dispatch(setProducts(swrSearchProducts));
     dispatch(setCategory(swrSearchCategory));
-  }, [swrSearchProducts])
+  }, [swrSearchProducts, swrSearchCategory])
 
   useEffect(() => {
     if (localStorage.getItem("user:token")) {
@@ -78,7 +78,7 @@ const InnerApp: React.FC<InnerAppProps> = ({ children }) => {
     } else {
         return <>{children}</>
     }
-  }
+}
 
 const MyApp = (props: MyAppProps) => (
   <Provider store={store}>
@@ -86,7 +86,6 @@ const MyApp = (props: MyAppProps) => (
       <props.Component {...props.pageProps} />
     </InnerApp>
   </Provider>
-
 )
 MyApp.getInitialProps = async ({ Component, router, ctx }: AppContext) => {
 

@@ -7,6 +7,14 @@ import { TLIGHT_COLORS } from '@/interfaces/general';
 import { LIGHT_COLORS } from '@/constants/colors';
 import { ICatalogInfo } from '@/interfaces/dashboard';
 
+// catalog icons
+
+import foodIcon from '@/images/catalog/food-icon.svg';
+import alcoholIcon from '@/images/catalog/alcohol-icon.svg';
+import detergentIcon from '@/images/catalog/detergent-icon.svg';
+
+const catalogIcons = [foodIcon, alcoholIcon, detergentIcon];
+
 type TCard = 'standard' | 'multi' | 'row';
 
 interface NavigationCardProps {
@@ -94,8 +102,8 @@ const MultiCard: React.FC<NavigationCardProps> = ({
                 <Title rectColor={color}  titleText={title || 'Default title'} />
             </div>
             <div className={styles.multiCardBox}>
-                {multiCardData && multiCardData.map((item: ICatalogInfo) => (
-                    <MultiCardItem key={item.catalogId} {...item} />
+                {multiCardData && multiCardData.map((item: ICatalogInfo, index: number) => (
+                    <MultiCardItem key={item.catalogId} {...item} icon={catalogIcons[index]} />
                 ))}
             </div>
         </div>
@@ -104,7 +112,7 @@ const MultiCard: React.FC<NavigationCardProps> = ({
 
 const MultiCardItem: React.FC<ICatalogInfo> = ({
     catalogName,
-    catalogImage,
+    icon,
     totalCategory,
     totalProducts,
     linkName,
@@ -126,7 +134,7 @@ const MultiCardItem: React.FC<ICatalogInfo> = ({
                             <span className={styles.itemColNumber}>{totalCategory}</span>
                         </div>
                         <div className={styles.itemImage}>
-                            <img src={catalogImage} alt="icon" />
+                            <img src={icon} alt="icon" />
                         </div>
                     </div>
                 </a>

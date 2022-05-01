@@ -3,7 +3,7 @@ import { ILangData } from './general';
 export interface ICatalogInfo {
     catalogId: string;
     catalogName: ILangData;
-    catalogImage: string;
+    icon: string;
     linkName: string;
     totalCategory: number;
     totalProducts: number;
