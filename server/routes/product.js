@@ -6,6 +6,7 @@ const router = new Router()
 
 router.get('/products', productController.getAllProducts)
 router.get('/search-products', productController.getSearchProducts)
+router.get('/search-products-by-ids', productController.getSearchProductsByIds)
 router.get('/category-products/:id', productController.getProductsByCategoryId)
 router.get('/product/:id', productController.getProduct)
 router.get('/discounted-products', authMiddleware, productController.getDiscountedProducts)

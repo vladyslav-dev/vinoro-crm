@@ -1,8 +1,8 @@
 const ApiError = require('../exceptions/apiError')
 
 module.exports = function(err, req, res, next) {
-    console.log(err)
     if (err instanceof ApiError) {
+        console.log(err)
         return res.status(err.status).json({message: err.message, errors: err.errors})
     }
 

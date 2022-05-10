@@ -78,8 +78,7 @@ class ProductService {
     }
 
     async getOne(id) {
-
-        const product = await ProductModel.findById(id);
+        const product = await ProductModel.findById({ _id: id });
 
         const productDto = new ProductDto(product);
 
@@ -118,6 +117,14 @@ class ProductService {
         const searchProducts = await ProductModel.find({}, ['_id', 'name', 'category']);
 
         const searchProductsDto = searchProducts.map(item => new SearchProductsDto(item))
+
+        return searchProductsDto
+    }
+
+    async getSearchProductsByIds(data) {
+        const searchProducts = await ProductModel.find({ _id: { $in: data } });
+
+        const searchProductsDto = searchProducts.map(item => new ProductDto(item))
 
         return searchProductsDto
     }

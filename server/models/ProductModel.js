@@ -20,7 +20,6 @@ const ProductModel = new mongoose.Schema({
     image: {
         type: String,
         default: '',
-        require: true,
     },
     price: {
         type: Number,

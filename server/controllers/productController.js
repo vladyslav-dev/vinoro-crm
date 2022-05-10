@@ -71,6 +71,21 @@ module.exports.getSearchProducts = async (req, res, next) => {
     }
 }
 
+module.exports.getSearchProductsByIds = async (req, res, next) => {
+    try {
+        const data = req?.query?.data;
+
+        if (data) {
+            const productList = await ProductService.getSearchProductsByIds(data);
+
+            return res.json(productList)
+        }
+
+    } catch (error) {
+        next(error)
+    }
+}
+
 module.exports.getProductsByCategoryId = async (req, res, next) => {
     try {
         const id = req.params.id;

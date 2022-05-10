@@ -11,10 +11,10 @@ const catalogRouter = require('./routes/catalog')
 const categoryRouter = require('./routes/category')
 const productRouter = require('./routes/product')
 const dashboardRouter = require('./routes/dashboard')
+const orderRouter = require('./routes/order')
 
 const app = express()
 const PORT = process.env.PORT || 5000
-
 
 app.use(bodyParser.json({limit: '100mb', extended: true}))
 app.use(bodyParser.urlencoded({limit: '100mb', extended: true}))
@@ -27,11 +27,12 @@ app.use(cors({
     origin: process.env.CLIENT_URL
 }))
 
-app.use('/api', authRouter)
 app.use('/api', dashboardRouter)
-app.use('/api', catalogRouter)
 app.use('/api', categoryRouter)
+app.use('/api', catalogRouter)
 app.use('/api', productRouter)
+app.use('/api', orderRouter)
+app.use('/api', authRouter)
 
 app.use(errorMiddleware)
 
