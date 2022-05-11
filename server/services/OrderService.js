@@ -1,4 +1,4 @@
-const sendMail = require('../utils/nodemailer');
+const sendMail = require('../utils/sendOrderToEmail');
 const OrderModel = require('../models/OrderModel');
 
 class OrderService {

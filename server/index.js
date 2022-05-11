@@ -12,6 +12,7 @@ const categoryRouter = require('./routes/category')
 const productRouter = require('./routes/product')
 const dashboardRouter = require('./routes/dashboard')
 const orderRouter = require('./routes/order')
+const questionRouter = require('./routes/question')
 
 const app = express()
 const PORT = process.env.PORT || 5000
@@ -24,10 +25,11 @@ app.use(cookieParser())
 
 app.use(cors({
     credentials: true,
-    origin: process.env.CLIENT_URL
-}))
+    origin: [process.env.MAIN_CLIENT_URL, process.env.ADMIN_PANEL_CLIENT_URL]
+}));
 
 app.use('/api', dashboardRouter)
+app.use('/api', questionRouter)
 app.use('/api', categoryRouter)
 app.use('/api', catalogRouter)
 app.use('/api', productRouter)
