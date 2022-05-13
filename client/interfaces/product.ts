@@ -61,6 +61,7 @@ export interface IProductService {
     getAll: () => Promise<IProduct[]>;
     getSearchProducts: () => Promise<ISearchProduct[]>
     getByCategoryId: (categoryId: string) => Promise<IProduct[]>;
+    getProductsByIdList: (idList: string[]) => Promise<IProduct[]>;
     getOne: (id: string) => Promise<IProduct>;
     getDiscountedProducts: () => Promise<IProduct[]>;
     getNewProducts: () => Promise<IProduct[]>;

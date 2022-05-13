@@ -12,6 +12,18 @@ export const ExpandArrow: React.FC<SvgIconProps> = ({ color }) => (
             </clipPath>
         </defs>
     </svg>
+)
 
+export const OrderControllerArrow: React.FC<SvgIconProps> = ({ color }) => (
+    <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g clipPath="url(#clip0_2046_905)">
+            <path d="M16.8381 0.289238C17.4784 0.289238 18.0942 0.535615 18.587 1.00344C19.5475 1.96403 19.5475 3.54039 18.587 4.50099L11.1239 11.9887L18.6116 19.4764C19.5722 20.437 19.5722 22.0134 18.6116 22.9739C17.651 23.9345 16.0746 23.9345 15.114 22.9739L5.87756 13.7375C5.40953 13.2694 5.16336 12.6537 5.16336 11.9886C5.16336 11.3235 5.4343 10.7078 5.87756 10.2397L15.0894 1.00326C15.582 0.535412 16.2223 0.289062 16.8381 0.289062L16.8381 0.289238Z" fill={color || "#282B30"}/>
+        </g>
+        <defs>
+            <clipPath id="clip0_2046_905">
+                <rect width="24" height="24" fill="white" transform="translate(24.2461) rotate(90)"/>
+            </clipPath>
+        </defs>
+    </svg>
 
 )

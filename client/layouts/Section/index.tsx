@@ -5,6 +5,7 @@ import Toolbar from '@/components/Toolbar';
 // @store
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/index';
+import OrderController from '@/components/OrderController';
 
 interface SectionProps {
     title?: string;
@@ -12,6 +13,7 @@ interface SectionProps {
     children?: React.ReactNode;
     showBackground?: boolean;
     hideScrollbar?: boolean;
+    orderController?: boolean;
 }
 
 const Section: React.FC<SectionProps> = ({
@@ -19,6 +21,7 @@ const Section: React.FC<SectionProps> = ({
     toolbar = false,
     showBackground = true,
     hideScrollbar = false,
+    orderController = false,
     children,
 }) => {
 
@@ -63,16 +66,13 @@ const Section: React.FC<SectionProps> = ({
             <div className={styles.sectionRow}>
                 <h1 className={styles.sectionTitle}>{title}</h1>
                 {toolbar && <Toolbar />}
+                {orderController && <OrderController />}
             </div>
             <div className={`${styles.contentWrapper}`} ref={wrapperRef}>
                 <div className={`${styles.shadow} ${styles.top}`} ref={shadowTopRef} />
                 <div className={`${styles.shadow} ${styles.bottom}`} ref={shadowBottomRef} />
                 <div
-                    className={`
-                        ${styles.sectionContent}
-                        ${showBackground ? styles.background : ''}
-                        ${hideScrollbar ? styles.hideScrollbar : ''}
-                    `}
+                    className={`${styles.sectionContent} ${showBackground ? styles.background : ''} ${hideScrollbar ? styles.hideScrollbar : ''}`}
                     ref={contentRef}
                 >
                     {children}

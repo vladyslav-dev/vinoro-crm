@@ -1,8 +1,9 @@
 const sendMail = require('../utils/sendOrderToEmail');
 const OrderModel = require('../models/OrderModel');
+const OrderDto = require('../dtos/orderDtos');
 
 class OrderService {
-    async sendMail(data) {
+    async create(data) {
 
         const productArray = Object.values(data.products).map(item => ({
             product_ref: item.id,
@@ -32,11 +33,34 @@ class OrderService {
             created_at: data.created_at,
             products: productArray,
             order_price: totalPrice,
-            lang: data.mailLanguage
+            lang: data.mailLanguage,
+            confirmed: false,
+            success: false
         }, function (err) {
             if (err) return console.error(err);
             sendMail(data, totalPrice);
         });
+    }
+    async getAll() {
+        const orders = await OrderModel.find({}).sort({ order_id: -1 });
+
+        const ordersDtos = orders.map(order => new OrderDto(order));
+
+        return ordersDtos;
+    }
+    async getOne(id) {
+        const order = await OrderModel.findById(id);
+
+        const orderDto = new OrderDto(order)
+
+        return orderDto;
+    }
+    async updateOne(id, data) {
+        const order = await OrderModel.findByIdAndUpdate(id, data);
+
+        const orderDto = new OrderDto(order)
+
+        return orderDto;
     }
 }
 

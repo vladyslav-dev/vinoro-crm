@@ -8,6 +8,12 @@ export const COLORS = {
     COLOR_WHITE:'#FEFEFE',
 };
 
+export const ORDER_COLORS = {
+    COLOR_DANGER:'#D0021B',
+    COLOR_SUCCESS:'#25CB55',
+    COLOR_GOLD:'#FFBD0A',
+}
+
 export const LIGHT_COLORS = {
     COLOR_JORDY_BLUE: '#99CAF4',
     COLOR_SEA_PINK: '#EC9AA4',

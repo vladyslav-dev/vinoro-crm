@@ -2,11 +2,13 @@ import {combineReducers, configureStore} from '@reduxjs/toolkit';
 import authReducer from './slices/auth';
 import searchReducer from './slices/search';
 import viewReducer from './slices/viewMode';
+import orderReducer from './slices/orderController';
 
 const rootReducer = combineReducers({
     authReducer,
     searchReducer,
-    viewReducer
+    viewReducer,
+    orderReducer,
 });
 
 const store = configureStore({

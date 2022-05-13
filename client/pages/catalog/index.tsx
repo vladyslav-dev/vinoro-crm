@@ -30,7 +30,6 @@ const Catalog: NextPage = () => {
                 <CatalogList catalogList={catalog} categoryList={category} />
             </Section>
         </>
-
     )
 }
 

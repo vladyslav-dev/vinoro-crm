@@ -17,8 +17,6 @@ const Home: NextPage = () => {
 
   const catalogInfo = catalogResponse.data;
 
-  console.log(catalogInfo)
-
   if (!catalogInfo) {
     return null;
   }

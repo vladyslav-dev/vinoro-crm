@@ -1,0 +1,39 @@
+@import '../../styles/index.scss';
+
+.controller {
+    display: flex;
+    align-items: center;
+
+    @media (min-width: 700px) {
+        display: none;
+    }
+
+    .controllerItem {
+        all: unset;
+        padding: 4px;
+        @include flexCenter;
+        cursor: pointer;
+
+        &:last-child{
+            transform: rotate(180deg);
+        }
+
+        &.disable {
+            pointer-events: none;
+
+            svg {
+                path {
+                    fill: $gray;
+                }
+            }
+        }
+    }
+
+    .controllerDot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background-color: $slate;
+        margin: 0 10px;
+    }
+}

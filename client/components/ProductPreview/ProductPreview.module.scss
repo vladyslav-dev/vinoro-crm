@@ -13,7 +13,11 @@
     &::-webkit-scrollbar {
         width: 4px;
         margin-right: -20px;
-        visibility: hidden;
+        visibility: hidden !important;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: transparent;
     }
 
     &:hover {

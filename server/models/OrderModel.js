@@ -30,7 +30,7 @@ const OrderProduct = new mongoose.Schema({
     },
     quantity: Number,
     total_price: Number,
-    current_price: Number,
+    current_price: Number
 });
 
 const OrderModel = new mongoose.Schema({
@@ -63,7 +63,14 @@ const OrderModel = new mongoose.Schema({
     created_at: String,
     lang: String,
     order_price: Number,
-
+    confirmed: {
+        type: Boolean,
+        default: false
+    },
+    success: {
+        type: Boolean,
+        default: false
+    }
 }, {collection: 'orders'});
 
 module.exports = mongoose.model('orders', OrderModel)

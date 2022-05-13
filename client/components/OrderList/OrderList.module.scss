@@ -1,0 +1,29 @@
+@import '../../styles/index.scss';
+
+.orderListWrapper {
+    width: 100%;
+    .orderTitle {
+        display: flex;
+        align-items: center;
+        margin-bottom: 12px;
+
+        h3 {
+            font-size: 17px;
+            font-weight: 600;
+            margin-left: 6px;
+        }
+    }
+
+    .orderList {
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+        row-gap: 8px;
+        margin: 16px 0;
+    }
+
+    .emptyList {
+        border: 2px solid $bgGray;
+        @include radius-md;
+    }
+}

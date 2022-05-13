@@ -1,0 +1,332 @@
+@import '../../styles/index.scss';
+
+.wrapper {
+    color: $slate;
+
+    .section {
+        max-width: 1000px;
+
+        .sectionTitle {
+            h2 {
+                font-weight: 600;
+                font-size: 19px;
+            }
+        }
+
+        .sectionContent {
+            padding: 30px 0;
+            overflow: auto;
+
+            .sectionContentRow {
+                width: 100%;
+                padding: 16px 8px;
+                display: flex;
+                border-bottom: 2px solid $bgGray;
+
+
+                .sectionCol {
+                    line-height: 22px;
+                    font-weight: 600;
+                    font-size: 13px;
+
+                    &:first-child {
+                        color: $zinc;
+                        width: clamp(120px, 30%, 300px);
+                        margin-right: 8px;
+                    }
+
+                    &:last-child {
+                        width: clamp(120px, 80%, 80%);
+                    }
+
+                    a {
+                        color: #2c5cd2;
+                    }
+                }
+            }
+
+            .table {
+                // overflow: auto;
+                // box-shadow: 0px 8px 24px rgba(149, 157, 165, 0.2);
+                border: 2px solid $bgGray;
+                border-radius: 6px;
+                width: clamp(800px, 100%, 1000px);
+
+                .tableHead, .tableBody {
+                    .tableRow {
+                        display: flex;
+                        align-items: center;
+                        padding: 16px 0;
+                        font-size: 13px;
+                        line-height: 18px;
+                        font-weight: 600;
+
+
+                        .tableCol {
+
+                            &:nth-child(1) {
+                                min-width: 90px;
+                                text-align: center;
+                                display: flex;
+                                flex-direction: column;
+                                align-items: center;
+
+                                span {
+                                    all: inherit;
+                                    cursor: pointer;
+                                }
+                            }
+
+                            &:nth-child(2) {
+                                width: 100%;
+                            }
+
+                            &:nth-child(3) {
+                                min-width: 110px;
+                                text-align: center;
+                            }
+
+                            &:nth-child(4) {
+                                min-width: 110px;
+                                text-align: center;
+                            }
+
+                            &:nth-child(5) {
+                                min-width: 150px;
+                                text-align: center;
+                            }
+                        }
+                    }
+                }
+
+                .tableHead {
+                    color: $zinc;
+
+                    .tableRow {
+
+
+
+                        .tableCol {
+
+
+                        }
+                    }
+                }
+
+                .tableBody {
+                    color: $slate;
+
+                    .tableRow {
+
+                        &:nth-child(odd) {
+                            background-color: $bgGray;
+                        }
+
+                        .tableCol {
+                            position: relative;
+                        }
+                    }
+                }
+            }
+
+            .totalPrice {
+                width: 140px;
+                @include flexCenter;
+                padding: 8px 12px;
+                margin-top: 24px;
+                font-size: 15px;
+                font-weight: 600;
+                color: $slate;
+                border: 2px solid $slate;
+                @include radius-sm;
+            }
+        }
+
+        .button {
+            margin-top: 20px;
+            @include radius-sm;
+            border: none;
+            outline: none;
+            width: 100%;
+            height: 38px;
+            font-size: 14px;
+            font-weight: 600;
+            color: $white;
+            cursor: pointer;
+        }
+    }
+}
+
+.productDetailBackground {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.235);
+    visibility: hidden;
+    opacity: 0;
+    z-index: 999;
+
+    &.active {
+        visibility: visible;
+        opacity: 1;
+    }
+
+    .productDetailModal {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        height: 92vh;
+        max-height: 702px;
+        max-width: 360px;
+        @include transitionLow;
+        @include dropShadow;
+        background-color: $white;
+        @include radius-sm;
+        padding: 15px;
+        padding-right: 4px;
+        box-sizing: border-box;
+
+        .productModel {
+            min-width: 300px;
+            height: calc(92vh - 30px);
+            min-height: 500px;
+            max-height: 662px;
+            overflow: auto;
+            padding-right: 11px;
+
+            &::-webkit-scrollbar-thumb {
+                background: transparent;
+            }
+
+            .productImage {
+                width: 100%;
+                margin: 0 auto;
+                margin-bottom: 12px;
+
+                img {
+                    @include radius-sm;
+                }
+            }
+
+            .productName {
+                margin-bottom: 20px;
+
+                & > p {
+                    font-size: 15px;
+                    font-weight: 600;
+                    line-height: 22px;
+                    margin-bottom: 15px;
+                }
+            }
+
+            .productPrice {
+                margin-top: 20px;
+                font-size: 17px;
+                font-weight: 600;
+                line-height: 20px;
+                margin-bottom: 20px;
+            }
+
+            .productDiscount {
+                margin-top: 20px;
+                width: 100%;
+                display: flex;
+                align-items: center;
+                position: relative;
+                line-height: 20px;
+
+                .productNewPrice {
+                    font-size: 17px;
+                    font-weight: 600;
+                    color: $danger;
+                    margin-right: 16px;
+                }
+
+                .productOldPrice {
+                    position: relative;
+                    font-size: 14px;
+                    font-weight: 600;
+
+                    @include lineThrough;
+                }
+            }
+
+            .bulkPrice {
+                cursor: default;
+
+                .bulkPriceTitle {
+                    display: flex;
+                    align-items: center;
+                    color: $slate;
+
+                    p {
+                        font-size: 12px;
+                        font-weight: 600;
+                        margin-right: 6px;
+                    }
+                }
+
+                .bulkPriceList {
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 8px;
+                    margin: 12px 0;
+
+                    .bulkPriceItem {
+                        @include flexCenter;
+                        @include radius-sm;
+                        padding: 8px 10px;
+                        background-color: $bgGray;
+                        font-size: 12px;
+                        font-weight: 600;
+                        white-space: nowrap;
+                    }
+                }
+            }
+
+            .productAvailability {
+                margin-top: 26px;
+                border-bottom: 2px solid #ececec7a;
+                padding-bottom: 10px;
+                font-size: 12px;
+                font-weight: 600;
+                letter-spacing: .3px;
+                .cardAvailabilityRed {
+                    color: $danger;
+                }
+
+                .cardAvailabilityGreen {
+                    color: $success;
+                }
+            }
+        }
+
+        .closeModal {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 44px;
+            height: 44px;
+            background-color: $white;
+            border-radius: 50%;
+            @include dropShadow;
+            transform: translate(50%, -50%);
+            @include flexCenter;
+            cursor: pointer;
+
+            img {
+                border-radius: 50%;
+                // max-width: 10px;
+            }
+
+            @media(max-width: 368px) {
+                transform: translate(0, 0);
+                top: 11px;
+                right: 11px;
+            }
+        }
+    }
+}
+
