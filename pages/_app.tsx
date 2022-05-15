@@ -87,15 +87,15 @@ const MyApp = (props: MyAppProps) => (
     </InnerApp>
   </Provider>
 )
-// MyApp.getInitialProps = async ({ Component, router, ctx }: AppContext) => {
+MyApp.getInitialProps = async ({ Component, router, ctx }: AppContext) => {
 
-//   const pageContext = { ...ctx };
-//   const pageProps = Component.getInitialProps ? await Component.getInitialProps(pageContext) : {};
+  const pageContext = { ...ctx };
+  const pageProps = Component.getInitialProps ? await Component.getInitialProps(pageContext) : {};
 
-//   return {
-//     ...pageProps,
-//   }
-// }
+  return {
+    ...pageProps,
+  }
+}
 
 
 
