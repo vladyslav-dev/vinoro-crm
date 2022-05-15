@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { AuthResponse } from '@/interfaces/auth';
 
+console.log(process.env.NEXT_PUBLIC_API_URL)
 export const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 const $api = axios.create({
