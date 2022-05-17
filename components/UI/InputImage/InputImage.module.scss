@@ -75,7 +75,7 @@
     position: fixed;
     inset: 0;
     width: 100vw;
-    height: 100vh;
+    height: var(--app-height);
     z-index: 50;
     background: #e1e1e1b3;
     backdrop-filter: blur(6px);

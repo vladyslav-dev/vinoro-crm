@@ -59,8 +59,8 @@
             @include radius-md;
             @include viewTransition;
             border-radius: 12px;
-            min-height: calc(100vh - 274px);
-            max-height: calc(100vh - 220px);
+            min-height: calc(var(--app-height) - 274px);
+            max-height: calc(var(--app-height) - 220px);
             overflow-y: auto;
             scroll-behavior: smooth;
             animation: fade-in .6s forwards;
@@ -80,20 +80,20 @@
             }
 
             @media(max-width: 700px) {
-                max-height: calc(100vh - 275px);
+                max-height: calc(var(--app-height) - 275px);
             }
 
             @media(max-width: 450px) {
-                max-height: calc(100vh - 275px);
+                max-height: calc(var(--app-height) - 275px);
             }
         }
     }
 
     &.viewMode {
-        max-height: calc(100vh - 56px);
+        max-height: calc(var(--app-height) - 56px);
 
         .sectionContent {
-            max-height: calc(100vh - 156px);
+            max-height: calc(var(--app-height) - 156px);
         }
     }
 }

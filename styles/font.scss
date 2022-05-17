@@ -1,13 +1,19 @@
 @import './variables.scss';
 
+:root {
+    --app-height: 100%;
+}
+
 body {
     font-family: 'Noto Sans Display', sans-serif, Arial, Helvetica;
     font-style: normal;
     font-weight: normal;
     font-size: inherit;
     color: $slate;
-
-    overflow: hidden;
+    overflow: auto;
+    position: fixed;
+    inset: 0;
+    overscroll-behavior: contain;
 }
 
 

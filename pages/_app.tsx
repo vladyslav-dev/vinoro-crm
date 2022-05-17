@@ -38,6 +38,11 @@ const InnerApp: React.FC<InnerAppProps> = ({ children }) => {
   const { data: swrSearchCategory } = useSWR(`GET-SEARCH-CATEGORY`, async () => await CategoryService.getSearchCategory());
 
   useEffect(() => {
+    const doc = document.documentElement;
+    doc.style.setProperty('--app-height', `${window.innerHeight}px`)
+  }, [])
+
+  useEffect(() => {
     dispatch(setProducts(swrSearchProducts));
     dispatch(setCategory(swrSearchCategory));
   }, [swrSearchProducts, swrSearchCategory])

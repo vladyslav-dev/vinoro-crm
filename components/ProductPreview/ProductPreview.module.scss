@@ -5,7 +5,7 @@
     top: 30px;
     right: 0;
     overflow-y: scroll;
-    max-height: calc(100vh - 310px);
+    max-height: calc(var(--app-height) - 310px);
     margin-right: -10px;
     padding-right: 10px;
     @include transitionLow;
@@ -42,7 +42,7 @@
 
 
     @media(max-width: 450px) {
-        max-height: calc(100vh - 335px);
+        max-height: calc(var(--app-height) - 335px);
     }
 
     .previewTitle {

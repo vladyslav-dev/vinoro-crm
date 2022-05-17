@@ -17,7 +17,7 @@ const OrderPage: NextPage = () => {
             <Head>
                 <title>Vinoro — Заказы</title>
             </Head>
-            <Section title={'Заказы'} orderController>
+            <Section title={'Заказы'} orderController showBackground={!!orderList}>
                 {!orderList ? (
                     <Loader type='bubbles' />
                 ) : (

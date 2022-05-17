@@ -4,7 +4,9 @@ $headerMobileSize: 84px;
 
 .layout {
     width: 100vw;
-    height: 100vh;
+    position: fixed;
+    inset: 0;
+    overscroll-behavior: contain;
     overflow: hidden;
     background-color: $bgGray;
 
@@ -24,19 +26,19 @@ $headerMobileSize: 84px;
         position: fixed;
         inset: 0;
         top: 100px;
-        height: calc(100vh - 100px);
+        height: calc(var(--app-height) - 100px);
         width: 100%;
         @include viewTransition;
 
         @media (max-width: 700px) {
             top: $headerMobileSize;
             flex-direction: column-reverse;
-            height: calc(100vh - #{$headerMobileSize});
+            height: calc(var(--app-height) - #{$headerMobileSize});
         }
     }
 
     .layout__navbar {
-        height: 100vh;
+        height: var(--app-height);
         width: 100px;
         @include viewTransition;
         background-color: $white;
@@ -52,7 +54,7 @@ $headerMobileSize: 84px;
         width: 100%;
 
         @media (max-width: 700px) {
-            height: calc(100vh - #{$headerMobileSize} - #{$headerMobileSize});
+            height: calc(var(--app-height) - #{$headerMobileSize} - #{$headerMobileSize});
         }
     }
 
@@ -96,7 +98,7 @@ $headerMobileSize: 84px;
         }
 
         .layout__group {
-            height: calc(100vh - 56px);
+            height: calc(var(--app-height) - 56px);
             width: calc(100% + 100px);
             transform: translate(-100px, -100px);
 

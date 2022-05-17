@@ -80,7 +80,7 @@
     .searchOutput {
         position: absolute;
         width: 100%;
-        max-height: calc(100vh - 296px);
+        max-height: calc(var(--app-height) - 296px);
         overflow-y: auto;
         top: 52px;
         left: 0;
@@ -92,7 +92,7 @@
         z-index: 2;
 
         @media (max-width: 450px) {
-            max-height: calc(100vh - 162px);
+            max-height: calc(var(--app-height) - 162px);
         }
 
         .searchOutputLength {

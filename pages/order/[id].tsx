@@ -31,9 +31,9 @@ const Order: NextPage = () => {
     return (
         <>
             <Head>
-                <title>Vinoro — Заказ {order?.order_id || ''}</title>
+                <title>{!!order ? `Vinoro — Заказ ${order?.order_id}` : 'Загрузка'}</title>
             </Head>
-            <Section title={`Заказ №${order?.order_id || ''}`}>
+            <Section title={!!order ? `Заказ №${order?.order_id}` : ''} showBackground={!(!order || !products)}>
                 {!order || !products ? (
                     <Loader type='bubbles' />
                 ) : (
