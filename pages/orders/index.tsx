@@ -11,9 +11,6 @@ import Loader from '@/components/UI/Loader';
 const OrderPage: NextPage = () => {
 
     const { data: orderList } = useSWR('ORDERS-GET-ALL', async () => await OrderService.getAll());
-    if (!orderList) {
-        return null
-    }
 
     return (
         <>

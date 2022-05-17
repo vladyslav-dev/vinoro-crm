@@ -7,6 +7,7 @@ import OrderService from '@/services/OrderService';
 import { useRouter } from 'next/router';
 import OrderDetail from '@/components/OrderDetail';
 import ProductService from '@/services/ProductService';
+import Loader from '@/components/UI/Loader';
 
 const Order: NextPage = () => {
 
@@ -27,17 +28,17 @@ const Order: NextPage = () => {
         }
     }, [order]);
 
-    if (!order || !products) {
-        return null
-    }
-
     return (
         <>
             <Head>
-                <title>Vinoro — Заказ {order.order_id}</title>
+                <title>Vinoro — Заказ {order?.order_id || ''}</title>
             </Head>
-            <Section title={`Заказ №${order.order_id}`}>
-                <OrderDetail order={order} orderProducts={products} />
+            <Section title={`Заказ №${order?.order_id || ''}`}>
+                {!order || !products ? (
+                    <Loader type='bubbles' />
+                ) : (
+                    <OrderDetail order={order} orderProducts={products} />
+                )}
             </Section>
         </>
     )

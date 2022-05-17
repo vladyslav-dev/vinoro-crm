@@ -7,19 +7,12 @@ import Head from 'next/head';
 import { NextPage } from 'next';
 import CatalogList from '@/components/CatalogList';
 import Section from '@/layouts/Section';
+import Loader from '@/components/UI/Loader';
 
 const Catalog: NextPage = () => {
 
-    const catalogResponse = useSWR('CATALOG-GET-ALL', async () => await CatalogService.getAll());
-    const categoryResponse = useSWR('CATEGORY-GET-ALL', async () => await CategoryService.getAll());
-
-
-    const catalog = catalogResponse.data;
-    const category = categoryResponse.data;
-
-    if (!catalog || !category) {
-        return null
-    }
+    const { data: catalog } = useSWR('CATALOG-GET-ALL', async () => await CatalogService.getAll());
+    const { data: category } = useSWR('CATEGORY-GET-ALL', async () => await CategoryService.getAll());
 
     return (
         <>
@@ -27,7 +20,11 @@ const Catalog: NextPage = () => {
                 <title>Vinoro — Каталог</title>
             </Head>
             <Section title="Каталог" showBackground={false}>
-                <CatalogList catalogList={catalog} categoryList={category} />
+                {!catalog || !category ? (
+                    <Loader type='bubbles' />
+                ) : (
+                    <CatalogList catalogList={catalog} categoryList={category} />
+                )}
             </Section>
         </>
     )

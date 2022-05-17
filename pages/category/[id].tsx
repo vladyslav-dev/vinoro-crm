@@ -23,18 +23,14 @@ const Category: NextPage = () => {
         return await ProductService.getByCategoryId(query.id as string)
     })
 
-    if (!category || !products) {
-        return null
-    }
-
     return (
         <>
             <Head>
-                <title>Vinoro — {category.category_name.ru}</title>
+                <title>Vinoro — {category?.category_name.ru || ''}</title>
             </Head>
-            <Section title={category.category_name.ru} toolbar>
+            <Section title={category?.category_name.ru || ''} toolbar>
                 <div className={formStyles.sectionContainer}>
-                    {!products ? (
+                    {!category || !products ? (
                         <Loader type='bubbles' />
                     ) : (
                         <>
