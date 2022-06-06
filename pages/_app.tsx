@@ -34,8 +34,8 @@ const InnerApp: React.FC<InnerAppProps> = ({ children }) => {
   const dispatch = useDispatch();
   const { isAuth } = useSelector((state: RootState) => state.authReducer);
 
-  const { data: swrSearchProducts } = useSWR(`GET-SEARCH-PRODUCTS`, async () => await ProductService.getSearchProducts());
-  const { data: swrSearchCategory } = useSWR(`GET-SEARCH-CATEGORY`, async () => await CategoryService.getSearchCategory());
+  const { data: swrSearchProducts } = useSWR(isAuth ? `GET-SEARCH-PRODUCTS` : null, async () => await ProductService.getSearchProducts());
+  const { data: swrSearchCategory } = useSWR(isAuth ? `GET-SEARCH-CATEGORY` : null, async () => await CategoryService.getSearchCategory());
 
   useEffect(() => {
     const doc = document.documentElement;
@@ -92,16 +92,6 @@ const MyApp = (props: MyAppProps) => (
     </InnerApp>
   </Provider>
 )
-MyApp.getInitialProps = async ({ Component, router, ctx }: AppContext) => {
-
-  const pageContext = { ...ctx };
-  const pageProps = Component.getInitialProps ? await Component.getInitialProps(pageContext) : {};
-
-  return {
-    ...pageProps,
-  }
-}
-
 
 
 export default MyApp

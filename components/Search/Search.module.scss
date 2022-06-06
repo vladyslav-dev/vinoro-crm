@@ -144,13 +144,12 @@
 
                         .itemOutput {
                             @include textOverflow(1);
-                            .letter {
 
-                                &.highlight {
+                                .highlight {
                                     color: $slate;
                                     font-weight: 700;
                                 }
-                            }
+
                         }
                     }
                 }

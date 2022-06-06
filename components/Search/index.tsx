@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import styles from './Search.module.scss';
 import Link from 'next/link';
 import { SearchIcon } from '@/components/Icons/SearchIcon';
@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/store/index';
 import { ISearchProduct } from '@/interfaces/product';
 import { ISearchCategory } from '@/interfaces/category';
-import { highlightSearchedLetters } from '@/utils/search';
+import { highlight } from '../../utils/search';
 
 interface SearchProps {
     hideLogo: () => void;
@@ -51,7 +51,9 @@ const Search: React.FC<SearchProps> = ({
 
         return { searchResult, totalProducts }
 
-    }, [searchQuery])
+    }, [searchQuery]);
+
+    const enlighten = useCallback(string => highlight(searchQuery, string), [searchQuery])
 
     useEffect(() => {
         if (!searchQuery.trim()) {
@@ -93,18 +95,14 @@ const Search: React.FC<SearchProps> = ({
                                 </span>
                                 <div className={styles.searchItemOutput}>
                                     {item.products.map((product: ISearchProduct, index: number) => {
+
                                         if (index < 5) {
+                                            console.log(highlight(product.name['ru'], searchQuery))
                                             return (
                                                 <Link href={`/edit-product/[id]`} as={`/edit-product/${product?.id}`} key={product.id}>
                                                     <a className={styles.itemOutputLink} onClick={finishSearch}>
                                                         <span className={styles.itemOutput}>
-                                                            {highlightSearchedLetters(product.name['ru'], searchQuery).map((item, innerKey) => {
-                                                                return (
-                                                                    <span key={innerKey} className={`${styles.letter} ${item.isHighlighted ? styles.highlight : ''}`}>
-                                                                        {item.letter}
-                                                                    </span>
-                                                                )
-                                                            })}
+                                                            {enlighten(product.name['ru'])}
                                                         </span>
                                                     </a>
                                                 </Link>
