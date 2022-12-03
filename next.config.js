@@ -1,4 +1,11 @@
-const withPWA = require('next-pwa')
+/** @type {import('next').NextConfig} */
+const nextTranslate = require('next-translate')
+const withPWA = require("next-pwa")({
+  dest: 'public',
+  register: true,
+  skipWaiting: true,
+  disable: process.env.NODE_ENV === 'development'
+});
 
 const nextConfig = withPWA({
   reactStrictMode: true,
@@ -9,12 +16,5 @@ const nextConfig = withPWA({
   devIndicators: {
     buildActivity: false
   },
-  pwa: {
-    dest: 'public',
-    register: true,
-    skipWaiting: true,
-    disable: process.env.NODE_ENV === 'development'
-  }
-})
-
-module.exports = nextConfig
+});
+module.exports = nextConfig;
