@@ -1,5 +1,5 @@
 /** @type {import('next').NextConfig} */
-const nextTranslate = require('next-translate')
+
 const withPWA = require("next-pwa")({
   dest: 'public',
   register: true,
