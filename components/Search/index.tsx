@@ -97,7 +97,6 @@ const Search: React.FC<SearchProps> = ({
                                     {item.products.map((product: ISearchProduct, index: number) => {
 
                                         if (index < 5) {
-                                            console.log(highlight(product.name['ru'], searchQuery))
                                             return (
                                                 <Link href={`/edit-product/[id]`} as={`/edit-product/${product?.id}`} key={product.id}>
                                                     <a className={styles.itemOutputLink} onClick={finishSearch}>
