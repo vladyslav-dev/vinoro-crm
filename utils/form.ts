@@ -39,7 +39,7 @@ export type TFilterCategory = (category: ICategory[]) => IFilteredCategory;
 export type TGetLangField = (field: any, lang?: keyof ILangData) => string;
 export type TCompareLangFields = (arr1: ILangData, arr2: ILangData) => boolean;
 
-export const transformToSelectData: TTransformToSelectData = (data, value, lang = 'ru', id) => (
+export const transformToSelectData: TTransformToSelectData = (data, value, lang = 'uk', id) => (
     // Transform data for <Select>
     data.map((item: any, index: number) => ({
         id: item.id,
@@ -60,7 +60,7 @@ export const filterCategory: TFilterCategory = (category) => {
     return fiilteredCategory;
 }
 
-export const transformFilteredCategory: TTransformFilteredCategory = (fiilteredCategory, value, lang = 'ru', categoryId) => {
+export const transformFilteredCategory: TTransformFilteredCategory = (fiilteredCategory, value, lang = 'uk', categoryId) => {
     for(let key in fiilteredCategory) {
         fiilteredCategory[key] = transformToSelectData(fiilteredCategory[key], value, lang, categoryId)
     }
@@ -93,7 +93,7 @@ export const transformBulkPriceToString = (bulkPrice: IFormBulkPrice[] | IBulkPr
     bulkPrice.map(item => `${item.price} ₴ от ${item.from}шт.`).join(' | ')
 )
 
-export const getLangField: TGetLangField = (field, lang = 'ru') => field[lang];
+export const getLangField: TGetLangField = (field, lang = 'uk') => field[lang];
 
 export const getSelectedCategory = (data: ISelectData[]) => (
     data.find((item: any) => item.selected)
@@ -123,19 +123,19 @@ const getSelectedCatalogIdByCategory = (transformedCategory: IFilteredCategory) 
 
 export const setInitialValues = (catalog: ICatalog[], category: ICategory[], product?: IProduct) => {
     const transformedCategory: IFilteredCategory =
-                        transformFilteredCategory(filterCategory(category), 'category_name', 'ru', product?.category);
+                        transformFilteredCategory(filterCategory(category), 'category_name', 'uk', product?.category);
 
     const selectedCatalogId = getSelectedCatalogIdByCategory(transformedCategory);
-    const transformedCatalog: ISelectData[] = transformToSelectData(catalog, 'catalog_name', 'ru', selectedCatalogId);
+    const transformedCatalog: ISelectData[] = transformToSelectData(catalog, 'catalog_name', 'uk', selectedCatalogId);
 
     return {
         name: {
-            ru: product?.name.ru || '',
+            ru: product?.name.ru || 'Unused language',
             uk: product?.name.uk || '',
             en: product?.name.en || '',
         },
         description: {
-            ru: product?.description.ru || '',
+            ru: product?.description.ru || 'Unused language',
             uk: product?.description.uk || '',
             en: product?.description.en || '',
         },
@@ -166,8 +166,8 @@ export const setProductPreview = (options: IProductPreviewOptions): IProductPrev
 
     const IND = 'Не указано'; // Is not defined field;
 
-    const nameField = getLangField(getField('name'), 'ru');
-    const descriptionField = getLangField(getField('description'), 'ru');
+    const nameField = getLangField(getField('name'), 'uk');
+    const descriptionField = getLangField(getField('description'), 'uk');
     const bulkPriceField = transformBulkPriceToString(getField('bulk_price'));
 
     const config = [
@@ -327,12 +327,12 @@ export const setProductPreview = (options: IProductPreviewOptions): IProductPrev
 // Category form
 
 export const initCategoryForm = (catalog: ICatalog[], category?: ICategory) => {
-    const transformedCatalog: ISelectData[] = transformToSelectData(catalog, 'catalog_name', 'ru', category?.catalog);
+    const transformedCatalog: ISelectData[] = transformToSelectData(catalog, 'catalog_name', 'uk', category?.catalog);
 
     return {
         id: category?.id || '',
         category_name: {
-            ru: category?.category_name.ru || '',
+            ru: category?.category_name.ru || 'Unused language',
             uk: category?.category_name.uk || '',
             en: category?.category_name.en || '',
         },

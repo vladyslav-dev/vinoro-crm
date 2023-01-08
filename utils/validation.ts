@@ -7,7 +7,7 @@ export const authValidationSchema = yup.object().shape({
 
 export const catalogValidationSchema = yup.object().shape({
     catalog_name: yup.object().shape({
-        ru: yup.string().required(),
+        ru: yup.string(),
         uk: yup.string().required(),
         en: yup.string().required(),
     })
@@ -15,7 +15,7 @@ export const catalogValidationSchema = yup.object().shape({
 
 export const categoryValidationSchema = yup.object().shape({
     category_name: yup.object().shape({
-        ru: yup.string().required(),
+        ru: yup.string(),
         uk: yup.string().required(),
         en: yup.string().required(),
     })
@@ -23,7 +23,7 @@ export const categoryValidationSchema = yup.object().shape({
 
 export const productValidationSchema = yup.object().shape({
     name: yup.object().shape({
-        ru: yup.string().required(),
+        ru: yup.string(),
         uk: yup.string().required(),
         en: yup.string().required(),
     }),

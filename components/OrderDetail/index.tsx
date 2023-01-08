@@ -132,7 +132,7 @@ const OrderDetail: React.FC<OrderDetailProps> = ({ order, orderProducts }) => {
                                                             <Img src={product.image} />
                                                         </div>
                                                         <div className={styles.productName}>
-                                                            <p>{product.name['ru']}</p>
+                                                            <p>{product.name['uk']}</p>
                                                         </div>
                                                         <div className={styles.productAvailability}>
                                                             {productCollection[product.product_ref].availability ? <p className={styles.cardAvailabilityGreen}>Есть в наличии &nbsp; &#10004;</p> : <p className={styles.cardAvailabilityRed}>Нет в наличии &nbsp; &#10008;</p>}
@@ -180,7 +180,7 @@ const OrderDetail: React.FC<OrderDetailProps> = ({ order, orderProducts }) => {
                                         </Portal>
 
                                     </div>
-                                    <div className={styles.tableCol}>{product.name['ru']}</div>
+                                    <div className={styles.tableCol}>{product.name['uk']}</div>
                                     <div className={styles.tableCol}>{product.current_price}</div>
                                     <div className={styles.tableCol}>{product.quantity}</div>
                                     <div className={styles.tableCol}>{product.total_price}</div>

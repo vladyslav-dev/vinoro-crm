@@ -33,7 +33,7 @@ const Search: React.FC<SearchProps> = ({
 
         if (!query) return
 
-        const productResult: ISearchProduct[] = products.filter((item: ISearchProduct) => item.name['ru'].toLowerCase().includes(query));
+        const productResult: ISearchProduct[] = products.filter((item: ISearchProduct) => item.name['uk'].toLowerCase().includes(query));
 
         const result = productResult.reduce((acc: any, item) => {
             acc[item.category] = {
@@ -91,7 +91,7 @@ const Search: React.FC<SearchProps> = ({
                         {search.searchResult.map((item: any, key: any) => (
                             <li key={key} className={styles.searchItem}>
                                 <span className={styles.searchItemCategory}>
-                                    Категория: <span className={styles.categoryName}>{item.categoryName['ru']}</span>
+                                    Категория: <span className={styles.categoryName}>{item.categoryName['uk']}</span>
                                 </span>
                                 <div className={styles.searchItemOutput}>
                                     {item.products.map((product: ISearchProduct, index: number) => {
@@ -101,7 +101,7 @@ const Search: React.FC<SearchProps> = ({
                                                 <Link href={`/edit-product/[id]`} as={`/edit-product/${product?.id}`} key={product.id}>
                                                     <a className={styles.itemOutputLink} onClick={finishSearch}>
                                                         <span className={styles.itemOutput}>
-                                                            {enlighten(product.name['ru'])}
+                                                            {enlighten(product.name['uk'])}
                                                         </span>
                                                     </a>
                                                 </Link>
@@ -112,7 +112,7 @@ const Search: React.FC<SearchProps> = ({
                                                 <Link href={`/category/[id]`} as={`/category/${product?.category}`} key={product.id}>
                                                     <a className={`${styles.searchItemCategory} ${styles.searchItemCategoryRest}`} onClick={finishSearch}>
                                                         ... еще {item.products.length - 5} в категории <span className={styles.categoryName}>
-                                                        {dictionaryCategory[product.category]['ru']}</span>
+                                                        {dictionaryCategory[product.category]['uk']}</span>
                                                     </a>
                                                 </Link>
                                             )

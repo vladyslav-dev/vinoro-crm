@@ -20,7 +20,7 @@ const CatalogForm: React.FC<CatalogFormProps> = ({ catalogData }) => {
         mode: 'onChange',
         defaultValues: {
             catalog_name: {
-                ru: catalogData?.catalog_name.ru || '',
+                ru: catalogData?.catalog_name.ru || 'Unused language',
                 uk: catalogData?.catalog_name.uk || '',
                 en: catalogData?.catalog_name.en || '',
             },
@@ -41,13 +41,13 @@ const CatalogForm: React.FC<CatalogFormProps> = ({ catalogData }) => {
         <div className={styles.form}>
             <div className={styles.formSection}>
                 <FormSection title='Название' color='COLOR_JORDY_BLUE'>
-                    <div className={styles.formItem}>
+                    {/* <div className={styles.formItem}>
                         <InputText
                             label='Название — RU'
                             registerPath='catalog_name.ru'
                             register={register}
                         />
-                    </div>
+                    </div> */}
                     <div className={styles.formItem}>
                         <InputText
                             label='Название — UK'

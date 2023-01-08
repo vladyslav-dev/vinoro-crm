@@ -178,13 +178,13 @@ const CategoryForm: React.FC<CategoryFormProps> = ({
             </div>
             <div className={styles.formSection}>
                 <FormSection title='Категория' color='COLOR_JORDY_BLUE'>
-                    <div className={styles.formItem}>
+                    {/* <div className={styles.formItem}>
                         <InputText
                             label='Название — RU'
                             registerPath='category_name.ru'
                             register={register}
                         />
-                    </div>
+                    </div> */}
                     <div className={styles.formItem}>
                         <InputText
                             label='Название — UK'

@@ -26,9 +26,9 @@ const EditCategory: NextPage = () => {
     return (
         <>
             <Head>
-                <title>Vinoro — {category.category_name.ru}</title>
+                <title>Vinoro — {category.category_name.uk}</title>
             </Head>
-            <Section title={category.category_name.ru}>
+            <Section title={category.category_name.uk}>
                 <div className={styles.sectionContainer}>
                     <CategoryForm
                         catalog={catalogList}

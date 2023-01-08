@@ -11,7 +11,7 @@ interface CatalogProps {
 const CatalogItem: React.FC<CatalogProps> = ({ catalog, categoryList }) => (
     <div className={styles.catalogItem} id={String(catalog.catalog_name.en).replaceAll(' ', '-')}>
         <div className={styles.catalogName}>
-            <h4>{catalog.catalog_name.ru}</h4>
+            <h4>{catalog.catalog_name.uk}</h4>
         </div>
         <div className={styles.categoryList}>
             <CategoryList categoryList={categoryList} />

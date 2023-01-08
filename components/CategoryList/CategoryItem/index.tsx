@@ -12,7 +12,7 @@ const CategoryItem: React.FC<CategoryItemProps> = ({ category }) => (
     <Link href={`/category/[id]`} as={`/category/${category?.id}`} passHref>
         <span className={styles.categoryItem}>
             <span className={`${styles.categoryItemName} ${!category.visibility ? styles.hide : ''}`}>
-                {category.category_name.ru}
+                {category.category_name.uk}
             </span>
             <Link href={`/edit-category/[id]`} as={`/edit-category/${category?.id}`}>
                 <a className={styles.categoryItemIcon}>

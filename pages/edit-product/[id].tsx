@@ -30,9 +30,9 @@ const EditProduct: NextPage = () => {
     return (
         <>
             <Head>
-                <title>Vinoro — {product.name.ru}</title>
+                <title>Vinoro — {product.name.uk}</title>
             </Head>
-            <Section title={product.name.ru}>
+            <Section title={product.name.uk}>
                 <div className={styles.sectionContainer}>
                     <ProductForm
                         catalog={catalogList}

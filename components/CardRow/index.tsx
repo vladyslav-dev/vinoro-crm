@@ -24,7 +24,7 @@ const RowCardComponent: React.FC<CardProps> = ({ product }) => (
                     )}
                 </div>
                 <ul className={styles.cardInfo}>
-                    <li className={styles.cardInfoItem}>{product.name.ru}</li>
+                    <li className={styles.cardInfoItem}>{product.name.uk}</li>
                     <li className={styles.cardInfoItem}>
                         <span className={`${!product.availability ? styles.danger : styles.success}`}>{product.availability ? 'Есть в наличии' : 'Нет в наличии'}</span>
                     </li>

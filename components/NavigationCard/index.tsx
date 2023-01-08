@@ -122,7 +122,7 @@ const MultiCardItem: React.FC<ICatalogInfo> = ({
             <Link href={`/catalog#${linkName}`}>
                 <a>
                     <div className={styles.itemRow}>
-                        <h3 className={styles.itemTitle}>{catalogName.ru}</h3>
+                        <h3 className={styles.itemTitle}>{catalogName.uk}</h3>
                     </div>
                     <div className={styles.itemRow}>
                         <div className={styles.itemCol}>

@@ -65,7 +65,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
     });
 
     const transformedCategory: IFilteredCategory = useMemo(() => {
-        return transformFilteredCategory(filterCategory(category), 'category_name', 'ru');
+        return transformFilteredCategory(filterCategory(category), 'category_name', 'uk');
     }, [catalog, category]);
 
     const [formState, setFormState] = useState<IProductForm>(() => setInitialValues(catalog, category, product));
@@ -250,13 +250,13 @@ const ProductForm: React.FC<ProductFormProps> = ({
                 <div className={styles.formCol}>
                     <div className={styles.formSection} id='name'>
                         <FormSection title='Название' color='COLOR_JORDY_BLUE'>
-                            <div className={styles.formItem}>
+                            {/* <div className={styles.formItem}>
                                 <InputText
                                     label='Название — RU'
                                     registerPath='name.ru'
                                     register={register}
                                 />
-                            </div>
+                            </div> */}
                             <div className={styles.formItem}>
                                 <InputText
                                     label='Название — UK'
@@ -275,13 +275,13 @@ const ProductForm: React.FC<ProductFormProps> = ({
                     </div>
                     <div className={styles.formSection} id='description' >
                         <FormSection title='Описание' color='COLOR_MADANG'>
-                            <div className={styles.formItem}>
+                            {/* <div className={styles.formItem}>
                                 <Textarea
                                     label='Описание — RU'
                                     registerPath='description.ru'
                                     register={register}
                                 />
-                            </div>
+                            </div> */}
                             <div className={styles.formItem}>
                                 <Textarea
                                     label='Описание — UK'

@@ -23,7 +23,7 @@ const DefaultCardComponent: React.FC<CardProps> = ({ product }) => (
                         {product.availability ? <p className={styles.cardAvailabilityGreen}>Есть в наличии	&nbsp;&#10004;</p> : <p className={styles.cardAvailabilityRed}>Нет в наличии &#10008;</p>}
                     </div>
                     <div className={styles.cardName}>
-                        <span>{product.name.ru}</span>
+                        <span>{product.name.uk}</span>
                     </div>
 
                     {product.discount_price ? (
