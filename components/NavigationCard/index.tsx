@@ -12,8 +12,9 @@ import { ICatalogInfo } from '@/interfaces/dashboard';
 import foodIcon from '@/images/catalog/food-icon.svg';
 import alcoholIcon from '@/images/catalog/alcohol-icon.svg';
 import detergentIcon from '@/images/catalog/detergent-icon.svg';
+import tabacIcon from '@/images/catalog/tabac-icon.svg';
 
-const catalogIcons = [foodIcon, alcoholIcon, detergentIcon, detergentIcon];
+const catalogIcons = [foodIcon, alcoholIcon, detergentIcon, tabacIcon];
 
 type TCard = 'standard' | 'multi' | 'row';
 
