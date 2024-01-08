@@ -1,34 +1,8 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-
-## Getting Started
-
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+# Vinoro CRM
+<img width="1440" alt="Screenshot 2024-01-08 at 21 41 13" src="https://github.com/vladyslav-dev/vinoro-crm/assets/51026693/a3177249-0045-4a10-8438-ebc311ce9303">
+<img width="1440" alt="Screenshot 2024-01-08 at 21 40 29" src="https://github.com/vladyslav-dev/vinoro-crm/assets/51026693/526f1cd9-5224-4ddd-99f0-53813523ce04">
+<img width="1440" alt="Screenshot 2024-01-08 at 21 42 51" src="https://github.com/vladyslav-dev/vinoro-crm/assets/51026693/c7ad129c-2ec0-4c55-b914-351e01645636">
+<img width="1440" alt="Screenshot 2024-01-08 at 21 44 58" src="https://github.com/vladyslav-dev/vinoro-crm/assets/51026693/e24f4fd3-2e64-4139-9f3b-a2ef6e40a4d6">
+<img width="1440" alt="Screenshot 2024-01-08 at 21 45 56" src="https://github.com/vladyslav-dev/vinoro-crm/assets/51026693/b53c5a6f-5e35-4352-a21c-e0b79677eb6b">
+<img width="1440" alt="Screenshot 2024-01-08 at 21 46 41" src="https://github.com/vladyslav-dev/vinoro-crm/assets/51026693/09f6271a-ed7b-447c-bfc0-9eb30fcc2329">
+<img width="1440" alt="Screenshot 2024-01-08 at 21 47 45" src="https://github.com/vladyslav-dev/vinoro-crm/assets/51026693/7d6594ad-4184-476f-913c-c440575cfaf9">
