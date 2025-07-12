@@ -135,7 +135,7 @@ const MultiCardItem: React.FC<ICatalogInfo> = ({
                             <span className={styles.itemColNumber}>{totalCategory}</span>
                         </div>
                         <div className={styles.itemImage}>
-                            <img src={icon.src} alt="icon" />
+                            {icon && <img src={icon.src} alt="icon" />}
                         </div>
                     </div>
                 </a>
